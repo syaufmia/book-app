@@ -4,14 +4,6 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <icon>
-        <small-icon>
-            /style/img/openbook.png
-        </small-icon>
-        <large-icon>
-            /style/img/openbook.png
-        </large-icon>
-    </icon>
 
     <servlet>
         <servlet-name>DeleteAuthorServlet</servlet-name>
