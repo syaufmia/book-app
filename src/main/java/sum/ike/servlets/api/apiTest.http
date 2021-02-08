@@ -1,0 +1,48 @@
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/basti
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/buch/title/a
+accept: application/json
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/suche/buch/author/sa
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/isbn/978-3
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/verlag/Ana
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/a HTTP/1.1
+accept: application/json
+
+
+###
+POST http://localhost:8080/book_manager_war_exploded/api/v1/author/
+content-type: application/json
+
+{
+  "firstName": "PETER",
+  "lastName": "Dennis"
+}
+
+###
+PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/34
+content-type: application/json
+
+{
+  "firstName": "Wer auch",
+  "lastName": "immer"
+}
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author
+
+
+
+
