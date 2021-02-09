@@ -2,7 +2,6 @@ package sum.ike.model;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -24,6 +23,12 @@ public class Author implements Serializable {
         this.lastName = lastName.toUpperCase(Locale.ROOT);
     }
     //end::Constructor[]
+
+    public Author (int authorID, String firstName, String lastName) {
+        this.authorID = authorID;
+        this.firstName = firstName.toUpperCase(Locale.ROOT);
+        this.lastName = lastName.toUpperCase(Locale.ROOT);
+    }
 
     //tag::setAuthorIDCounter[]
     public static void setAuthorIDCounter (int authorIDCounter) {
@@ -137,9 +142,15 @@ public class Author implements Serializable {
     public static class Builder {
         private String firstName;
         private String lastName;
+        private int authorID;
 
         public Builder setFirstName(String firstName) {
             this.firstName = firstName;
+            return this;
+        }
+
+        public Builder setAuthorID(int authorID) {
+            this.authorID = authorID;
             return this;
         }
 

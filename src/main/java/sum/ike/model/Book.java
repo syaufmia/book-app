@@ -25,6 +25,14 @@ public class Book implements Serializable {
     }
     //end::bookConstructor[]
 
+    public Book (int authorID, String isbn, String title, String publisher, int publishedYear) {
+        this.authorID = authorID;
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.publishedYear = publishedYear;
+    }
+
     public int getAuthorID () {
         return authorID;
     }

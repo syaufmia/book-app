@@ -141,7 +141,6 @@ public class AuthorDao {
     }
 
 
-
     public boolean addNew (Author author) {
         setAuthorIDToExistingID(author);
         if (!al.contains(author)) {
@@ -154,11 +153,13 @@ public class AuthorDao {
     //this addNew() is only for reading from CSV!
     public void addNew(int id, String firstName, String lastName) {
         Author author = new Author.Builder()
+                .setAuthorID(id)
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .build();   //id created with counter++
-        author.setAuthorID(id);   //id overwritten with hard set from csv
-        addNew(author);
+        //author.setAuthorID(id);   //id overwritten with hard set from csv
+        //addNew(author);
+        al.add(author);
     }
 
     //this addNew() is only for input from User

@@ -7,9 +7,6 @@ import java.util.*;
 
 public class FileManager {
 
-    private final List <String[]> readingList = new ArrayList<>();
-
-
     public static final String AUTHOR_TABLE_HEADER_ROW = "AuthorID,Vorname,Nachname";
     public static final String BOOK_TABLE_HEADER_ROW = "AuthorID,Titel,ISBN,Verlag,Erscheinungsjahr";
     public static final String USER_HEADER_ROW = "username,password,full name,UID";
@@ -55,30 +52,10 @@ public class FileManager {
         }
     }
 
-//    public void writeObjectFileCSV (List<Object> writingList, String path, String header) {
-//        File filePath = new File(path);
-//        this.writingList.clear();
-//        this.writingList = writingList;
-//
-//        try {
-//            FileWriter fw = new FileWriter (filePath);
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            bw.write(header);
-//            for (Object o : writingList) {
-//                bw.newLine();
-//                bw.write(o.toString());
-//            }
-//            bw.close();
-//            fw.close();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
     public List<String[]> readCSVFileAsObjects (String fileName) {
-        readingList.clear();
+        List <String[]> readingList = new ArrayList<>();
         File file = getFile(fileName);
         InputStream is;
         try {
