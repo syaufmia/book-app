@@ -40,9 +40,9 @@ public class DeleteAuthorServlet extends HttpServlet {
             BookDao bDao = new BookDao();
             bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
             Author selectedAuthor = aDao.searchForAndSelect(name,Integer.parseInt(selectedIndex));
+
             //TODO: METHOD FOR DELETING BOOK BY ID!
-            aDao.delete(selectedAuthor);
-            aDao.delete(selectedAuthor);
+            aDao.delete(Integer.parseInt(selectedIndex));
 
 
             fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);

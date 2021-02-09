@@ -1,19 +1,25 @@
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/basti
-
-###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/search/buch/title/a
-accept: application/json
-
-###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/suche/buch/author/sa
-
-###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/isbn/978-3
-
-###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author/
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/1/
 accept: application/json
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/2
+accept: application/json
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/author_id/34
+
+###
+POST http://localhost:8080/book_manager_war_exploded/api/v1/author/
+accept: application/json
+
+{
+  "first_name": "Jane",
+  "last_name": "Austen"
+}
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/a HTTP/1.1
@@ -30,16 +36,16 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/35
+PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/36
 content-type: application/json
 
 {
-  "firstName": "Wer auch",
-  "lastName": "immer"
+  "first_name": "william",
+  "last_name": "shakespeare"
 }
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/book
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/0
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author

@@ -126,7 +126,6 @@ public class BookDao {
         return bookList;
     }
 
-
     public void delete (int authorID) {
         AuthorDao aDao = new AuthorDao();
         bl.removeAll(getListOfAuthor(aDao.getAuthorByID(authorID)));

@@ -83,17 +83,15 @@ public class AuthorDao {
      *
      * @param author Author object, that is compared to all Author objects inside the AuthorList.
      */
-    public boolean setAuthorIDToExistingID (Author author) {
-        boolean unchanged = true;
+    public void setAuthorIDToExistingID (Author author) {
         if (al.contains(author)) {
             for (Author a : al) {
                 if (author.equals(a)) {
                     author.setAuthorID(a.getAuthorID());
-                    unchanged = false;
                     break;
                 }
             }
-        } return unchanged;
+        }
     }
 
 
@@ -175,10 +173,17 @@ public class AuthorDao {
     }
 
 
-
     public void changeAuthor (int id, String firstName, String lastName) {
             getAuthorByID(id).setFirstName(firstName);
             getAuthorByID(id).setLastName(lastName);
+    }
+
+    public void delete (int authorID) {
+        if (idExists(authorID)) {
+            al.remove(getAuthorByID(authorID));
+            BookDao bDao = new BookDao();
+            bDao.delete(authorID);
+        }
     }
 
 
@@ -214,6 +219,7 @@ public class AuthorDao {
         }
         return searchForList;
     }
+
 
     //TODO: ALTERNATIVE
 //    public void delete (String input, Author.Attribute field) {
