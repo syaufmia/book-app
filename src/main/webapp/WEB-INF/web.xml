@@ -68,18 +68,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>AuthorAPIServlet</servlet-name>
-        <url-pattern>/api/v1/autor/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
         <servlet-name>SearchAPIServlet</servlet-name>
         <url-pattern>/api/v1/search/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>SearchAPIServlet</servlet-name>
-        <url-pattern>/api/v1/suche/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -87,10 +77,6 @@
         <url-pattern>/api/v1/book/*</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>BookAPIServlet</servlet-name>
-        <url-pattern>/api/v1/buch/*</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>ShowBookListServlet</servlet-name>

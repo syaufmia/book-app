@@ -2,7 +2,7 @@
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author/
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/1/
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/39
 accept: application/json
 
 ###
@@ -36,12 +36,12 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/40
+PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/39
 content-type: application/json
 
 {
-  "first_name": "Peter",
-  "last_name": "Robisch"
+  "first_name": "Michelle",
+  "last_name": "Obama"
 }
 
 ###

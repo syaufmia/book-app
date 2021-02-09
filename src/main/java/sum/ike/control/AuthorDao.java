@@ -132,6 +132,19 @@ public class AuthorDao {
         return author;
     }
 
+    public int getID (String firstName, String lastName) {
+        int ID = 0;
+        for (Author author : al) {
+            if (author.getFirstName().equalsIgnoreCase(firstName)) {
+                if (author.getLastName().equalsIgnoreCase(lastName)) {
+                    ID = author.getAuthorID();
+                    break;
+                }
+            }
+        }
+        return ID;
+    }
+
 
     public boolean idExists (int ID) {
         boolean exists = false;
@@ -145,13 +158,11 @@ public class AuthorDao {
     }
 
 
-    public boolean addNew (Author author) {
+    public void addNew (Author author) {
         setAuthorIDToExistingID(author);
         if (!al.contains(author)) {
             al.add(author);
-            return true;
         }
-        else return false;
     }
 
     //this addNew() is only for reading from CSV!

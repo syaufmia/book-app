@@ -67,6 +67,16 @@ public class BookDao {
         return exists;
     }
 
+    public Book getBook (String isbn) {
+        Book b = null;
+        for (Book book : bl) {
+            if (book.getIsbn().equalsIgnoreCase(isbn)) {
+                b = book;
+            }
+        }
+        return b;
+    }
+
     public Author getBookAuthor (Book book) {
         AuthorDao aDao = new AuthorDao();
         return (aDao.getAuthorByID(book.getAuthorID()));
@@ -96,12 +106,19 @@ public class BookDao {
 
     //"add"method for adding new book by user
     public boolean addNew (String firstName, String lastName, String isbn, String title, String publisher, int year) {
+        boolean added;
         AuthorDao aDao = new AuthorDao();
-        Author author = new Author.Builder()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .build();
-        boolean added = aDao.addNew(author); //add new author to list (if not already exists) -> sets the ID of author.
+        Author author;
+        int aID;
+        if ((aID = aDao.getID(firstName, lastName)) != 0) {
+            author = aDao.getAuthorByID(aID);
+            added = false;
+        } else {
+            author = new Author(firstName, lastName);
+            aDao.addNew(author);
+            added = true;
+        }
+        //add new author to list (if not already exists) -> sets the ID of author.
         Book book = new Book.Builder()
                 .setIsbn(isbn)
                 .setTitle(title)
@@ -110,7 +127,6 @@ public class BookDao {
                 .build();
         book.setAuthorID(author.getAuthorID()); //sets the ID of Autor to aID in book! same ID
         addNew(book);  //add the book to booklist (including the aID == ID of author)
-
         return added;
     }
 

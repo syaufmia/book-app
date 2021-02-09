@@ -166,7 +166,6 @@ public class AuthorAPIServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
         }
-
     }
 
 }
