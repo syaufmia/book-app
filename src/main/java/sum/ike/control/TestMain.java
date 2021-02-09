@@ -18,9 +18,13 @@ public class TestMain {
         AuthorXDao aXDao = new AuthorXDao();
         BookXDao bXDao = new BookXDao();
 
+        aDao.delete(34);
+
+
         System.out.println(aXDao.convertAuthorList(aDao.getAll()));
         System.out.println();
         System.out.println(bXDao.convertBookList(bDao.getAll()));
+
 
 
 

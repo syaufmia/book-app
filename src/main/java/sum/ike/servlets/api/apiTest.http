@@ -17,8 +17,8 @@ POST http://localhost:8080/book_manager_war_exploded/api/v1/author/
 accept: application/json
 
 {
-  "first_name": "Jane",
-  "last_name": "Austen"
+  "first_name": "Michelle",
+  "last_name": "Obama"
 }
 
 ###
@@ -40,12 +40,12 @@ PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/36
 content-type: application/json
 
 {
-  "first_name": "william",
-  "last_name": "shakespeare"
+  "first_name": "Peter",
+  "last_name": "Robisch"
 }
 
 ###
-DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/0
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/38
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author

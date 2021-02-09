@@ -180,9 +180,9 @@ public class AuthorDao {
 
     public void delete (int authorID) {
         if (idExists(authorID)) {
-            al.remove(getAuthorByID(authorID));
             BookDao bDao = new BookDao();
             bDao.delete(authorID);
+            al.remove(getAuthorByID(authorID));
         }
     }
 
