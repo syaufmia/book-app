@@ -59,8 +59,9 @@ public class AddAuthorServlet extends HttpServlet {
                             req.setAttribute("message", displayText.toString());
                         }
                         else {
-                            boolean added = ((aDao.addNew(firstName, lastName)));
-                            if (added) {
+                            boolean exists = aDao.authorExists(firstName, lastName);
+                            if (!exists) {
+                                aDao.addNew(firstName, lastName);
                                 req.setAttribute("firstName", StringTrimmer.trim(firstName));
                                 req.setAttribute("lastName", StringTrimmer.trim(lastName));
                                 req.setAttribute("sentence", "wurde erfolgreich hinzugefügt. ");

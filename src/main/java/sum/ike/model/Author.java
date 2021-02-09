@@ -13,7 +13,7 @@ public class Author implements Serializable {
     private int authorID;
     private  String firstName;
     private  String lastName;
-    private transient static int authorIDCounter = 1;
+    private static int authorIDCounter = 1;
     //end::Fields[]
 
     //tag::Constructor[]
@@ -160,7 +160,7 @@ public class Author implements Serializable {
         }
 
         public Author build() {
-            return new Author(firstName, lastName);
+            return new Author(authorID, firstName, lastName);
         }
     }
     //end::BuilderClass[]

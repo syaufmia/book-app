@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import sum.ike.control.AuthorDao;
-import sum.ike.control.BookDao;
 import sum.ike.control.FileManager;
-import sum.ike.model.Author;
+import sum.ike.control.connector.AuthorXDao;
+
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,171 +14,192 @@ import javax.servlet.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.*;
 
 
 @WebServlet
 public class AuthorAPIServlet extends HttpServlet {
     @Override
-    protected void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //TODO: Map<String,List<Object>> möglich? (Angabe von Gesamtanzahl & andere Infos
-
-        //
-
-        AuthorDao aDao = new AuthorDao();
         FileManager fm = new FileManager();
+        AuthorDao aDao = new AuthorDao();
+        Gson gson = new Gson();
+        AuthorXDao aXDao = new AuthorXDao();
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        Gson gson = new Gson();
 
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
 
-        String uri = request.getRequestURI().substring(1);
-        String[] splitURI = uri.split("/");
-
-
-        switch (splitURI.length) {
+        String[] uri = getSubURI(req);
+        switch (uri.length) {
             case 4:
-                if (!aDao.getAll().isEmpty()) {
-                    response.getWriter().println(gson.toJson(aDao.getAll()));
-                    response.setStatus(HttpServletResponse.SC_OK);
-                }
-                else {
-                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                }
+                resp.getWriter().println(gson.toJson(aXDao.convertAuthorList(aDao.getAll())));
+                resp.setStatus(200);
                 break;
             case 6:
-                if (splitURI[4].equalsIgnoreCase("id")) {
-                    if (splitURI[5].matches("\\d++")) {
-                        if (aDao.idExists(Integer.parseInt(splitURI[5]))) {
-                            List<Author> list = new ArrayList<>();
-                            list.add(aDao.getAuthorByID(Integer.parseInt(splitURI[5])));
-                            response.getWriter().println(gson.toJson(list));
-                            response.setStatus(HttpServletResponse.SC_OK);
-                        }
-                        //when ID is not in the list --> NO CONTENT
-                        else {
-                            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                        }
-                    }
-                    //when not correct format of ID
-                    else {
-                        response.sendError(HttpServletResponse.SC_NO_CONTENT);
-                    }
-                }
-                else if (splitURI[4].equalsIgnoreCase("lastName")) {
-                    response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-                    // by last name???
-                }
-                else {
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    //return error code
+                if (compareSubURITo(req, 4, "id", "author_id")
+                        && subURIisInt(req, 5)
+                        && (aDao.idExists(Integer.parseInt(uri[5])))) {
+
+                    resp.getWriter().println(gson.toJson(aXDao.convertAuthor(aDao.getAuthorByID(Integer.parseInt(uri[5])))));
+
+                    resp.setStatus(200);
+                } else {
+                    resp.setStatus(404);
+                    getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
                 }
                 break;
             default:
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                // return error code
+                resp.setStatus(404);
+                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
                 break;
         }
     }
 
+    public String[] getSubURI (HttpServletRequest req) {
+        return (req.getRequestURI().substring(1)).split("/");
+    }
+
+    public boolean compareSubURITo (HttpServletRequest req, int index, String check, String check2) {
+        String[] uri = getSubURI(req);
+        return uri[index].equalsIgnoreCase(check) || uri[index].equalsIgnoreCase(check2);
+    }
+    public boolean subURIisInt (HttpServletRequest req, int index) {
+        return getSubURI(req)[index].matches("\\d++");
+    }
+
+
+
+
     @Override
-    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AuthorDao aDao = new AuthorDao();
+    protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         FileManager fm = new FileManager();
+        AuthorDao aDao = new AuthorDao();
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
 
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        String uri = request.getRequestURI().substring(1);
-        String[] splitURI = uri.split("/");
+        String[] uri = getSubURI(req);
+        String body;
 
 
-        if (splitURI.length == 4) {
-            String body = getBody(request);
-            if (body != null && !(body.isEmpty())) {
-                JsonParser parser = new JsonParser();
-                JsonObject json = parser.parse(body).getAsJsonObject();
-                if (json.has("firstName") && json.has("lastName")) {
-                    String firstName = json.get("firstName").getAsString();
-                    String lastName = json.get("lastName").getAsString();
-                    if (aDao.addNew(firstName, lastName)) {
-                        fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-                        response.setStatus(HttpServletResponse.SC_CREATED);
-                    } else {
-                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                    }
+        if ((uri.length == 4) && ((body = getBody(req)) != null) && !body.isEmpty()) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(body).getAsJsonObject();
+            if (json.has("first_name") && json.has("last_name")) {
+                String firstName = json.get("first_name").getAsString();
+                String lastName = json.get("last_name").getAsString();
+                if (!aDao.authorExists(firstName, lastName)) {
+                    aDao.addNew(firstName, lastName);
+                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
                 } else {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please add BODY with correct Key-Value pair in JSON");
+                    resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                    getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
                 }
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please add BODY in JSON format");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
             }
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        else {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
         }
     }
 
     @Override
-    protected void doPut (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        AuthorDao aDao = new AuthorDao();
+
         FileManager fm = new FileManager();
+        AuthorDao aDao = new AuthorDao();
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
 
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        String uri = request.getRequestURI().substring(1);
-        String[] splitURI = uri.split("/");
+        String[] uri = getSubURI(req);
+        String body;
 
-
-        if (splitURI.length == 6) {
-            if (splitURI[4].equalsIgnoreCase("id")) {
-                if (splitURI[5].matches("\\d+")) {
-                    if (aDao.idExists(Integer.parseInt(splitURI[5]))) {
-                        String body = getBody(request);
-                        if (body != null && !(body.isEmpty())) {
-                            JsonParser parser = new JsonParser();
-                            JsonObject json = parser.parse(body).getAsJsonObject();
-                            if (json.has("firstName") && json.has("lastName")) {
-                                String firstName = json.get("firstName").getAsString();
-                                String lastName = json.get("lastName").getAsString();
-                                if (aDao.changeAuthor(Integer.parseInt(splitURI[5]), firstName, lastName)) {
-                                    fm.writeObjectFileCSV(aDao.exportData(),"AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
-                                    BookDao bDao = new BookDao();
-                                    fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
-                                    response.setStatus(HttpServletResponse.SC_CREATED);
-                                }
-                                else {
-                                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                                }
-                            }
-                            else{
-                                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please add BODY with correct Key-Value pair in JSON");
-                            }
-                        }
-                        else{
-                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please add BODY in JSON format");
-                        }
-                    }
-                    else{
-                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                    }
+        if ((uri.length == 6)
+                && (compareSubURITo(req, 4, "id", "author_id")
+                && (subURIisInt(req, 5)
+                && (aDao.idExists(Integer.parseInt(uri[5])))
+                && ((body = getBody(req)) != null)
+                && !body.isEmpty()))) {
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(body).getAsJsonObject();
+            if (json.has("first_name") && json.has("last_name")) {
+                String firstName = json.get("first_name").getAsString();
+                String lastName = json.get("last_name").getAsString();
+                if (aDao.authorExists(firstName, lastName)) {
+                    resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                    getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
                 }
-                else{
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please enter a valid id");
+                else {
+                    aDao.changeAuthor(Integer.parseInt(uri[5]), firstName, lastName);
+                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
                 }
             }
-            else{
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
             }
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
         }
-        else{
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
+
+
+//        if (splitURI.length == 6) {
+//            if (splitURI[4].equalsIgnoreCase("id")) {
+//                if (splitURI[5].matches("\\d+")) {
+//                    if (aDao.idExists(Integer.parseInt(splitURI[5]))) {
+//                        String body = getBody(request);
+//                        if (body != null && !(body.isEmpty())) {
+//                            JsonParser parser = new JsonParser();
+//                            JsonObject json = parser.parse(body).getAsJsonObject();
+//                            if (json.has("firstName") && json.has("lastName")) {
+//                                String firstName = json.get("firstName").getAsString();
+//                                String lastName = json.get("lastName").getAsString();
+//                                if (aDao.changeAuthor(Integer.parseInt(splitURI[5]), firstName, lastName)) {
+//                                    fm.writeObjectFileCSV(aDao.exportData(),"AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
+//                                    BookDao bDao = new BookDao();
+//                                    fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
+//                                    response.setStatus(HttpServletResponse.SC_CREATED);
+//                                }
+//                                else {
+//                                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+//                                }
+//                            }
+//                            else{
+//                                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please add BODY with correct Key-Value pair in JSON");
+//                            }
+//                        }
+//                        else{
+//                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please add BODY in JSON format");
+//                        }
+//                    }
+//                    else{
+//                        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+//                    }
+//                }
+//                else{
+//                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "please enter a valid id");
+//                }
+//            }
+//            else{
+//                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+//            }
+//        }
+//        else{
+//            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+//        }
     }
 
     public String getBody (HttpServletRequest request) throws IOException {

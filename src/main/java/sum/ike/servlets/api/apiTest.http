@@ -12,7 +12,8 @@ GET http://localhost:8080/book_manager_war_exploded/api/v1/suche/buch/author/sa
 GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/isbn/978-3
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/verlag/Ana
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/
+accept: application/json
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/a HTTP/1.1
@@ -24,12 +25,12 @@ POST http://localhost:8080/book_manager_war_exploded/api/v1/author/
 content-type: application/json
 
 {
-  "firstName": "PETER",
-  "lastName": "Dennis"
+  "first_name": "Jennifer",
+  "last_name": "Lopez"
 }
 
 ###
-PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/34
+PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/35
 content-type: application/json
 
 {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDao {
-    private static final List<Author> al = new ArrayList<>();
+    private final static List<Author> al = new ArrayList<>();
 
 
 
@@ -21,6 +21,7 @@ public class AuthorDao {
 
     //importing from a CSV
     public void importData (List<String[]> list) {
+        al.clear();
         for (String[] element : list) {
             if (element.length == 3) {
                 addNew(Integer.parseInt(element[0]), //each index is column
@@ -28,6 +29,7 @@ public class AuthorDao {
                         element[2]);
             }
         }
+        setAuthorCounterToMax();
     }
 
 
@@ -94,6 +96,8 @@ public class AuthorDao {
         } return unchanged;
     }
 
+
+
     public boolean authorExists (String firstName, String lastName) {
         boolean exists = false;
         for (Author author : al) {
@@ -126,8 +130,10 @@ public class AuthorDao {
                 author = a;
                 break;
             }
-        } return author;
+        }
+        return author;
     }
+
 
     public boolean idExists (int ID) {
         boolean exists = false;
@@ -163,26 +169,16 @@ public class AuthorDao {
     }
 
     //this addNew() is only for input from User
-    public boolean addNew (String firstName, String lastName) {
-        Author author = new Author.Builder()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .build(); //id created with counter++
-        return (setAuthorIDToExistingID(author) & addNew(author));   //change id if in List available. Otherwise keep counter++
+    public void addNew (String firstName, String lastName) {
+        Author author = new Author(firstName, lastName); //id created with counter++
+        addNew(author);   //change id if in List available. Otherwise keep counter++
     }
 
 
 
-    public boolean changeAuthor(int id, String firstName, String lastName) {
-        BookDao bDao = new BookDao();
-        boolean changed = false;
-        if (!authorExists(firstName, lastName)) {
-            bDao.delete(id);
+    public void changeAuthor (int id, String firstName, String lastName) {
             getAuthorByID(id).setFirstName(firstName);
             getAuthorByID(id).setLastName(lastName);
-            changed = true;
-        }
-        return changed;
     }
 
 
