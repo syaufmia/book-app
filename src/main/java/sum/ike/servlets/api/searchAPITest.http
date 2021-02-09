@@ -1,0 +1,38 @@
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/sa
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/aaa
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/title/a
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/title/das
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/title/parfum
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/isbn/978-3-2 HTTP/1.1
+
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/publisher/reclam
+
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/author/goethe
+
+###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/author/uzun
+
+###
+POST http://localhost:8080/book_manager_war_exploded/api/v1/search/book/author/
+content-type: application/json
+
+{
+  "first_name": "Michelle",
+  "last_name": "Obama"
+}
+

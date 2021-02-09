@@ -27,6 +27,12 @@ public class APIHelperServlet extends HttpServlet {
         String[] uri = getSubURI(req);
         return uri[index].equalsIgnoreCase(check) || uri[index].equalsIgnoreCase(check2);
     }
+
+    public boolean compareSubURITo (HttpServletRequest req, int index, String check) {
+        String[] uri = getSubURI(req);
+        return uri[index].equalsIgnoreCase(check);
+    }
+
     public boolean subURIisInt (HttpServletRequest req, int index) {
         return getSubURI(req)[index].matches("\\d++");
     }

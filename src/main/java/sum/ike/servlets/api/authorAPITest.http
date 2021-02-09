@@ -14,7 +14,7 @@ GET http://localhost:8080/book_manager_war_exploded/api/v1/author/author_id/34
 
 ###
 POST http://localhost:8080/book_manager_war_exploded/api/v1/author/
-accept: application/json
+content-type: application/json
 
 {
   "first_name": "Michelle",
@@ -49,6 +49,8 @@ DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/34
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author
+
+
 
 
 

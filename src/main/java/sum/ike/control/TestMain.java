@@ -1,7 +1,9 @@
 package sum.ike.control;
 
+import com.google.gson.Gson;
 import sum.ike.control.connector.AuthorXDao;
 import sum.ike.control.connector.BookXDao;
+import sum.ike.model.Book;
 
 public class TestMain {
 
@@ -9,6 +11,7 @@ public class TestMain {
     public static void main(String[] args) {
         BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
+        Gson gson = new Gson();
 
         FileManager fm = new FileManager();
 
@@ -23,7 +26,9 @@ public class TestMain {
 
         System.out.println(aXDao.convertAuthorList(aDao.getAll()));
         System.out.println();
-        System.out.println(bXDao.convertBookList(bDao.getAll()));
+        System.out.println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList("das", Book.Attribute.TITLE))));
+
+        System.out.println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList("wur", Book.Attribute.TITLE))));
 
 
 
