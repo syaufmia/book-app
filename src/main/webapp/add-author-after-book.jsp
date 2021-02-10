@@ -16,7 +16,7 @@
         <p>
         <b>Titel:</b> ${titel}, <b>ISBN:</b> ${isbn}, <b>Verlag:</b> ${publisher}, <b>Erscheinungsjahr:</b> ${year}.
         </p>
-        <form class="form" name="search-author" action= "added-author-after-book" method="POST">
+        <form class="form" name="search-author" action= "${pageContext.request.contextPath}/added-author-after-book/" method="POST">
             <table class="form-table"border="0">
                     <tr>
                         <td>Name: </td>

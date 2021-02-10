@@ -9,15 +9,15 @@
 <main>
     <div class="text-box">
         <c:choose>
-        <c:when test="${sessionScope.loggedIn == true}">
+        <c:when test="${sessionScope.user != null}">
         <h1>Füge einen neuen Autor hinzu</h1>
         <p>Bitte fülle alle notwendigen Felder aus.</p>
-        <p class="red">${message}</p>
+        <p class="red">${requestScope.message}</p>
         <p class="grey">
-        <b> ${firstName} ${lastName} </b> ${sentence}
+        <b> ${requestScope.firstName} ${requestScope.lastName} </b> ${requestScope.sentence}
         </p>
         <%-- actionURl => URL depending on the outcome of the addAuthorServlet --%>
-        <form class="form" name="add-author" action="${actionURL}" method="POST">
+        <form class="form" name="add-author" action="${requestScope.actionURL}" method="POST">
             <table class="form-table"border="0">
                     <tr>
                         <td>Vorname: </td>

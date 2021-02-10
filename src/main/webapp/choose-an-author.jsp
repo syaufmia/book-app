@@ -16,7 +16,7 @@
         <p class="red">${message}</p>
         <p class="grey"> ${sentence} </p>
 
-        <form class="form" name="select-author" action= "added-book" method="POST">
+        <form class="form" name="select-author" action= "${pageContext.request.contextPath}/added-book/" method="POST">
             <table class="form-table"border="0">
 
             <%
@@ -26,15 +26,15 @@
             </table>
             <p class="grey">
                 Wähle einen Autor aus oder gib einen neuen Autor ein. </p>
-            <input type="hidden" name="titel" value="${titel}">
-            <input type="hidden" name="isbn" value="${isbn}">
-            <input type="hidden" name="publisher" value="${publisher}">
-            <input type="hidden" name="year" value="${year}">
+            <input type="hidden" name="titel" value="${requestScope.titel}">
+            <input type="hidden" name="isbn" value="${requestScope.isbn}">
+            <input type="hidden" name="publisher" value="${requestScope.publisher}">
+            <input type="hidden" name="year" value="${requestScope.year}">
             <input type="hidden" name="name" value="${name}">
             <input class="button" type="submit" value="Autor auswählen" name="submit" />
 
         </form>
-        <form name="add-author" action="added-author" method="POST">
+        <form name="add-author" action="${pageContext.request.contextPath}/added-author/" method="POST">
         <input type="hidden" name="titel" value="${titel}">
         <input type="hidden" name="isbn" value="${isbn}">
         <input type="hidden" name="publisher" value="${publisher}">

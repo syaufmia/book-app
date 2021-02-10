@@ -17,7 +17,7 @@
         <p class="red">${message}</p>
         <p class="grey"> ${sentence} </p>
 
-        <form class="form" name="select-author" action= "deleted-author" method="POST">
+        <form class="form" name="select-author" action= "${pageContext.request.contextPath}/deleted-author/" method="POST">
             <table class="form-table"border="0">
 
                 ${requestScope.htmltext}

@@ -15,7 +15,7 @@
         <p>Bitte fülle alle notwendigen Felder aus.</p>
 
 
-        <form class="form" name="add-book" action="${actionURL}" method="POST">
+        <form class="form" name="add-book" action="${requestScope.actionURL}" method="POST">
             <table class="form-table"border="0">
                     <tr>
                         <td>Titel: </td>
