@@ -1,8 +1,8 @@
 package sum.ike.control;
 
 import com.google.gson.Gson;
-import sum.ike.control.connector.AuthorXDao;
-import sum.ike.control.connector.BookXDao;
+import sum.ike.control.connector.AuthorConverter;
+import sum.ike.control.connector.BookConverter;
 import sum.ike.model.Book;
 
 public class TestMain {
@@ -18,19 +18,18 @@ public class TestMain {
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
-        AuthorXDao aXDao = new AuthorXDao();
-        BookXDao bXDao = new BookXDao();
-
-        aDao.delete(34);
+        AuthorConverter aConverter = new AuthorConverter();
+        BookConverter bConverter = new BookConverter();
 
 
-        System.out.println(aXDao.convertAuthorList(aDao.getAll()));
+
+        System.out.println(gson.toJson(aConverter.convert(aDao.getAll())));
         System.out.println();
-        System.out.println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList("das", Book.Attribute.TITLE))));
-
-        System.out.println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList("wur", Book.Attribute.TITLE))));
-
-
+        System.out.println(gson.toJson(aConverter.convert(aDao.searchFor("hdgdl"))));
+        System.out.println();
+        System.out.println(gson.toJson(bConverter.convert(bDao.getFilteredList("das", Book.Attribute.TITLE))));
+        System.out.println();
+        System.out.println(gson.toJson(bConverter.convert(bDao.getFilteredList("wur", Book.Attribute.TITLE))));
 
 
     }

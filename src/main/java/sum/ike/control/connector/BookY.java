@@ -2,28 +2,20 @@ package sum.ike.control.connector;
 
 import java.io.Serializable;
 
-public class BookX implements Serializable {
+public class BookY implements Serializable {
 
-    private static final long serialVersionUID = 5L;
-
+    private static final long serialVersionUID = 8L;
     private final String title;
     private final String isbn;
-    private final AuthorX author;
     private final String publisher;
     private final int year;
 
-    protected BookX (AuthorX author, String title, String isbn, String publisher, int year) {
-        this.author = author;
+    protected BookY (String title, String isbn, String publisher, int year) {
         this.title = title;
         this.isbn = isbn;
         this.publisher = publisher;
         this.year = year;
     }
-
-    public AuthorX getXAuthor () {
-        return author;
-    }
-
 
     public String getXTitle () {
         return title;
@@ -39,9 +31,10 @@ public class BookX implements Serializable {
         return publisher;
     }
 
-
     public int getXYear () {
         return year;
     }
+
+
 
 }

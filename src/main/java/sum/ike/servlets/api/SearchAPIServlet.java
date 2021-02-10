@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import sum.ike.control.AuthorDao;
 import sum.ike.control.BookDao;
 import sum.ike.control.FileManager;
-import sum.ike.control.connector.AuthorXDao;
+import sum.ike.control.connector.AuthorConverter;
 
-import sum.ike.control.connector.BookXDao;
+import sum.ike.control.connector.BookConverter;
 import sum.ike.model.Book;
 
 import javax.servlet.*;
@@ -21,22 +21,24 @@ public class SearchAPIServlet extends HttpServlet {
     FileManager fm = new FileManager();
     AuthorDao aDao = new AuthorDao();
     BookDao bDao = new BookDao();
-    BookXDao bXDao = new BookXDao();
+    BookConverter bCon = new BookConverter();
     Gson gson = new Gson();
-    AuthorXDao aXDao = new AuthorXDao();
+    AuthorConverter aCon = new AuthorConverter();
     APIHelperServlet helper = new APIHelperServlet();
+
+    @Override
+    protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+    }
 
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
-
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
-
 
         String[] uri = helper.getSubURI(req);
 
@@ -44,51 +46,59 @@ public class SearchAPIServlet extends HttpServlet {
         switch (uri.length) {
             case 6:
                 if (helper.compareSubURITo(req, 4, "author")) {
-                    resp.getWriter().println(gson.toJson(aXDao.convertAuthorList(aDao.searchFor(uri[5]))));
+                    resp.getWriter().println(gson.toJson(aCon.convert(aDao.searchFor(uri[5]))));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 }
                 else {
-                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    getServletContext().getRequestDispatcher("error-page.jsp").forward(req, resp);
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 }
                 break;
 
             case 7:
                 if (helper.compareSubURITo(req, 4, "book")) {
                     if (helper.compareSubURITo(req, 5, "title", "titel")) {
-                        resp.getWriter().println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList(uri[6], Book.Attribute.TITLE))));
+                        resp.getWriter().println(gson.toJson(bCon.convert(bDao.getFilteredList(uri[6], Book.Attribute.TITLE))));
                         resp.setStatus(HttpServletResponse.SC_OK);
                     } else if (helper.compareSubURITo(req, 5, "isbn")) {
-                        resp.getWriter().println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList(uri[6], Book.Attribute.ISBN))));
+                        resp.getWriter().println(gson.toJson(bCon.convert(bDao.getFilteredList(uri[6], Book.Attribute.ISBN))));
                         resp.setStatus(HttpServletResponse.SC_OK);
                     } else if (helper.compareSubURITo(req, 5, "publisher")) {
-                        resp.getWriter().println(gson.toJson(bXDao.convertBookList(bDao.getFilteredList(uri[6], Book.Attribute.PUBLISHER))));
+                        resp.getWriter().println(gson.toJson(bCon.convert(bDao.getFilteredList(uri[6], Book.Attribute.PUBLISHER))));
                         resp.setStatus(HttpServletResponse.SC_OK);
                     } else if (helper.compareSubURITo(req, 5, "author")) {
-                        resp.getWriter().println(gson.toJson(bXDao.convertBookList(bDao.getBookListFromAuthorList(aDao.searchFor(uri[6])))));
+                        resp.getWriter().println(gson.toJson(bCon.convert(bDao.getBookListFromAuthorList(aDao.searchFor(uri[6])))));
                         resp.setStatus(HttpServletResponse.SC_OK);
                     } else {
-                        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                        getServletContext().getRequestDispatcher("/error-page").forward(req, resp);
+                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                     }
                 }
                 else {
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    getServletContext().getRequestDispatcher("/error-page").forward(req, resp);
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 }
                 break;
             default:
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                getServletContext().getRequestDispatcher("/error-page").forward(req, resp);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
     }
 
     @Override
-    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        response.setHeader("Access-Control-Allow-Methods", "GET");
+    }
 
+    @Override
+    protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+
+    }
+
+    @Override
+    protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }
 }

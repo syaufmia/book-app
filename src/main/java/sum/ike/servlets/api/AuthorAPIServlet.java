@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import sum.ike.control.AuthorDao;
 import sum.ike.control.BookDao;
 import sum.ike.control.FileManager;
-import sum.ike.control.connector.AuthorXDao;
+import sum.ike.control.connector.AuthorConverter;
 
 
 import javax.servlet.*;
@@ -24,14 +24,16 @@ public class AuthorAPIServlet extends HttpServlet {
     AuthorDao aDao = new AuthorDao();
     BookDao bDao = new BookDao();
     Gson gson = new Gson();
-    AuthorXDao aXDao = new AuthorXDao();
+    AuthorConverter aCon = new AuthorConverter();
 
     APIHelperServlet helper = new APIHelperServlet();
+
 
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -39,23 +41,21 @@ public class AuthorAPIServlet extends HttpServlet {
         String[] uri = helper.getSubURI(req);
         switch (uri.length) {
             case 4:
-                resp.getWriter().println(gson.toJson(aXDao.convertAuthorList(aDao.getAll())));
+                resp.getWriter().println(gson.toJson(aCon.convert(aDao.getAll())));
                 resp.setStatus(HttpServletResponse.SC_OK);
                 break;
             case 6:
                 if (helper.compareSubURITo(req, 4, "id", "author_id")
                         && helper.subURIisInt(req, 5)
                         && (aDao.idExists(Integer.parseInt(uri[5])))) {
-                    resp.getWriter().println(gson.toJson(aXDao.convertAuthor(aDao.getAuthorByID(Integer.parseInt(uri[5])))));
+                    resp.getWriter().println(gson.toJson(aCon.convert(aDao.getAuthorByID(Integer.parseInt(uri[5])))));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 } else {
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 }
                 break;
             default:
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
     }
@@ -84,17 +84,14 @@ public class AuthorAPIServlet extends HttpServlet {
                     fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                     resp.setStatus(HttpServletResponse.SC_CREATED);
                 } else {
-                    resp.setStatus(HttpServletResponse.SC_CONFLICT);
-                    getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+                    resp.sendError(HttpServletResponse.SC_CONFLICT);
                 }
             } else {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
         else {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -125,21 +122,19 @@ public class AuthorAPIServlet extends HttpServlet {
                 else {
                     aDao.changeAuthor(Integer.parseInt(uri[5]), firstName, lastName);
                     fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
-                    resp.setStatus(HttpServletResponse.SC_CREATED);
+                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
             }
             else {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         } else {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
     @Override
-    protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
@@ -158,13 +153,11 @@ public class AuthorAPIServlet extends HttpServlet {
                 fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
                 fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
             } else {
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         }
         else {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
