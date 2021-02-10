@@ -19,7 +19,7 @@ public class User implements Serializable {
         this.password = password;
         this.fullName = fullName;
         this.admin = false;
-        this.UID = "" +createUID();
+        this.UID = createUID();
     }
 
     public User (String username, String password, String fullName, String UID) {
@@ -39,14 +39,14 @@ public class User implements Serializable {
         this.UID = UID;
     }
 
-    private int createUID () {
+    private String createUID () {
         char[] s = new char[username.length()];
         int code = 0;
         for (int i = 0; i < username.length(); i++) {
             s[i] = username.charAt(i);
             code += (s[i]*Math.pow(3,(username.length()-1)-i));
         }
-        return code;
+        return Integer.toHexString(code);
     }
 
     public String getUsername () {

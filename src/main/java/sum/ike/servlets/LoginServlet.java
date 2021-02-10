@@ -23,26 +23,36 @@ public class LoginServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-
         UserDao uDao = new UserDao();
         User user = new User();
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
         HttpSession httpSession = req.getSession();
 
-        if (username.equals(uDao.getDefaultAdmin().getUsername()) && password.equals((uDao.getDefaultAdmin().getPassword()))) {
-            req.setAttribute("sentence", "You successfully logged in.");
-            httpSession.setAttribute("loggedIn", true);
-            getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
-        }
-        else if (uDao.containsUser(username, password)) {
-            req.setAttribute("sentence", "You successfully logged in.");
-            httpSession.setAttribute("loggedIn", true);
+
+        if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
+            req.setAttribute("sentence", "Hallo " + user.getFullName() + ".");
         }
         else {
-            httpSession.setAttribute("loggedIn", false);
-            req.setAttribute("message", "This username or password does not exist.");
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
 
+            if (username != null && password != null) {
+                if (uDao.isDefaultAdmin(username, password)) {
+                    httpSession.setAttribute("user", uDao.getDefaultAdmin());
+                    req.setAttribute("sentence","Du bist jetzt eingeloggt.");
+                }
+                else if (uDao.UserExists(username, password)) {
+                    httpSession.setAttribute("UID",uDao.getUser(username, password));
+                    req.setAttribute("sentence","Du bist jetzt eingeloggt.");
+                }
+                else {
+                    req.setAttribute("message", "Benutzername oder Passwort ist falsch.");
+                }
+            }
         }
+        doGet(req,resp);
+
+
+
+
     }
 }

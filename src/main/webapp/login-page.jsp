@@ -18,10 +18,9 @@
 <main>
     <div class="text-box">
         <c:choose>
-            <c:when test="${sessionScope.loggedIn == true}">
+            <c:when test="${sessionScope.user != null}">
             <div class="text-box">
-                <p class="red">${message}</p>
-                <p class="grey"> ${sentence} </p>
+                <p class="grey"> Hallo ${sessionScope.user.fullName}. </p>
                 <h1>Willkommen in meiner Bibliothek.</h1>
                 <span>In dieser Applikation sind alle Informationen über die Bücher in meiner Bibliothek zu finden.</span>
                 <span>Im Menü kannst du neue Bücher oder Autoren hinzufügen, bereits vorhandene wieder löschen und mehr.</span>
@@ -31,18 +30,22 @@
             <div class="text-box">
             <h1>Melde dich an</h1>
             <p>Bitte gib deinen Benutzernamen und Passwort ein.</p>
-            <p class="red">${message}</p>
-            <p class="grey"> ${sentence} </p>
+            <p class="red">${requestScope.message}</p>
+            <p class="grey"> ${requestScope.sentence} </p>
             <%-- actionURl => URL depending on the outcome of the addAuthorServlet --%>
-            <form class="form" name="login" action="login" method="POST">
-                <table class="form-table"border="0">
+            <form class="form" name="login" action="${pageContext.request.contextPath}/login/" method="POST">
+                <table class="form-table">
                     <tr>
                         <td>Benutzername: </td>
-                        <td><input class="text-field" type="text" name="username" value="" size="50" /> </td>
+                        <td><label>
+                            <input class="text-field" type="text" name="username" value="" size="50" />
+                        </label></td>
                     </tr>
                     <tr>
                         <td>Passwort: </td>
-                        <td><input class="text-field" type="password" name="password" value="" size="50" /> </td>
+                        <td><label>
+                            <input class="text-field" type="password" name="password" value="" size="50" />
+                        </label></td>
                     </tr>
 
                 </table>
