@@ -36,16 +36,16 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/39
+PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/40
 content-type: application/json
 
 {
-  "first_name": "Michelle",
+  "first_name": "Michele",
   "last_name": "Obama"
 }
 
 ###
-DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/34
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/40
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author

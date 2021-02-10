@@ -2,7 +2,7 @@
 GET http://localhost:8080/book_manager_war_exploded/api/v1/book/
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/34
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/39
 accept: application/json
 
 ###
@@ -17,10 +17,10 @@ POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
 content-type: application/json
 
 {
-  "first_name": "Michelle",
-  "last_name": "Obama",
-  "title": "Becoming",
-  "isbn": "978-3-442-31487-4",
+  "first_name": "Safiye",
+  "last_name": "Uzun",
+  "title": "Java",
+  "isbn": "111-222-333",
   "publisher": "goldmann",
   "year": "2018"
 }
