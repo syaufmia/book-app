@@ -108,6 +108,11 @@
         <url-pattern>/added-book/*</url-pattern>
     </servlet-mapping>
 
+    <welcome-file-list>
+        <welcome-file>login-page.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
