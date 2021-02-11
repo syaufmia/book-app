@@ -1,0 +1,17 @@
+= Bücherverwaltungsapplikation
+Safiye Uzun <safiye.uzun@msg.group>
+2021-02-11
+
+Über die Anwendung: +
+Die
+
+== Inhaltsverzeichnis
+
+
+== Projektbeschreibung
+
+
+image:dias/addbook.svg[]
+
+== API Dokumentation
+
