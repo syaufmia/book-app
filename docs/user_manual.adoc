@@ -1,4 +1,4 @@
-= image:openbook.png[] Bücherverwaltung
+= image:img/openbook.png[] Bücherverwaltung
 Safiye Uzun <safiye.uzun@msg.group>
 v1.0, 2021-02-11
 :toc:
@@ -62,19 +62,19 @@ Wenn Dateiname `book-app.war` lautet,
 dann ist die Applikation über `http://localhost:8080/book-app/` erreichbar.
 ====
 
-
-
-== Funktionen
-
+=== Menü
 === Hauptmenü
 
-image:img/author-list.png[]
 
 image:img/add-author.png[]
 
 image:img/add-book.png[]
 
-image:img/delete-author.png[]
+
+
+
+== Funktionen
+
 
 === Anwendungsfälle
 image:dias/usecase.svg[]
