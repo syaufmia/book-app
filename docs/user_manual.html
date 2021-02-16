@@ -602,7 +602,14 @@ dann ist die Applikation über <code><a href="http://localhost:8080/book-app/" c
 <p>Jeder Anwender hat vollen Zugriff auf die Bücher- und Autorenverwaltung und ist nicht auf eine bestimmte Personengruppe eingeschränkt.</p>
 </div>
 <div class="paragraph">
-<p>Im nächsten Schritt werden die einzelnen Fälle näher erläutert. Alle Fälle sind einzeln zu betrachten, werden aber für bessere Verständlichkeit teilweise zusammengefasst.</p>
+<p>Im nächsten Schritt werden die einzelnen Fälle näher erläutert.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Wichtig: Bei allen Anwendungsprozessen, in denen eine Eingabe durch den Anwender benötigt wird, ist davon auszugehen, dass alle Felder ausgefüllt sind.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -701,19 +708,28 @@ dann ist die Applikation über <code><a href="http://localhost:8080/book-app/" c
 <td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
 </tr>
 <tr>
-<th class="tableblock halign-center valign-top" rowspan="2"><p class="tableblock">Vorbedingungen</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Felder sind vollständig ausgefüllt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Felder sind vollständig ausgefüllt</p></td>
-</tr>
-<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Vorbedingungen</p></th>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Autor mit demselben Namen existiert noch nicht in der Datenbank</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Buch-ISBN existiert noch nicht als Eintrag in der Datenbank</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p><span class="image"><img src="dias/add-author-pap.svg" alt="add author pap"></span></p>
-</div>
+<table class="tableblock frame-ends grid-cols stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock"><em>Autor hinzufügen</em> Prozess</p></th>
+<th class="tableblock halign-center valign-top"><p class="tableblock"><em>Buch hinzufügen</em> Prozess</p></th>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="image"><img src="dias/add-author-pap.svg" alt="add author pap"></span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="image"><img src="dias/add-book-pap.svg" alt="add book pap"></span></p></td>
+</tr>
+</tbody>
+</table>
 <table class="tableblock frame-ends grid-rows stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -835,7 +851,7 @@ dann ist die Applikation über <code><a href="http://localhost:8080/book-app/" c
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2021-02-16 10:47:16 +0100
+Last updated 2021-02-16 12:16:34 +0100
 </div>
 </div>
 </body>

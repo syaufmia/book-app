@@ -73,7 +73,7 @@ image:img/add-book.png[]
 
 
 
-== Funktionen
+== Programmverlauf
 
 
 === Anwendungsfälle
@@ -81,16 +81,26 @@ image:dias/usecase.svg[]
 
 Jeder Anwender hat vollen Zugriff auf die Bücher- und Autorenverwaltung und ist nicht auf eine bestimmte Personengruppe eingeschränkt.
 
-Im nächsten Schritt werden die einzelnen Fälle näher erläutert. Alle Fälle sind einzeln zu betrachten, werden aber für bessere Verständlichkeit teilweise zusammengefasst.
+Im nächsten Schritt werden die einzelnen Fälle näher erläutert.
 
-=== Listen ausgeben
+[INFO]
+====
+Wichtig: Bei allen Anwendungsprozessen, in denen eine Eingabe durch den Anwender benötigt wird, ist davon auszugehen, dass die Eingabefelder ausgefüllt sind. Grundsätzlich gilt in der gesamten Anwendung, dass keine Felder leer stehen dürfen. +
+_Ausnahme: Falsche oder unzulässige Jahresangaben werden durch das Jahr 2000 ersetzt._
+====
 
+
+
+=== Alle Einträge ausgeben
+
+Bei den Fällen `Autoren ausgeben` und `Bücher ausgeben` handelt es sich um getrennte Prozesse und sollte deswegen grundsätzlich getrennt betrachtet werden. +
+Aufgrund der Ähnlichkeiten und für eine bessere Verständlichkeit werden sie hier teilweise zusammengefasst.
 
 [cols=3*,frame=topbot, grid=rows]
 |====
-^h|Name
-s| Alle Autoren
-s| Alle Bücher
+^.h|Name
+^s| Alle Autoren
+^s| Alle Bücher
 
 ^.h|Ziel
 | Eine sortierbare Liste aller in der Datenbank vorhandenen Autoren anzeigen
@@ -101,37 +111,31 @@ s| Alle Bücher
 |Alle Benutzer der Applikation
 
 
-.2+^.h|Vorbedingungen
-| -
-| -
-|====
-[cols=3*,frame=topbot, grid=rows]
-|====
-.4+h|Optionen
-|Nutzer sortiert die Autorenliste alphabetisch nach Vornamen
-| Nutzer sortiert die Bücherliste alphabetisch nach Titel
+^.h|Vorbedingungen
+^| -
+^| -
 
+^.h|Prozess
+| Autorendatenbank wird ausgelesen und dem Anwender tabellarisch angezeigt
+| Bücherdatenbank wird ausgelesen und dem Anwender tabellarisch angezeigt
 
-| Nutzer sortiert die Autorenliste alphabetisch nach Nachnamen
-| Nutzer sortiert die Bücherliste alphabetisch nach Verlag
+^.h| Weitere Optionen
+| Die ausgegebene Tabelle kann vom Anwender alphabetisch nach *Vorname* oder *Nachname* sortiert werden
+| Die ausgegebene Tabelle kann vom Anwender alphabetisch nach *Titel*, *Vorlage* oder numerisch nach *ISBN* sortiert werden
 
-
-|
-| Nutzer sortiert die Bücherliste numerisch nach der ISBN
-
-|
-| Nutzer sortiert die Bücherliste numerisch nach dem Erscheinungsjahr
 |====
 
-
+====
 Die genannten Optionen der Sortierung sind aktuell nur in eine Richtung möglich.
 
 - Alphabetisch ist immer in alphabetischer Reihenfolge beginnend mit _a_
 - Numerisch immer beginnend mit der kleinsten Zahl
+====
 
 
 === Einträge hinzufügen
 
+Die Fälle `Autor hinzufügen` und `Buch hinzufügen` sind ebenso getrennt voneinander zu betrachten, werden allerdings hier für eine bessere Verständlichkeit teilweise zusammengefasst.
 
 [cols=3*,frame=topbot, grid=rows]
 |====
@@ -148,49 +152,24 @@ s| Buch hinzufügen
 |Alle Benutzer der Applikation
 
 
-.2+^.h|Vorbedingungen
-| Felder sind vollständig ausgefüllt
-|Felder sind vollständig ausgefüllt
-
+^.h|Vorbedingungen
 |Autor mit demselben Namen existiert noch nicht in der Datenbank
 |Buch-ISBN existiert noch nicht als Eintrag in der Datenbank
 |====
-[cols= 3*]
+[cols= 2*, frame=topbot, grid=cols]
 |====
-^h| Prozessablauf
-| image:dias/add-author-pap.svg[]
-|
+^h| _Autor hinzufügen_ Prozess
+^h| _Buch hinzufügen_ Prozess
+
+^| image:dias/add-author-pap.svg[]
+^| image:dias/add-book-pap.svg[]
+
 |====
 
-[cols=3*,frame=topbot, grid=rows]
-|====
-.7+^.h| Essenzielle Schritte
-| Nutzer gibt Vor- und Nachname in die dafür beschrifteten Felder ein
-| Nutzer gibt Titel, ISBN, Verlag und Erscheinungsjahr in die dafür beschrifteten Felder ein
-
-| Die getätigten Einträge werden auf Vollständigkeit geprüft.
-| Die getätigten Einträge werden auf Vollständigkeit geprüft.
-
-| Die eingegebenen Informationen werden mit der vorhandenen Datenbank von Autoren abgeglichen
-| Die eingetragene ISBN wird mit denen der vorhandenen Datenbank von Büchern abgeglichen
-
-| Der neue Eintrag wird als Autoreneintrag in die Datenbank gespeichert
-| Nutzer gibt einen Namen oder einen Teil des Namens des Autors zur Suche ein
-
-| Der Benutzer wird über die Eintragung informiert
-| Eingegebener Name wird in der vorhandenen Datenbank von Autoren durchsucht
-
-|
-| Suchergebnisse innerhalb der Autorenliste sowie eine alternative Möglichkeit zur Neueintragung werden dem Nutzer zur Auswahl gestellt
-
-|
-| Die Informationen, zusammen mit dem ausgewählten oder eingetragenen Autor werden als neuer Bucheintrag in der Datenbank von Büchern gespeichert.
-
-|
-| Benutzer wir über die Eintragung informiert
-|====
 
 === Einträge löschen
+
+Die Fälle `Autor löschen` und `Buch löschen` sind getrennte Prozesse, die hier aufgrund besserer Verständlichkeit teilweise zusammengefasst werden.
 
 [cols=3*,frame=topbot, grid=rows]
 |====
