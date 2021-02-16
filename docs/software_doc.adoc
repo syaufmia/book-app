@@ -96,7 +96,7 @@ _Ausnahme: Falsche oder unzulässige Jahresangaben werden durch das Jahr 2000 er
 Bei den Fällen `Autoren ausgeben` und `Bücher ausgeben` handelt es sich um getrennte Prozesse und sollte deswegen grundsätzlich getrennt betrachtet werden. +
 Aufgrund der Ähnlichkeiten und für eine bessere Verständlichkeit werden sie hier teilweise zusammengefasst.
 
-[cols=3*,frame=topbot, grid=rows]
+[width=100%, cols=3*,frame=topbot, grid=rows]
 |====
 ^.h|Name
 ^s| Alle Autoren
@@ -137,7 +137,7 @@ Die genannten Optionen der Sortierung sind aktuell nur in eine Richtung möglich
 
 Die Fälle `Autor hinzufügen` und `Buch hinzufügen` sind ebenso getrennt voneinander zu betrachten, werden allerdings hier für eine bessere Verständlichkeit teilweise zusammengefasst.
 
-[cols=3*,frame=topbot, grid=rows]
+[width=100%,cols=3*,frame=topbot, grid=rows]
 |====
 ^h|Name
 s|Autor hinzufügen
@@ -156,7 +156,7 @@ s| Buch hinzufügen
 |Autor mit demselben Namen existiert noch nicht in der Datenbank
 |Buch-ISBN existiert noch nicht als Eintrag in der Datenbank
 |====
-[cols= 2*, frame=topbot, grid=cols]
+[width=100%,cols= 2*, frame=topbot, grid=cols]
 |====
 ^h| _Autor hinzufügen_ Prozess
 ^h| _Buch hinzufügen_ Prozess
@@ -171,7 +171,7 @@ s| Buch hinzufügen
 
 Die Fälle `Autor löschen` und `Buch löschen` sind getrennte Prozesse, die hier aufgrund besserer Verständlichkeit teilweise zusammengefasst werden.
 
-[cols=3*,frame=topbot, grid=rows]
+[width=100%,cols=3*,frame=topbot, grid=rows]
 |====
 ^h|Name
 s|Autor löschen
@@ -191,31 +191,14 @@ s| Buch löschen
 |
 |====
 
-[cols=3*,frame=topbot, grid=rows]
+
+[width=100%,cols= 2*, frame=topbot, grid=cols]
 |====
-.7+^.h| Essenzielle Schritte
-| Nutzer gibt zur Suche eines Autors ein Schlüsselbegriff ein
-|
+^h| _Autor löschen_ Prozess
+^h| _Buch löschen_ Prozess
 
-| Die getätigten Einträge werden auf Vollständigkeit geprüft.
-| Die getätigten Einträge werden auf Vollständigkeit geprüft.
-
-| Das eingegebene Schlüsselwort wird als Name oder Teil im Namen der Autoren gesucht
-|
-
-| Die gefundenen Sucheinträge werden dem Nutzer zur Auswahl gestellt
-|
-
-| Der Nutzer wählt einen Autor zum Löschen aus
-|
-
-| Alle Bücher des vom Nutzer gewählten Autors werden aus der Bücherdatenbank gelöscht
-|
-| Ausgewählter Autor wird von der Autorendatenbank gelöscht
-|
-
-| Nutzer wird über die erfolgreiche Löschung informiert
-|
+^| image:dias/delete-author-pap.svg[]
+^| TODO
 |====
 
 
