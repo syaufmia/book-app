@@ -1,4 +1,4 @@
-= image:img/openbook.png[] Bücherverwaltung
+= image:docs/img/openbook.png[] Bücherverwaltung
 Safiye Uzun <safiye.uzun@msg.group>
 v1.0, 2021-02-11
 :toc:
