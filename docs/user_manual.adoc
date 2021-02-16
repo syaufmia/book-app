@@ -155,6 +155,12 @@ s| Buch hinzufügen
 |Autor mit demselben Namen existiert noch nicht in der Datenbank
 |Buch-ISBN existiert noch nicht als Eintrag in der Datenbank
 |====
+[cols= 3*]
+|====
+^h| Prozessablauf
+| image:dias/add-author-pap.svg[]
+|
+|====
 
 [cols=3*,frame=topbot, grid=rows]
 |====
