@@ -1,0 +1,131 @@
+= image:docs/img/openbook.png[] Bücherverwaltung
+Safiye Uzun <safiye.uzun@msg.group>
+v1.0, 2021-02-11
+:toc:
+:toc-title: Inhaltsverzeichnis
+
+
+
+:sectnums:
+== Einführung
+
+=== Projektbeschreibung
+
+Bei diesem Projekt handelt es sich um ein Bücherverwaltungsprogramm auf Web Basis. +
+
+Die Basis des Projektes ist zunächst als Aufgabenstellung zum Erlernen der Java Grundkenntnisse im ersten Ausbildungsjahr entstanden. Mit der Zeit wurde der Umfang des Projektes vonseiten der Ausbilder immer mehr erweitert. +
+Das Hauptziel des Projektes ist die Erweiterung der Java Grundkenntnisse. +
+Dabei kann das Projekt in drei kleinere Projekte unterteilt werden.
+
+
+=== Projektumfeld
+
+Nach erfolgreichem Erlernen der Grundkenntnisse in der Programmiersprache Java
+Neueinstieg in die Ausbildung, Keine bis null Kenntnisse
+
+=== Projektziel
+
+- 1. Teilprojektziel:
+Grundkomponenten erstellen, lauffähig machen, speicherfähig machen, sortieren können, Commando-zeilen applikation.
+Java Grundkenntnisse mithilfe einer Bücher-Verwaltungsapplikation erweitern. Ziele der Applikation: Implementierung einer ID, Verarbeitung der Daten und Speicherung der Daten über Listen.
+
+- 2. Teilprojektziel: Das bereits gebaute Projekt in eine Webapplikation umwandeln. Die Funktionen der vorherigen Applikation in die neue Web-Anwendung implementieren.
+
+- Einarbeitung in HTTP
+
+- 3. Teilprojektziel: Webapplikation durch eine _RESTful API_ erweitern.
+
+== Start- und Planungsphase
+
+
+=== Soll-Zustand
+- agiles Konzept
+- keine große Planung
+- kleine lauffähige Planungshäppchen
+
+
+== Durchführungsphase
+
+=== erste Phase: Commando Line
+
+=== zweite Phase: Web applikation
+
+=== dritte Phase: API Phase
+
+
+== Projektabschlussphase
+
+=== Nachkalkulation
+- keine Nachkalkulation, sondern eher einer Kalkulation des Zeitaufwandes
+- berechnet in Sprints
+
+=== Gantt-Diagramm
+- Diagram hier
+
+
+=== Qualitätsmanagement
+- Code Style
+-
+
+=== Ausblick
+- Projektplanungen für die Zukunft
+- SPA (Single Page Applicaiton)
+- Einarbeitung in angular
+- Benutzeranmeldung & individuelle Listen pro User
+
+=== Rückblick
+- Eigener Rückblick, was war gut? was war nicht gut?
+
+== Technische Grundlagen
+
+=== Plattform
+- Server: Tomcat 8.5.61
+- Build Tool: Maven 3.1
+- JDK: 11.0.8.10
+- external libraries:
+
+=== Grafische Nutzeroberfläche
+
+_SCREENSHOT HERE_
+
+_TEXT HERE_
+
+
+== Struktur und Modelle
+
+
+=== Diagramme
+Der _User_ kann in der Buchverwaltungsapplikation die Listen ausgeben, Einträge löschen sowie neue Einträge erstellen.
+
+image:docs/dias/usecase.svg[]
+
+=== Klassenmodell
+
+_TEXT HIER_
+
+image:docs/dias/class-diagram.svg[]
+
+
+
+
+
+
+
+
+=== Funktionsweise
+Funktionsweise der Speicherung von Autoren durch den Nutzer:
+
+image:docs/dias/addauthor.svg[]
+
+
+Funktionsweise der Speicherung von Büchern durch den Nutzer:
+
+image:docs/dias/addbook.svg[]
+
+
+_TEXT HIER_
+//TODO
+
+== Glossar
+- alle technologischen Begriffe
+

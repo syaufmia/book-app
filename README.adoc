@@ -1,131 +1,307 @@
-= image:docs/img/openbook.png[] Bücherverwaltung
+= image:img/openbook.png[] Bücherverwaltung
 Safiye Uzun <safiye.uzun@msg.group>
 v1.0, 2021-02-11
 :toc:
 :toc-title: Inhaltsverzeichnis
 
+== Einleitung
+
+Die Bücherverwaltungsapplikation ist eine Webanwendung, die die Verwaltung von Büchern und Autoren ermöglicht. +
+Die Applikation wird in link:#war_datei_[.war Dateiformat] geliefert und beinhaltet bereits eine kleine Sammlung an Beispielbüchern und -autoren.
+
+=== Zielgruppen
+
+Bei dieser Anwendung handelt es sich um ein Prototyp, welches im Lernprozess der Ausbildung entstanden ist und nur im Rahmen der Ausbildung verwendet werden sollte. +
+Prinzipiell ist die Applikation aber für Nutzer gedacht, die ihre eigene private Bücherbibliothek in einem Verzeichnis speichern möchten, um diese leichter zu verwalten.
 
 
-:sectnums:
-== Einführung
+=== Beschreibung
 
-=== Projektbeschreibung
+Der Anwender kann in der Bücherverwaltungsapplikation folgende Aufgaben erledigen:
 
-Bei diesem Projekt handelt es sich um ein Bücherverwaltungsprogramm auf Web Basis. +
+- die gespeicherten Bücher als Liste ausgeben
+- die gespeicherten Autoren als Liste ausgeben
+- neue Büchereinträge tätigen
+- neue Autoreneinträge tätigen
+- vorhandene Büchereinträge löschen
+- vorhandene Autoreneinträge löschen
 
-Die Basis des Projektes ist zunächst als Aufgabenstellung zum Erlernen der Java Grundkenntnisse im ersten Ausbildungsjahr entstanden. Mit der Zeit wurde der Umfang des Projektes vonseiten der Ausbilder immer mehr erweitert. +
-Das Hauptziel des Projektes ist die Erweiterung der Java Grundkenntnisse. +
-Dabei kann das Projekt in drei kleinere Projekte unterteilt werden.
+== Umgebung
+
+=== Installation
+
+Um das Projekt starten zu können, wird ein spezieller Webserver benötigt, der einen link:#web_container_[Web-Server-Container] enthält. Ein Beispiel für einen solchen Webserver ist: *Apache Tomcat*.
+
+Außerdem wird neben einem Webserver auch eine link:#jre_[Java Laufzeitumgebung] benötigt.
+
+.Mindestanforderungen:
+- Tomcat 4
+- JRE 8
+
+Da allerdings Tomcat 4 von Apache nicht mehr offiziell unterstützt wird, wird die Installation von einer noch unterstützen Version empfohlen.
+
+.empfohlene Umgebung:
+- Tomcat 8.5
+- JRE 8
+
+=== Weitere Einrichtungen
+
+Nach Installation von Tomcat und link:#jre_[JRE] muss eventuell die JAVA_HOME Systemvariable festgelegt werden.
+
+Bei Windows 10 kommt man zu den Einstellungen über
+*Systemsteuerung* => *System und Sicherheit* => *System* => *erweiterte Systemeinstellungen* => *Erweitert* => *Umgebungsvariablen*.
+Bei den Systemvariablen kann man eine neue Variable definieren.
+
+Name der Variable soll sein: `*JAVA_HOME*`. Der dazugehörige Wert entspricht dem Verzeichnispfad, indem sich die installierte link:#jre_[Java Laufzeitumgebung] befindet. +
+Sollte das Verzeichnis nicht auffindbar sein, kann über die Eingabeaufforderung (_command prompt_) ebenfalls nach dem Verzeichnis suchen.
+[source,bash]
+----
+C:\Users\user> where java
+----
+
+Als Antwort erhält man, falls eine link:#jre_[JRE] installiert wurde, den Speicherort im Rechner.
+
+[source,bash]
+----
+C:\Program Files\AdoptOpenJDK\jre-11.0.9.101-hotspot\bin\java.exe
+----
+
+Als Variablenwert für `*JAVA_HOME*` wird nur der Pfad des gesamten Verzeichnisses benötigt, d.h. ohne `\bin\java.exe`
+
+====
+In diesem Beispiel wäre die Systemvariable wie folgt einzutragen:
+[cols=2*]
+|====
+h| Variablenname
+h| Variablenwert
+| `JAVA_HOME`
+| `C:\Program Files\AdoptOpenJDK\jre-11.0.9.101-hotspot`
+|====
+
+====
+
+=== Starten
+
+Um die Applikation über den Tomcat Server bereitzustellen (_deployen_), muss die Anwendung manuell in das Verzeichnis kopiert werden, in dem der Tomcat Server installiert wurde.
+
+So könnte das Verzeichnis beispielsweise aussehen:
+
+image:docs/img/Screenshot 2021-02-16 003239.png[]
+
+Die Applikationsdatei muss in den `\webapps` Ordner kopiert oder verschoben werden.
+
+Nachdem die Datei erfolgreich verschoben wurde, kann der Server über die _command prompt_ gestartet werden:
+
+[source,shell script]
+----
+C:\Users>cd C:\dev\env\Tomcat8.5\bin
+
+C:\dev\env\Tomcat8.5\bin>startup
+----
+
+Die Applikation ist ab jetzt startbereit.
+
+Mit einem beliebigen Browser kann man den link:#local_server_[lokalen Server] durch
+`\http://localhost:8080/` erreichen.
+
+Um die Applikation zu öffnen, muss als URL der Name der Datei mit angegeben werden.
+
+[#u_r_l]
+====
+Wenn beispielsweise der Dateiname der Applikation `book-app.war` lautet,
+dann ist diese nun über den link `\http://localhost:8080/book-app/` erreichbar.
+====
+
+== Nutzeroberfläche
+
+Die Nutzeroberfläche der Applikation ist auf Basis von HTML und CSS aufgebaut. +
+Jeder Anwendungsfall stellt eine komplett eigene Einheit dar und kann vom Anwender jederzeit über das Navigationsmenü erreicht werden.
+
+Für die Eingabe vonseiten des Anwenders werden Textfelder zur Verfügung gestellt (beispielsweise beim Hinzufügen von neuen Einträgen).
 
 
-=== Projektumfeld
-
-Nach erfolgreichem Erlernen der Grundkenntnisse in der Programmiersprache Java
-Neueinstieg in die Ausbildung, Keine bis null Kenntnisse
-
-=== Projektziel
-
-- 1. Teilprojektziel:
-Grundkomponenten erstellen, lauffähig machen, speicherfähig machen, sortieren können, Commando-zeilen applikation.
-Java Grundkenntnisse mithilfe einer Bücher-Verwaltungsapplikation erweitern. Ziele der Applikation: Implementierung einer ID, Verarbeitung der Daten und Speicherung der Daten über Listen.
-
-- 2. Teilprojektziel: Das bereits gebaute Projekt in eine Webapplikation umwandeln. Die Funktionen der vorherigen Applikation in die neue Web-Anwendung implementieren.
-
-- Einarbeitung in HTTP
-
-- 3. Teilprojektziel: Webapplikation durch eine _RESTful API_ erweitern.
-
-== Start- und Planungsphase
+=== Beispiele
 
 
-=== Soll-Zustand
-- agiles Konzept
-- keine große Planung
-- kleine lauffähige Planungshäppchen
+image:docs/img/add-author.png[]
+
+image:docs/img/add-book.png[]
 
 
-== Durchführungsphase
-
-=== erste Phase: Commando Line
-
-=== zweite Phase: Web applikation
-
-=== dritte Phase: API Phase
+== Programmverlauf
 
 
-== Projektabschlussphase
-
-=== Nachkalkulation
-- keine Nachkalkulation, sondern eher einer Kalkulation des Zeitaufwandes
-- berechnet in Sprints
-
-=== Gantt-Diagramm
-- Diagram hier
-
-
-=== Qualitätsmanagement
-- Code Style
--
-
-=== Ausblick
-- Projektplanungen für die Zukunft
-- SPA (Single Page Applicaiton)
-- Einarbeitung in angular
-- Benutzeranmeldung & individuelle Listen pro User
-
-=== Rückblick
-- Eigener Rückblick, was war gut? was war nicht gut?
-
-== Technische Grundlagen
-
-=== Plattform
-- Server: Tomcat 8.5.61
-- Build Tool: Maven 3.1
-- JDK: 11.0.8.10
-- external libraries:
-
-=== Grafische Nutzeroberfläche
-
-_SCREENSHOT HERE_
-
-_TEXT HERE_
-
-
-== Struktur und Modelle
-
-
-=== Diagramme
-Der _User_ kann in der Buchverwaltungsapplikation die Listen ausgeben, Einträge löschen sowie neue Einträge erstellen.
-
+=== Anwendungsfälle
 image:docs/dias/usecase.svg[]
 
-=== Klassenmodell
+Jeder Anwender hat vollen Zugriff auf die Bücher- und Autorenverwaltung und ist nicht auf eine bestimmte Personengruppe eingeschränkt.
 
-_TEXT HIER_
+Im nächsten Schritt werden die einzelnen Fälle näher erläutert.
 
-image:docs/dias/class-diagram.svg[]
-
-
-
-
-
-
+[INFO]
+====
+Wichtig: Bei allen Anwendungsprozessen, in denen eine Eingabe durch den Anwender benötigt wird, ist davon auszugehen, dass die Eingabefelder ausgefüllt sind. Grundsätzlich gilt in der gesamten Anwendung, dass keine Felder leer stehen dürfen. +
+_Ausnahme: Falsche oder unzulässige Jahresangaben werden durch das Jahr 2000 ersetzt._
+====
 
 
-=== Funktionsweise
-Funktionsweise der Speicherung von Autoren durch den Nutzer:
 
-image:docs/dias/addauthor.svg[]
+=== Alle Einträge ausgeben
+
+Bei den Fällen `Autoren ausgeben` und `Bücher ausgeben` handelt es sich um getrennte Prozesse und sollte deswegen grundsätzlich getrennt betrachtet werden. +
+Aufgrund der Ähnlichkeiten und für eine bessere Verständlichkeit werden sie hier teilweise zusammengefasst.
+
+[width=100%, cols=3*,frame=topbot, grid=rows]
+|====
+^.h|Name
+^s| Alle Autoren
+^s| Alle Bücher
+
+^.h|Ziel
+| Eine sortierbare Liste aller in der Datenbank vorhandenen Autoren anzeigen
+| Eine sortierbare Liste aller in der Datenbank vorhandenen Bücher anzeigen
+
+^.h|Akteure
+|Alle Benutzer der Applikation
+|Alle Benutzer der Applikation
 
 
-Funktionsweise der Speicherung von Büchern durch den Nutzer:
+^.h|Vorbedingungen
+^| -
+^| -
 
-image:docs/dias/addbook.svg[]
+^.h|Prozess
+| Autorendatenbank wird ausgelesen und dem Anwender tabellarisch angezeigt
+| Bücherdatenbank wird ausgelesen und dem Anwender tabellarisch angezeigt
+
+^.h| Weitere Optionen
+| Die ausgegebene Tabelle kann vom Anwender alphabetisch nach *Vorname* oder *Nachname* sortiert werden
+| Die ausgegebene Tabelle kann vom Anwender alphabetisch nach *Titel*, *Vorlage* oder numerisch nach *ISBN* sortiert werden
+
+|====
+
+====
+Die genannten Optionen der Sortierung sind aktuell nur in eine Richtung möglich.
+
+- Alphabetisch ist immer in alphabetischer Reihenfolge beginnend mit _a_
+- Numerisch immer beginnend mit der kleinsten Zahl
+====
 
 
-_TEXT HIER_
-//TODO
+=== Einträge hinzufügen
+
+Die Fälle `Autor hinzufügen` und `Buch hinzufügen` sind ebenso getrennt voneinander zu betrachten, werden allerdings hier für eine bessere Verständlichkeit teilweise zusammengefasst.
+
+[width=100%,cols=3*,frame=topbot, grid=rows]
+|====
+^h|Name
+s|Autor hinzufügen
+s| Buch hinzufügen
+
+^.h|Ziel
+|Einen neuen Eintrag in die Autorendatenbank tätigen
+| Einen neuen Eintrag in die Bücherdatenbank tätigen
+
+^.h|Akteure
+|Alle Benutzer der Applikation
+|Alle Benutzer der Applikation
+
+
+^.h|Vorbedingungen
+|Autor mit demselben Namen existiert noch nicht in der Datenbank
+|Buch-ISBN existiert noch nicht als Eintrag in der Datenbank
+|====
+[width=100%,cols= 2*, frame=topbot, grid=cols]
+|====
+^h| _Autor hinzufügen_ Prozess
+^h| _Buch hinzufügen_ Prozess
+
+^| image:docs/dias/add-author-pap.svg[]
+^| image:docs/dias/add-book-pap.svg[]
+
+|====
+
+
+=== Einträge löschen
+
+Die Fälle `Autor löschen` und `Buch löschen` sind getrennte Prozesse, die hier aufgrund besserer Verständlichkeit teilweise zusammengefasst werden.
+
+[width=100%,cols=3*,frame=topbot, grid=rows]
+|====
+^h|Name
+s|Autor löschen
+s| Buch löschen
+
+^.h|Ziel
+|Einen ausgewählten Autor aus der Bücherdatenbank entfernen
+| Ein ausgewähltes Buch aus der Bücherdatenbank entfernen
+
+^.h|Akteure
+|Alle Benutzer der Applikation
+|Alle Benutzer der Applikation
+
+
+.2+^.h|Vorbedingungen
+|Gesuchter Autor existiert in der Datenbank
+|
+|====
+
+
+[width=100%,cols= 2*, frame=topbot, grid=cols]
+|====
+^h| _Autor löschen_ Prozess
+^h| _Buch löschen_ Prozess
+
+^| image:docs/dias/delete-author-pap.svg[]
+^| TODO
+|====
+
+== API Dokumentation
+
+
+=== Allgemein
+[cols= 2*]
+|====
+h| API URL
+| `link:#u_r_l[\{Link-zur-Applikation}]/api/v1/`
+
+h| Version
+| v1
+
+h| Response Format
+| JSON
+|====
+
+=== Suche
+
+TODO
+
+=== Bücher
+
+TODO
+
+=== Autoren
+
+TODO
+
+
+
+
 
 == Glossar
-- alle technologischen Begriffe
 
+[#war_datei_]
+.war-Datei
+Eine war Datei ist...
+
+[#web_container_]
+.Webcontainer
+Ein Webconatiner ist...
+
+[#local_server_]
+.local Server
+Ein local Server ist...
+
+[#jre_]
+.Laufzeitumgebung
+Eine Laufzeitumgebung ist...
