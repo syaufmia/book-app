@@ -26,41 +26,95 @@ Der Anwender kann in der Bücherverwaltungsapplikation folgende Aufgaben erledig
 - vorhandene Büchereinträge löschen
 - vorhandene Autoreneinträge löschen
 
-== How-To
+== Umgebung
 
-=== Start
+=== Installation
 
-Aktuell ist das Starten der Anwendung ohne einen link:#web_container_[Webcontainer] nicht möglich.
+Um das Projekt starten zu können, wird ein spezieller Webserver benötigt, der einen link:#web_container_[Web-Server-Container] enthält. Ein Beispiel für einen solchen Webserver ist: *Apache Tomcat*.
 
-=> TODO: INSTALL TOMCAT
+Außerdem wird neben einem Webserver auch eine link:#jre_[Java Laufzeitumgebung] benötigt.
 
-Die Anwendungsdatei muss in folgenden Pfad gelegt werden
-[source]
+.Mindestanforderungen:
+- Tomcat 4
+- JRE 8
+
+Da allerdings Tomcat 4 von Apache nicht mehr offiziell unterstützt wird, wird die Installation von einer noch unterstützen Version empfohlen.
+
+.empfohlene Umgebung:
+- Tomcat 8.5
+- JRE 8
+
+=== Weitere Einrichtungen
+
+Nach Installation von Tomcat und JRE muss eventuell die JAVA_HOME Systemvariable festgelegt werden.
+
+Bei Windows 10 kommt man zu den Einstellungen über
+*Systemsteuerung* => *System und Sicherheit* => *System* => *erweiterte Systemeinstellungen* => *Erweitert* => *Umgebungsvariablen*.
+Bei den Systemvariablen kann man eine neue Variable definieren.
+
+Name der Variable soll sein: `*JAVA_HOME*`. Der dazugehörige Wert entspricht dem Verzeichnispfad, indem sich die installierte link:#jre_[Java Laufzeitumgebung] befindet. +
+Sollte das Verzeichnis nicht auffindbar sein, kann über die Eingabeaufforderung (_command prompt_) ebenfalls nach dem Verzeichnis suchen.
+[source,bash]
 ----
-../Tomcat8/webapps/
+C:\Users\user> where java
 ----
-So könnte ein Beispielverzeichnis eines link:#web_container_[Webcontainers] aussehen:
+
+Als Antwort erhält man, falls eine link:#jre_[JRE] installiert wurde, den Speicherort im Rechner.
+
+[source,bash]
+----
+C:\Program Files\AdoptOpenJDK\jre-11.0.9.101-hotspot\bin\java.exe
+----
+
+Als Variablenwert für `*JAVA_HOME*` wird nur der Pfad des gesamten Verzeichnisses benötigt, d.h. ohne `\bin\java.exe`
+
+====
+In diesem Beispiel wäre die Systemvariable wie folgt einzutragen:
+[cols=2*]
+|====
+h| Variablenname
+h| Variablenwert
+| `JAVA_HOME`
+| `C:\Program Files\AdoptOpenJDK\jre-11.0.9.101-hotspot`
+|====
+
+====
+
+=== Starten
+
+Um die Applikation über den Tomcat Server bereitzustellen (_deployen_), muss die Anwendung manuell in das Verzeichnis kopiert werden, in dem der Tomcat Server installiert wurde.
+
+So könnte das Verzeichnis beispielsweise aussehen:
 
 image:img/Screenshot 2021-02-16 003239.png[]
 
-Nach dem Verschieben der Datei in den genannten Pfad kann die der link:#web_container_[Webcontainer] gestartet werden. +
+Die Applikationsdatei muss in den `\webapps` Ordner kopiert oder verschoben werden.
 
-Im Beispiel von Tomcat kann der Server über die _Eingabeaufforderung_ gestartet werden.
-[source]
+Nachdem die Datei erfolgreich verschoben wurde, kann der Server über die _command prompt_ gestartet werden:
+
+[source,shell script]
 ----
->cd c:/Program Files/Tomcat8/bin/
->startup
+C:\Users>cd C:\dev\env\Tomcat8.5\bin
+
+C:\dev\env\Tomcat8.5\bin>startup
 ----
-Mit einem beliebigen Browser kann man den link:#local_server_[lokalen Server] nun durch
+
+Die Applikation ist ab jetzt startbereit.
+
+Mit einem beliebigen Browser kann man den link:#local_server_[lokalen Server] durch
 `\http://localhost:8080/` erreichen.
-Durch Anhängen des Dateinamens an die o.g. URI kann die Anwendung aufgerufen werden.
+
+Um die Applikation zu öffnen, muss als URL der Name der Datei mit angegeben werden.
+
 
 ====
-Wenn beispielseise der Dateiname der Applikation `book-app.war` lautet,
-dann ist die diese nun über den link über `\http://localhost:8080/book-app/` erreichbar.
+Wenn beispielsweise der Dateiname der Applikation `book-app.war` lautet,
+dann ist diese nun über den link `\http://localhost:8080/book-app/` erreichbar.
 ====
 
-=== Menü
+== Menü
+Nach dem erfolgreichen Einrichten der Anwendungsumgebung agiert das Progr
+
 === Hauptmenü
 
 
@@ -217,3 +271,7 @@ Ein Webconatiner ist...
 [#local_server_]
 .local Server
 Ein local Server ist...
+
+[#jre_]
+.Laufzeitumgebung
+Eine Laufzeitumgebung ist...
