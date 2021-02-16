@@ -11,14 +11,70 @@ v1.0, 2021-02-11
 
 === Projektbeschreibung
 
-Bei diesem Projekt handelt es sich um ein vollwertiges Bücherverwaltungssystem auf Web Basis. +
-Ziel der Webapplikation ist es, dem individuellen Nutzer eine leichte Verwaltung für dessen Bücher zu ermöglichen. +
-Zusätzlich soll es möglich sein, neben Büchern auch separat Autoren zu verwalten. +
-Dabei ist eine wichtige Voraussetzung, dass Bücher immer einen Autor haben müssen, wohingegen Autoren auch ohne Bücher existieren können. +
-Die Basis des Projektes ist zunächst als Aufgabenstellung zum Erlernen der Java Grundkenntnisse im ersten Ausbildungsjahr entstanden. Mit der Zeit wurde der Umfang des Projektes vonseiten der Ausbilder immer mehr erweitert.
+Bei diesem Projekt handelt es sich um ein Bücherverwaltungsprogramm auf Web Basis. +
 
-=== Einschränkungen
-Aufgrund der noch fehlenden Kenntnisse besteht die aktuelle Version der Applikation noch aus einer selbst-definierten Datenbank ohne JDBC _(Java Database Connectivity)_. Aus diesem Grund kann die Kapazität der Bücher eingeschränkt sein.
+Die Basis des Projektes ist zunächst als Aufgabenstellung zum Erlernen der Java Grundkenntnisse im ersten Ausbildungsjahr entstanden. Mit der Zeit wurde der Umfang des Projektes vonseiten der Ausbilder immer mehr erweitert. +
+Das Hauptziel des Projektes ist die Erweiterung der Java Grundkenntnisse. +
+Dabei kann das Projekt in drei kleinere Projekte unterteilt werden.
+
+
+=== Projektumfeld
+
+Nach erfolgreichem Erlernen der Grundkenntnisse in der Programmiersprache Java
+Neueinstieg in die Ausbildung, Keine bis null Kenntnisse
+
+=== Projektziel
+
+- 1. Teilprojektziel:
+Grundkomponenten erstellen, lauffähig machen, speicherfähig machen, sortieren können, Commando-zeilen applikation.
+Java Grundkenntnisse mithilfe einer Bücher-Verwaltungsapplikation erweitern. Ziele der Applikation: Implementierung einer ID, Verarbeitung der Daten und Speicherung der Daten über Listen.
+
+- 2. Teilprojektziel: Das bereits gebaute Projekt in eine Webapplikation umwandeln. Die Funktionen der vorherigen Applikation in die neue Web-Anwendung implementieren.
+
+- Einarbeitung in HTTP
+
+- 3. Teilprojektziel: Webapplikation durch eine _RESTful API_ erweitern.
+
+== Start- und Planungsphase
+
+
+=== Soll-Zustand
+- agiles Konzept
+- keine große Planung
+- kleine lauffähige Planungshäppchen
+
+
+== Durchführungsphase
+
+=== erste Phase: Commando Line
+
+=== zweite Phase: Web applikation
+
+=== dritte Phase: API Phase
+
+
+== Projektabschlussphase
+
+=== Nachkalkulation
+- keine Nachkalkulation, sondern eher einer Kalkulation des Zeitaufwandes
+- berechnet in Sprints
+
+=== Gantt-Diagramm
+- Diagram hier
+
+
+=== Qualitätsmanagement
+- Code Style
+-
+
+=== Ausblick
+- Projektplanungen für die Zukunft
+- SPA (Single Page Applicaiton)
+- Einarbeitung in angular
+- Benutzeranmeldung & individuelle Listen pro User
+
+=== Rückblick
+- Eigener Rückblick, was war gut? was war nicht gut?
 
 == Technische Grundlagen
 
@@ -66,8 +122,10 @@ Funktionsweise der Speicherung von Büchern durch den Nutzer:
 
 image:docs/dias/addbook.svg[]
 
-== API Dokumentation
 
 _TEXT HIER_
 //TODO
+
+== Glossar
+- alle technologischen Begriffe
 

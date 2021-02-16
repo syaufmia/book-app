@@ -1,0 +1,241 @@
+= image:openbook.png[] Bücherverwaltung
+Safiye Uzun <safiye.uzun@msg.group>
+v1.0, 2021-02-11
+:toc:
+:toc-title: Inhaltsverzeichnis
+
+== Einleitung
+
+Die Bücherverwaltungsapplikation ist eine Webanwendung, die die Verwaltung von Büchern und Autoren ermöglicht.
+Die Applikation wird als _war-Datei_ geliefert und beinhaltet bereits eine kleine Sammlung an Beispielbüchern und -autoren.
+
+=== Zielgruppen
+
+Bei dieser Anwendung handelt es sich um ein Prototyp, welches im Lernprozess der Ausbildung entstanden ist und nur für diese Zwecke benutzt werden sollte. +
+Prinzipiell ist die Applikation für Nutzer gedacht, die ihre eigene private Bücherbibliothek in einem Verzeichnis speichern möchten, um diese leichter zu verwalten.
+
+
+=== Beschreibung
+
+Der Anwender kann in der Bücherverwaltungsapplikation:
+
+- die gespeicherten Bücher als Liste ausgeben
+- die gespeicherten Autoren als Liste ausgeben
+- neue Büchereinträge tätigen
+- neue Autoreneinträge tätigen
+- vorhandene Büchereinträge löschen
+- vorhandene Autoreneinträge löschen
+
+== How-To
+
+=== Start
+
+Aktuell ist das Starten der Anwendung ohne einen _Webcontainer_ nicht möglich.
+
+=> TODO: INSTALL TOMCAT
+
+Die Anwendungsdatei muss in folgenden Pfad gelegt werden
+[source]
+----
+../Tomcat8/webapps/
+----
+So könnte ein Beispielverzeichnis eines Webcontainers aussehen:
+
+image:img/Screenshot 2021-02-16 003239.png[]
+
+Nach dem Verschieben der Datei in den genannten Pfad kann die der Webcontainer gestartet werden. +
+
+Im Beispiel von Tomcat kann der Server über die _Eingabeaufforderung_ gestartet werden.
+[source]
+----
+>cd c:/Program Files/Tomcat8/bin/
+>startup
+----
+Mit einem beliebigen Browser kann man den lokalen Server nun durch
+`http://localhost:8080/` erreichen.
+Durch Anhängen des Dateinamens an die o.g. URI kann die Anwendung aufgerufen werden.
+
+====
+Beispiel:
+
+Wenn Dateiname `book-app.war` lautet,
+dann ist die Applikation über `http://localhost:8080/book-app/` erreichbar.
+====
+
+
+
+== Funktionen
+
+=== Hauptmenü
+
+image:img/author-list.png[]
+
+image:img/add-author.png[]
+
+image:img/add-book.png[]
+
+image:img/delete-author.png[]
+
+=== Anwendungsfälle
+image:dias/usecase.svg[]
+
+Jeder Anwender hat vollen Zugriff auf die Bücher- und Autorenverwaltung und ist nicht auf eine bestimmte Personengruppe eingeschränkt.
+
+Im nächsten Schritt werden die einzelnen Fälle näher erläutert. Alle Fälle sind einzeln zu betrachten, werden aber für bessere Verständlichkeit teilweise zusammengefasst.
+
+=== Listen ausgeben
+
+
+[cols=3*,frame=topbot, grid=rows]
+|====
+^h|Name
+s| Alle Autoren
+s| Alle Bücher
+
+^.h|Ziel
+| Eine sortierbare Liste aller in der Datenbank vorhandenen Autoren anzeigen
+| Eine sortierbare Liste aller in der Datenbank vorhandenen Bücher anzeigen
+
+^.h|Akteure
+|Alle Benutzer der Applikation
+|Alle Benutzer der Applikation
+
+
+.2+^.h|Vorbedingungen
+| -
+| -
+|====
+[cols=3*,frame=topbot, grid=rows]
+|====
+.4+h|Optionen
+|Nutzer sortiert die Autorenliste alphabetisch nach Vornamen
+| Nutzer sortiert die Bücherliste alphabetisch nach Titel
+
+
+| Nutzer sortiert die Autorenliste alphabetisch nach Nachnamen
+| Nutzer sortiert die Bücherliste alphabetisch nach Verlag
+
+
+|
+| Nutzer sortiert die Bücherliste numerisch nach der ISBN
+
+|
+| Nutzer sortiert die Bücherliste numerisch nach dem Erscheinungsjahr
+|====
+
+
+Die genannten Optionen der Sortierung sind aktuell nur in eine Richtung möglich.
+
+- Alphabetisch ist immer in alphabetischer Reihenfolge beginnend mit _a_
+- Numerisch immer beginnend mit der kleinsten Zahl
+
+
+=== Einträge hinzufügen
+
+
+[cols=3*,frame=topbot, grid=rows]
+|====
+^h|Name
+s|Autor hinzufügen
+s| Buch hinzufügen
+
+^.h|Ziel
+|Einen neuen Eintrag in die Autorendatenbank tätigen
+| Einen neuen Eintrag in die Bücherdatenbank tätigen
+
+^.h|Akteure
+|Alle Benutzer der Applikation
+|Alle Benutzer der Applikation
+
+
+.2+^.h|Vorbedingungen
+| Felder sind vollständig ausgefüllt
+|Felder sind vollständig ausgefüllt
+
+|Autor mit demselben Namen existiert noch nicht in der Datenbank
+|Buch-ISBN existiert noch nicht als Eintrag in der Datenbank
+|====
+
+[cols=3*,frame=topbot, grid=rows]
+|====
+.7+^.h| Essenzielle Schritte
+| Nutzer gibt Vor- und Nachname in die dafür beschrifteten Felder ein
+| Nutzer gibt Titel, ISBN, Verlag und Erscheinungsjahr in die dafür beschrifteten Felder ein
+
+| Die getätigten Einträge werden auf Vollständigkeit geprüft.
+| Die getätigten Einträge werden auf Vollständigkeit geprüft.
+
+| Die eingegebenen Informationen werden mit der vorhandenen Datenbank von Autoren abgeglichen
+| Die eingetragene ISBN wird mit denen der vorhandenen Datenbank von Büchern abgeglichen
+
+| Der neue Eintrag wird als Autoreneintrag in die Datenbank gespeichert
+| Nutzer gibt einen Namen oder einen Teil des Namens des Autors zur Suche ein
+
+| Der Benutzer wird über die Eintragung informiert
+| Eingegebener Name wird in der vorhandenen Datenbank von Autoren durchsucht
+
+|
+| Suchergebnisse innerhalb der Autorenliste sowie eine alternative Möglichkeit zur Neueintragung werden dem Nutzer zur Auswahl gestellt
+
+|
+| Die Informationen, zusammen mit dem ausgewählten oder eingetragenen Autor werden als neuer Bucheintrag in der Datenbank von Büchern gespeichert.
+
+|
+| Benutzer wir über die Eintragung informiert
+|====
+
+=== Einträge löschen
+
+[cols=3*,frame=topbot, grid=rows]
+|====
+^h|Name
+s|Autor löschen
+s| Buch löschen
+
+^.h|Ziel
+|Einen ausgewählten Autor aus der Bücherdatenbank entfernen
+| Ein ausgewähltes Buch aus der Bücherdatenbank entfernen
+
+^.h|Akteure
+|Alle Benutzer der Applikation
+|Alle Benutzer der Applikation
+
+
+.2+^.h|Vorbedingungen
+|Gesuchter Autor existiert in der Datenbank
+|
+|====
+
+[cols=3*,frame=topbot, grid=rows]
+|====
+.7+^.h| Essenzielle Schritte
+| Nutzer gibt zur Suche eines Autors ein Schlüsselbegriff ein
+|
+
+| Die getätigten Einträge werden auf Vollständigkeit geprüft.
+| Die getätigten Einträge werden auf Vollständigkeit geprüft.
+
+| Das eingegebene Schlüsselwort wird als Name oder Teil im Namen der Autoren gesucht
+|
+
+| Die gefundenen Sucheinträge werden dem Nutzer zur Auswahl gestellt
+|
+
+| Der Nutzer wählt einen Autor zum Löschen aus
+|
+
+| Alle Bücher des vom Nutzer gewählten Autors werden aus der Bücherdatenbank gelöscht
+|
+| Ausgewählter Autor wird von der Autorendatenbank gelöscht
+|
+
+| Nutzer wird über die erfolgreiche Löschung informiert
+|
+|====
+
+
+
+
+
+
+== Glossar

@@ -441,7 +441,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1><span class="image"><img src="docs/openbook.png" alt="openbook"></span> Bücherverwaltung</h1>
+<h1><span class="image"><img src="openbook.png" alt="openbook"></span> Bücherverwaltung</h1>
 <div class="details">
 <span id="author" class="author">Safiye Uzun</span><br>
 <span id="email" class="email"><a href="mailto:safiye.uzun@msg.group">safiye.uzun@msg.group</a></span><br>
@@ -451,91 +451,69 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc">
 <div id="toctitle">Inhaltsverzeichnis</div>
 <ul class="sectlevel1">
-<li><a href="#_einführung">1. Einführung</a>
+<li><a href="#_einleitung">Einleitung</a>
 <ul class="sectlevel2">
-<li><a href="#_projektbeschreibung">1.1. Projektbeschreibung</a></li>
-<li><a href="#_projektumfeld">1.2. Projektumfeld</a></li>
-<li><a href="#_projektziel">1.3. Projektziel</a></li>
+<li><a href="#_zielgruppen">Zielgruppen</a></li>
+<li><a href="#_beschreibung">Beschreibung</a></li>
 </ul>
 </li>
-<li><a href="#_startphase">2. Startphase</a></li>
-<li><a href="#_planungsphase">3. Planungsphase</a>
+<li><a href="#_how_to">How-To</a>
 <ul class="sectlevel2">
-<li><a href="#_soll_zustand">3.1. Soll-Zustand</a></li>
+<li><a href="#_start">Start</a></li>
 </ul>
 </li>
-<li><a href="#_durchführungsphase">4. Durchführungsphase</a>
+<li><a href="#_funktionen">Funktionen</a>
 <ul class="sectlevel2">
-<li><a href="#_erste_phase_commando_line">4.1. erste Phase: Commando Line</a></li>
-<li><a href="#_zweite_phase_web_applikation">4.2. zweite Phase: Web applikation</a></li>
-<li><a href="#_dritte_phase_api_phase">4.3. dritte Phase: API Phase</a></li>
+<li><a href="#_hauptmenü">Hauptmenü</a></li>
+<li><a href="#_anwendungsfälle">Anwendungsfälle</a></li>
+<li><a href="#_listen_ausgeben">Listen ausgeben</a></li>
+<li><a href="#_einträge_hinzufügen">Einträge hinzufügen</a></li>
+<li><a href="#_einträge_löschen">Einträge löschen</a></li>
 </ul>
 </li>
-<li><a href="#_projektabschlussphase">5. Projektabschlussphase</a>
-<ul class="sectlevel2">
-<li><a href="#_nachkalkulation">5.1. Nachkalkulation</a></li>
-<li><a href="#_gantt_diagramm">5.2. Gantt-Diagramm</a></li>
-<li><a href="#_qualitätsmanagement">5.3. Qualitätsmanagement</a></li>
-<li><a href="#_ausblick">5.4. Ausblick</a></li>
-<li><a href="#_rückblick">5.5. Rückblick</a></li>
-</ul>
-</li>
-<li><a href="#_technische_grundlagen">6. Technische Grundlagen</a>
-<ul class="sectlevel2">
-<li><a href="#_plattform">6.1. Plattform</a></li>
-<li><a href="#_grafische_nutzeroberfläche">6.2. Grafische Nutzeroberfläche</a></li>
-</ul>
-</li>
-<li><a href="#_struktur_und_modelle">7. Struktur und Modelle</a>
-<ul class="sectlevel2">
-<li><a href="#_diagramme">7.1. Diagramme</a></li>
-<li><a href="#_klassenmodell">7.2. Klassenmodell</a></li>
-<li><a href="#_funktionsweise">7.3. Funktionsweise</a></li>
-</ul>
-</li>
-<li><a href="#_glossar">8. Glossar</a></li>
+<li><a href="#_glossar">Glossar</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_einführung">1. Einführung</h2>
+<h2 id="_einleitung">Einleitung</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_projektbeschreibung">1.1. Projektbeschreibung</h3>
 <div class="paragraph">
-<p>Bei diesem Projekt handelt es sich um ein Bücherverwaltungsprogramm auf Web Basis.<br></p>
-</div>
-<div class="paragraph">
-<p>Die Basis des Projektes ist zunächst als Aufgabenstellung zum Erlernen der Java Grundkenntnisse im ersten Ausbildungsjahr entstanden. Mit der Zeit wurde der Umfang des Projektes vonseiten der Ausbilder immer mehr erweitert.<br>
-Das Hauptziel des Projektes ist die Erweiterung der Java Grundkenntnisse.<br>
-Dabei kann das Projekt
-Das Projektziel ist in 3 Teilzielen unterteilt. Ziel des Endproduktes ist es, dem individuellen Nutzer eine leichte Verwaltung für dessen Bücher zu ermöglichen.<br></p>
-</div>
+<p>Die Bücherverwaltungsapplikation ist eine Webanwendung, die die Verwaltung von Büchern und Autoren ermöglicht.
+Die Applikation wird als <em>war-Datei</em> geliefert und beinhaltet bereits eine kleine Sammlung an Beispielbüchern und -autoren.</p>
 </div>
 <div class="sect2">
-<h3 id="_projektumfeld">1.2. Projektumfeld</h3>
+<h3 id="_zielgruppen">Zielgruppen</h3>
 <div class="paragraph">
-<p>Neueinstieg in die Ausbildung, Keine bis null Kenntnisse</p>
+<p>Bei dieser Anwendung handelt es sich um ein Prototyp, welches im Lernprozess der Ausbildung entstanden ist und nur für diese Zwecke benutzt werden sollte.<br>
+Prinzipiell ist die Applikation für Nutzer gedacht, die ihre eigene private Bücherbibliothek in einem Verzeichnis speichern möchten, um diese leichter zu verwalten.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_projektziel">1.3. Projektziel</h3>
+<h3 id="_beschreibung">Beschreibung</h3>
+<div class="paragraph">
+<p>Der Anwender kann in der Bücherverwaltungsapplikation:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>1. Teilprojektziel:
-Grundkomponenten erstellen, lauffähig machen, speicherfähig machen, sortieren können, Commando-zeilen applikation.
-Java Grundkenntnisse mithilfe einer Bücher-Verwaltungsapplikation erweitern. Ziele der Applikation: Implementierung einer ID, Verarbeitung der Daten und Speicherung der Daten über Listen.</p>
+<p>die gespeicherten Bücher als Liste ausgeben</p>
 </li>
 <li>
-<p>2. Teilprojektziel: Das bereits gebaute Projekt in eine Webapplikation umwandeln. Die Funktionen der vorherigen Applikation in die neue Web-Anwendung implementieren.</p>
+<p>die gespeicherten Autoren als Liste ausgeben</p>
 </li>
 <li>
-<p>Einarbeitung in HTTP</p>
+<p>neue Büchereinträge tätigen</p>
 </li>
 <li>
-<p>3. Teilprojektziel: Webapplikation durch eine <em>RESTful API</em> erweitern.</p>
+<p>neue Autoreneinträge tätigen</p>
+</li>
+<li>
+<p>vorhandene Büchereinträge löschen</p>
+</li>
+<li>
+<p>vorhandene Autoreneinträge löschen</p>
 </li>
 </ul>
 </div>
@@ -543,208 +521,319 @@ Java Grundkenntnisse mithilfe einer Bücher-Verwaltungsapplikation erweitern. Zi
 </div>
 </div>
 <div class="sect1">
-<h2 id="_startphase">2. Startphase</h2>
+<h2 id="_how_to">How-To</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_start">Start</h3>
+<div class="paragraph">
+<p>Aktuell ist das Starten der Anwendung ohne einen <em>Webcontainer</em> nicht möglich.</p>
+</div>
+<div class="paragraph">
+<p>&#8658; TODO: INSTALL TOMCAT</p>
+</div>
+<div class="paragraph">
+<p>Die Anwendungsdatei muss in folgenden Pfad gelegt werden</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>../Tomcat8/webapps/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So könnte ein Beispielverzeichnis eines Webcontainers aussehen:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/Screenshot%202021-02-16%20003239.png" alt="Screenshot 2021 02 16 003239"></span></p>
+</div>
+<div class="paragraph">
+<p>Nach dem Verschieben der Datei in den genannten Pfad kann die der Webcontainer gestartet werden.<br></p>
+</div>
+<div class="paragraph">
+<p>Im Beispiel von Tomcat kann der Server über die <em>Eingabeaufforderung</em> gestartet werden.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>&gt;cd c:/Program Files/Tomcat8/bin/
+&gt;startup</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Mit einem beliebigen Browser kann man den lokalen Server nun durch
+<code><a href="http://localhost:8080/" class="bare">http://localhost:8080/</a></code> erreichen.
+Durch Anhängen des Dateinamens an die o.g. URI kann die Anwendung aufgerufen werden.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Beispiel:</p>
+</div>
+<div class="paragraph">
+<p>Wenn Dateiname <code>book-app.war</code> lautet,
+dann ist die Applikation über <code><a href="http://localhost:8080/book-app/" class="bare">http://localhost:8080/book-app/</a></code> erreichbar.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_funktionen">Funktionen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_hauptmenü">Hauptmenü</h3>
+<div class="paragraph">
+<p><span class="image"><img src="img/author-list.png" alt="author list"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/add-author.png" alt="add author"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/add-book.png" alt="add book"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/delete-author.png" alt="delete author"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_anwendungsfälle">Anwendungsfälle</h3>
+<div class="paragraph">
+<p><span class="image"><img src="dias/usecase.svg" alt="usecase"></span></p>
+</div>
+<div class="paragraph">
+<p>Jeder Anwender hat vollen Zugriff auf die Bücher- und Autorenverwaltung und ist nicht auf eine bestimmte Personengruppe eingeschränkt.</p>
+</div>
+<div class="paragraph">
+<p>Im nächsten Schritt werden die einzelnen Fälle näher erläutert. Alle Fälle sind einzeln zu betrachten, werden aber für bessere Verständlichkeit teilweise zusammengefasst.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_listen_ausgeben">Listen ausgeben</h3>
+<table class="tableblock frame-ends grid-rows stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Name</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alle Autoren</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Alle Bücher</strong></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Ziel</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eine sortierbare Liste aller in der Datenbank vorhandenen Autoren anzeigen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eine sortierbare Liste aller in der Datenbank vorhandenen Bücher anzeigen</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Akteure</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top" rowspan="2"><p class="tableblock">Vorbedingungen</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-ends grid-rows stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top" rowspan="4"><p class="tableblock">Optionen</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer sortiert die Autorenliste alphabetisch nach Vornamen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer sortiert die Bücherliste alphabetisch nach Titel</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer sortiert die Autorenliste alphabetisch nach Nachnamen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer sortiert die Bücherliste alphabetisch nach Verlag</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer sortiert die Bücherliste numerisch nach der ISBN</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer sortiert die Bücherliste numerisch nach dem Erscheinungsjahr</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Die genannten Optionen der Sortierung sind aktuell nur in eine Richtung möglich.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Alphabetisch ist immer in alphabetischer Reihenfolge beginnend mit <em>a</em></p>
+</li>
+<li>
+<p>Numerisch immer beginnend mit der kleinsten Zahl</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_einträge_hinzufügen">Einträge hinzufügen</h3>
+<table class="tableblock frame-ends grid-rows stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Name</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Autor hinzufügen</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Buch hinzufügen</strong></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Ziel</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Einen neuen Eintrag in die Autorendatenbank tätigen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Einen neuen Eintrag in die Bücherdatenbank tätigen</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Akteure</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top" rowspan="2"><p class="tableblock">Vorbedingungen</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Felder sind vollständig ausgefüllt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Felder sind vollständig ausgefüllt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Autor mit demselben Namen existiert noch nicht in der Datenbank</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Buch-ISBN existiert noch nicht als Eintrag in der Datenbank</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-ends grid-rows stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top" rowspan="7"><p class="tableblock">Essenzielle Schritte</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer gibt Vor- und Nachname in die dafür beschrifteten Felder ein</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer gibt Titel, ISBN, Verlag und Erscheinungsjahr in die dafür beschrifteten Felder ein</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die getätigten Einträge werden auf Vollständigkeit geprüft.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die getätigten Einträge werden auf Vollständigkeit geprüft.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die eingegebenen Informationen werden mit der vorhandenen Datenbank von Autoren abgeglichen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die eingetragene ISBN wird mit denen der vorhandenen Datenbank von Büchern abgeglichen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der neue Eintrag wird als Autoreneintrag in die Datenbank gespeichert</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer gibt einen Namen oder einen Teil des Namens des Autors zur Suche ein</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Benutzer wird über die Eintragung informiert</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eingegebener Name wird in der vorhandenen Datenbank von Autoren durchsucht</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suchergebnisse innerhalb der Autorenliste sowie eine alternative Möglichkeit zur Neueintragung werden dem Nutzer zur Auswahl gestellt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Informationen, zusammen mit dem ausgewählten oder eingetragenen Autor werden als neuer Bucheintrag in der Datenbank von Büchern gespeichert.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_einträge_löschen">Einträge löschen</h3>
+<table class="tableblock frame-ends grid-rows stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Name</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Autor löschen</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Buch löschen</strong></p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Ziel</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Einen ausgewählten Autor aus der Bücherdatenbank entfernen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ein ausgewähltes Buch aus der Bücherdatenbank entfernen</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top"><p class="tableblock">Akteure</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer der Applikation</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-center valign-top" rowspan="2"><p class="tableblock">Vorbedingungen</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gesuchter Autor existiert in der Datenbank</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-ends grid-rows stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-top" rowspan="7"><p class="tableblock">Essenzielle Schritte</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nutzer gibt zur Suche eines Autors ein Schlüsselbegriff ein</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die getätigten Einträge werden auf Vollständigkeit geprüft.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die getätigten Einträge werden auf Vollständigkeit geprüft.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das eingegebene Schlüsselwort wird als Name oder Teil im Namen der Autoren gesucht</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die gefundenen Sucheinträge werden dem Nutzer zur Auswahl gestellt</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Nutzer wählt einen Autor zum Löschen aus</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Bücher des vom Nutzer gewählten Autors werden aus der Bücherdatenbank gelöscht</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ausgewählter Autor wird von der Autorendatenbank gelöscht</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_glossar">Glossar</h2>
 <div class="sectionbody">
 
-</div>
-</div>
-<div class="sect1">
-<h2 id="_planungsphase">3. Planungsphase</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_soll_zustand">3.1. Soll-Zustand</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>agiles Konzept</p>
-</li>
-<li>
-<p>keine große Planung</p>
-</li>
-<li>
-<p>kleine lauffähige Planungshäppchen</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_durchführungsphase">4. Durchführungsphase</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_erste_phase_commando_line">4.1. erste Phase: Commando Line</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_zweite_phase_web_applikation">4.2. zweite Phase: Web applikation</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_dritte_phase_api_phase">4.3. dritte Phase: API Phase</h3>
-
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_projektabschlussphase">5. Projektabschlussphase</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_nachkalkulation">5.1. Nachkalkulation</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>keine Nachkalkulation, sondern eher einer Kalkulation des Zeitaufwandes</p>
-</li>
-<li>
-<p>berechnet in Sprints</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gantt_diagramm">5.2. Gantt-Diagramm</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Diagram hier</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_qualitätsmanagement">5.3. Qualitätsmanagement</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Code Style
--</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ausblick">5.4. Ausblick</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Projektplanungen für die Zukunft</p>
-</li>
-<li>
-<p>SPA (Single Page Applicaiton)</p>
-</li>
-<li>
-<p>Einarbeitung in angular</p>
-</li>
-<li>
-<p>Benutzeranmeldung &amp; individuelle Listen pro User</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_rückblick">5.5. Rückblick</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Eigener Rückblick, was war gut? was war nicht gut?</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_technische_grundlagen">6. Technische Grundlagen</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_plattform">6.1. Plattform</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Server: Tomcat 8.5.61</p>
-</li>
-<li>
-<p>Build Tool: Maven 3.1</p>
-</li>
-<li>
-<p>JDK: 11.0.8.10</p>
-</li>
-<li>
-<p>external libraries:</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_grafische_nutzeroberfläche">6.2. Grafische Nutzeroberfläche</h3>
-<div class="paragraph">
-<p><em>SCREENSHOT HERE</em></p>
-</div>
-<div class="paragraph">
-<p><em>TEXT HERE</em></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_struktur_und_modelle">7. Struktur und Modelle</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_diagramme">7.1. Diagramme</h3>
-<div class="paragraph">
-<p>Der <em>User</em> kann in der Buchverwaltungsapplikation die Listen ausgeben, Einträge löschen sowie neue Einträge erstellen.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="docs/dias/usecase.svg" alt="usecase"></span></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_klassenmodell">7.2. Klassenmodell</h3>
-<div class="paragraph">
-<p><em>TEXT HIER</em></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="docs/dias/class-diagram.svg" alt="class diagram"></span></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_funktionsweise">7.3. Funktionsweise</h3>
-<div class="paragraph">
-<p>Funktionsweise der Speicherung von Autoren durch den Nutzer:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="docs/dias/addauthor.svg" alt="addauthor"></span></p>
-</div>
-<div class="paragraph">
-<p>Funktionsweise der Speicherung von Büchern durch den Nutzer:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="docs/dias/addbook.svg" alt="addbook"></span></p>
-</div>
-<div class="paragraph">
-<p><em>TEXT HIER</em></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_glossar">8. Glossar</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>alle technologischen Begriffe</p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2021-02-12 11:23:25 +0100
+Last updated 2021-02-16 01:08:35 +0100
 </div>
 </div>
 </body>
