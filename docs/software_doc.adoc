@@ -6,18 +6,18 @@ v1.0, 2021-02-11
 
 == Einleitung
 
-Die Bücherverwaltungsapplikation ist eine Webanwendung, die die Verwaltung von Büchern und Autoren ermöglicht.
-Die Applikation wird als _war-Datei_ geliefert und beinhaltet bereits eine kleine Sammlung an Beispielbüchern und -autoren.
+Die Bücherverwaltungsapplikation ist eine Webanwendung, die die Verwaltung von Büchern und Autoren ermöglicht. +
+Die Applikation wird in link:#war_datei_[.war Dateiformat] geliefert und beinhaltet bereits eine kleine Sammlung an Beispielbüchern und -autoren.
 
 === Zielgruppen
 
-Bei dieser Anwendung handelt es sich um ein Prototyp, welches im Lernprozess der Ausbildung entstanden ist und nur für diese Zwecke benutzt werden sollte. +
-Prinzipiell ist die Applikation für Nutzer gedacht, die ihre eigene private Bücherbibliothek in einem Verzeichnis speichern möchten, um diese leichter zu verwalten.
+Bei dieser Anwendung handelt es sich um ein Prototyp, welches im Lernprozess der Ausbildung entstanden ist und nur im Rahmen der Ausbildung verwendet werden sollte. +
+Prinzipiell ist die Applikation aber für Nutzer gedacht, die ihre eigene private Bücherbibliothek in einem Verzeichnis speichern möchten, um diese leichter zu verwalten.
 
 
 === Beschreibung
 
-Der Anwender kann in der Bücherverwaltungsapplikation:
+Der Anwender kann in der Bücherverwaltungsapplikation folgende Aufgaben erledigen:
 
 - die gespeicherten Bücher als Liste ausgeben
 - die gespeicherten Autoren als Liste ausgeben
@@ -30,7 +30,7 @@ Der Anwender kann in der Bücherverwaltungsapplikation:
 
 === Start
 
-Aktuell ist das Starten der Anwendung ohne einen _Webcontainer_ nicht möglich.
+Aktuell ist das Starten der Anwendung ohne einen link:#web_container_[Webcontainer] nicht möglich.
 
 => TODO: INSTALL TOMCAT
 
@@ -39,11 +39,11 @@ Die Anwendungsdatei muss in folgenden Pfad gelegt werden
 ----
 ../Tomcat8/webapps/
 ----
-So könnte ein Beispielverzeichnis eines Webcontainers aussehen:
+So könnte ein Beispielverzeichnis eines link:#web_container_[Webcontainers] aussehen:
 
 image:img/Screenshot 2021-02-16 003239.png[]
 
-Nach dem Verschieben der Datei in den genannten Pfad kann die der Webcontainer gestartet werden. +
+Nach dem Verschieben der Datei in den genannten Pfad kann die der link:#web_container_[Webcontainer] gestartet werden. +
 
 Im Beispiel von Tomcat kann der Server über die _Eingabeaufforderung_ gestartet werden.
 [source]
@@ -51,15 +51,13 @@ Im Beispiel von Tomcat kann der Server über die _Eingabeaufforderung_ gestartet
 >cd c:/Program Files/Tomcat8/bin/
 >startup
 ----
-Mit einem beliebigen Browser kann man den lokalen Server nun durch
-`http://localhost:8080/` erreichen.
+Mit einem beliebigen Browser kann man den link:#local_server_[lokalen Server] nun durch
+`\http://localhost:8080/` erreichen.
 Durch Anhängen des Dateinamens an die o.g. URI kann die Anwendung aufgerufen werden.
 
 ====
-Beispiel:
-
-Wenn Dateiname `book-app.war` lautet,
-dann ist die Applikation über `http://localhost:8080/book-app/` erreichbar.
+Wenn beispielseise der Dateiname der Applikation `book-app.war` lautet,
+dann ist die diese nun über den link über `\http://localhost:8080/book-app/` erreichbar.
 ====
 
 === Menü
@@ -207,3 +205,15 @@ s| Buch löschen
 
 
 == Glossar
+
+[#war_datei_]
+.war-Datei
+Eine war Datei ist...
+
+[#web_container_]
+.Webcontainer
+Ein Webconatiner ist...
+
+[#local_server_]
+.local Server
+Ein local Server ist...
