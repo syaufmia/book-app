@@ -3,7 +3,7 @@ package sum.ike.servlets;
 import sum.ike.control.AuthorDao;
 import sum.ike.control.BookDao;
 import sum.ike.control.FileManager;
-import sum.ike.control.StringTrimmer;
+
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 

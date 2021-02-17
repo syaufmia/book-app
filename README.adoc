@@ -34,13 +34,7 @@ Um das Projekt starten zu können, wird ein spezieller Webserver benötigt, der 
 
 Außerdem wird neben einem Webserver auch eine link:#jre_[Java Laufzeitumgebung] benötigt.
 
-.Mindestanforderungen:
-- Tomcat 4
-- JRE 8
-
-Da allerdings Tomcat 4 von Apache nicht mehr offiziell unterstützt wird, wird die Installation von einer noch unterstützen Version empfohlen.
-
-.empfohlene Umgebung:
+.Mindestvoraussetzung der Umgebung:
 - Tomcat 8.5
 - JRE 8
 
@@ -243,7 +237,7 @@ s| Buch löschen
 
 .2+^.h|Vorbedingungen
 |Gesuchter Autor existiert in der Datenbank
-|
+| Gesuchtes Schlüsselwort ist in Bücherdatenbank enthalten
 |====
 
 
@@ -253,55 +247,394 @@ s| Buch löschen
 ^h| _Buch löschen_ Prozess
 
 ^| image:docs/dias/delete-author-pap.svg[]
-^| TODO
+^| image:docs/dias/delete-book-pap.svg[]
 |====
 
 == API Dokumentation
 
 
-=== Allgemein
-[cols= 2*]
+=== Übersicht
+Die API der Bücherapplikation basiert auf dem REST Prinzip und ermöglicht eine externe Kommunikation direkt mit den Daten hinter der Anwendung.
+
+[cols= 2*, frame=topbot, grid=rows]
 |====
 h| API URL
-| `link:#u_r_l[\{Link-zur-Applikation}]/api/v1/`
+| `\{Root_URL}/api/v1/`
 
 h| Version
 | v1
+
 
 h| Response Format
 | JSON
 |====
 
+
+Die API Endpunkte sind nach drei Kategorien aufgeteilt:
+
+- link:#Suche[Suche]
+- link:#Bücher[Buch]
+- link:#Autoren[Autor]
+
+[#Suche]
 === Suche
 
-TODO
+[cols= 2*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+| Ermöglicht die Suche in Büchern sowie Autoren
+h| Endpunkt URL
+| `\{Root_URL}/api/v1/search/`
 
+h| zulässige Methoden
+| GET
+
+h| Response Format
+| JSON
+
+
+h| Datenformat
+| Liste
+
+|====
+
+In der Suche API kann, je nach Endpunkt, im Bücherverzeichnis oder Autorenverzeichnis gesucht werden, und die Suchergebnisse werden als Liste im JSON Format ausgegeben. +
+Bei einer Suche ohne Ergebnis wird eine leere Liste ausgegeben.
+
+
+
+[cols=3*, frame=topbot, grid=cols]
+|====
+^h| Beschreibung
+^h| Methode
+^h| Endpunkt
+|Büchersuche nach Titel
+| `GET`
+| `/search/book/title/\{Suchbegriff}`
+|Büchersuche nach ISBN
+| `GET`
+| `/search/book/isbn/\{Suchbegriff}`
+|Büchersuche nach Verlag
+| `GET`
+| `/search/book/publisher/\{Suchbegriff}`
+|Büchersuche nach Autor
+| `GET`
+| `/search/book/author/\{Suchbegriff}`
+|Autorensuche nach Name
+| `GET`
+| `/search/author/\{Suchbegriff}`
+|====
+
+====
+
+.Beispiel 1
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/search/book/title/parfum
+----
+*Response:*
+[source,json]
+----
+[
+  {
+    "title": "DAS PARFUM",
+    "isbn": "978-3-257-22800-7",
+    "author": {
+      "id": 20,
+      "first_name": "PATRICK",
+      "last_name": "SUESKIND"
+    },
+    "publisher": "DIOGENES",
+    "year": 1994
+  }
+]
+----
+====
+
+====
+.Beispiel 2
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/search/book/author/goethe
+----
+*Response:*
+[source,json]
+----
+[
+  {
+    "title": "FAUST",
+    "isbn": "978-3-15-000001-4",
+    "author": {
+      "id": 1,
+      "first_name": "JOHANN WOLFGANG",
+      "last_name": "GOETHE"
+    },
+    "publisher": "RECLAM",
+    "year": 1986
+  },
+  {
+    "title": "DIE LEIDEN DES JUNGEN WERTHER",
+    "isbn": "978-3-15-000067-0",
+    "author": {
+      "id": 1,
+      "first_name": "JOHANN WOLFGANG",
+      "last_name": "GOETHE"
+    },
+    "publisher": "RECLAM",
+    "year": 1986
+  },
+  {
+    "title": "DER ERLKOENIG",
+    "isbn": "978-3-934029-48-4",
+    "author": {
+      "id": 1,
+      "first_name": "JOHANN WOLFGANG",
+      "last_name": "GOETHE"
+    },
+    "publisher": "KINDERMANN VERLAG",
+    "year": 2013
+  }
+]
+----
+====
+
+[#Bücher]
 === Bücher
 
-TODO
+[cols= 2*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+| Ermöglicht die Modifizierung und Ausgabe von einzelnen Büchern
+h| Endpunkt URL
+| `\{Root_URL}/api/v1/book/`
 
+h| zulässige Methoden
+| GET \| POST \| DELETE
+
+h| Response und Request Format
+| JSON
+
+
+h| Datenformat
+| Liste, Objekt
+|====
+
+
+
+[cols=3*, frame=topbot, grid=cols]
+|====
+^h| Beschreibung
+^h| Methode
+^h| Endpunkt
+| Bücherliste aller Bücher ausgeben
+| `GET`
+| `/book`
+| Neues Buchobjekt hinzufügen
+| `POST`
+| `/book`
+| Buchobjekt mit bestimmter ISBN ausgeben
+| `GET`
+| `/book/isbn/\{isbn}`
+| Buchobjekt mit bestimmter ISBN löschen
+| `DELETE`
+| `/book/isbn/\{isbn}`
+|Bücherliste eines bestimmten Autors ausgeben
+| `GET`
+| `/book/author/id/\{Autor_ID}`
+|Bücherliste eines bestimmten Autors löschen
+| `DELETE`
+| `/book/author/id/\{Autor_ID}`
+|====
+
+====
+.Beispiel 1
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/book/author/id/12 HTTP/1.1
+----
+*Response:*
+[source,json]
+----
+[
+  {
+    "title": "WILLHELM TELL",
+    "isbn": "978-3-15-000012-0",
+    "author": {
+      "id": 12,
+      "first_name": "FRIEDRICH",
+      "last_name": "SCHILLER"
+    },
+    "publisher": "RECLAM",
+    "year": 2000
+  },
+  {
+    "title": "MARIA STUART",
+    "isbn": "978-3-15-000064-9",
+    "author": {
+      "id": 12,
+      "first_name": "FRIEDRICH",
+      "last_name": "SCHILLER"
+    },
+    "publisher": "RECLAM",
+    "year": 2001
+  }
+]
+----
+====
+
+====
+.Beispiel 2
+*Request:*
+[source,http request]
+----
+POST http://localhost:8080/book-app/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Safiye",
+  "last_name": "Uzun",
+  "title": "Java",
+  "isbn": "111-222-333",
+  "publisher": "goldmann",
+  "year": "2018"
+}
+----
+====
+
+[#Autoren]
 === Autoren
 
-TODO
+[cols= 2*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+| Ermöglicht die Modifizierung und Ausgabe von einzelnen Autoren
+h| Endpunkt URL
+| `\{Root_URL}/api/v1/book/`
+
+h| zulässige Methoden
+| GET \| POST \| DELETE \| PUT
+
+h| Response und Request Format
+| JSON
 
 
+h| Datenformat
+| Liste, Objekt
+|====
+
+
+
+[cols=3*, frame=topbot, grid=cols]
+|====
+^h| Beschreibung
+^h| Methode
+^h| Endpunkt
+| Autorenliste aller Autoren ausgeben
+| `GET`
+| `/author`
+| Neuen Autor hinzufügen
+| `POST`
+| `/author`
+| Autorobjekt mit bestimmter ID ausgeben
+| `GET`
+| `/author/id/\{Autor_ID}`
+| Autorobjekt mit bestimmter ID löschen
+| `DELETE`
+| `/author/id/\{Autor_ID}`
+| Informationen eines Autorobjekts mit bestimmter ID ändern
+| `PUT`
+| `/author/id/\{Autor_ID}`
+|====
+
+====
+.Beispiel 1
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/author/id/39
+
+{
+  "first_name": "Safiye",
+  "last_name": "Uzun",
+  "title": "Java",
+  "isbn": "111-222-333",
+  "publisher": "goldmann",
+  "year": "2018"
+}
+----
+*Response:*
+[source,json]
+----
+{
+  "id": 39,
+  "first_name": "MICHELLE",
+  "last_name": "OBAMA",
+  "books": [
+    {
+      "title": "BECOMING",
+      "isbn": "978-3-442-31487-4",
+      "publisher": "GOLDMANN",
+      "year": 2018
+    }
+  ]
+}
+----
+====
+====
+.Beispiel 2
+*Request:*
+[source,http request]
+----
+DELETE http://localhost:8080/book-app/api/v1/author/id/40
+----
+====
 
 
 
 == Glossar
 
 [#war_datei_]
-.war-Datei
-Eine war Datei ist...
+.Web Application Archive
+
+Eine WAR-Datei ist ein komprimiertes Paket, das Java-basierte Webkomponenten und -anwendungen enthält, die auf einem Webserver ausgeführt werden.
 
 [#web_container_]
 .Webcontainer
-Ein Webconatiner ist...
+Der Webcontainer, auch als Servlet-Container bezeichnet, ist die Komponente eines Webservers, der mit Java-Servlets interagiert.
+Ein Webcontainer ist dafür verantwortlich, den Lebenszyklus von Servlets zu verwalten.
+
+[#servlet_]
+.Servlet
+Ein Servlet ist eine spezielle Klasse, geschrieben in Java-Quellcode, die HTTP-Anfragen auf einem Webcontainer entgegennehmen und beantworten kann. Dabei werden HTML-Ergebnisseiten erzeugt.
 
 [#local_server_]
 .local Server
-Ein local Server ist...
+Ein lokaler Server ist ein Server, der auf einem Arbeitsplatzrechner eingerichtet ist und mit einem auf demselben Rechner vorhandenen Client wie ein Netzwerk-angebundener Server Daten austauscht.
 
 [#jre_]
 .Laufzeitumgebung
-Eine Laufzeitumgebung ist...
+
+Die Laufzeitumgebung (_Runtime Environment_) ist ein umfangreiches Programm, mit dem Anwendungsprogramme auf ungewohnter Umgebung lauffähig und ausführbar werden. Die Laufzeitumgebung stellt sicher, dass Anwendungsprogramme auf entsprechenden Betriebssystemen laufen und die Software-Module wiederverwendet werden können. +
+
+Mit Laufzeit versteht man den Zeitraum, der mit dem Start bzw. der Ausführung der Software beginnt und dem Verlassen bzw. Abbrechen endet.
+
+
+[#rest_]
+.REST
+Representational State Transfer, kurz REST, ist ein modernes Programmierparadigma für Web-Services, insbesondere für APIs.
+
+[#api_]
+.Application Programming Interface
+Die API ist eine Schnittstelle, die ein Softwaresystem bereitstellt, um dieses in andere Programme einzubinden.
+
+[#request_]
+.HTTP-request
+Unter einem HTTP-Request versteht man die Anfrage eines HTTP-Clients (beispielsweise dem Browser) an den HTTP-Server. Jeder Request wird durch die Angabe einer Methode eingeleitet, um dem Server zu sagen, was er mit dem Request machen soll.
+
+
+[#response_]
+.HTTP-response
+Die Antwort des Servers auf eine Client-Anfrage (HTTP-request) besteht aus einem Statuscode und weiteren Header-Informationen, die Informationen über den Server sowie Informationen über das angeforderte Objekt enthalten.

@@ -5,7 +5,7 @@ OPTIONS http://localhost:8080/book_manager_war_exploded/api/v1/book/
 PUT http://localhost:8080/book_manager_war_exploded/api/v1/book/
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/39
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/12
 accept: application/json
 
 ###
