@@ -55,6 +55,12 @@
         <servlet-class>sum.ike.servlets.api.SearchAPIServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>DeleteBookServlet</servlet-name>
+        <servlet-class>sum.ike.servlets.DeleteBookServlet</servlet-class>
+    </servlet>
+
+
 
 
     <servlet-mapping>
@@ -86,6 +92,12 @@
     <servlet-mapping>
         <servlet-name>DeleteAuthorServlet</servlet-name>
         <url-pattern>/deleted-author/*</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>DeleteBookServlet</servlet-name>
+        <url-pattern>/deleted-book/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

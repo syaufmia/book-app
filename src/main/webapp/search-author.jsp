@@ -17,7 +17,7 @@
         <p>
         </p>
         <form class="form" name="search-author" action= "${pageContext.request.contextPath}/deleted-author/" method="POST">
-            <table class="form-table"border="0">
+            <table class="form-table">
                     <tr>
                         <td>Name: </td>
                         <td><input class="text-field" type="text" name="name" value="" size="50" /> </td>

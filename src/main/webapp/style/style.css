@@ -142,6 +142,7 @@ main {
     text-align: left;
     display: inline-block;
     float: none;
+    border: none;
   }
 
 .real-table {

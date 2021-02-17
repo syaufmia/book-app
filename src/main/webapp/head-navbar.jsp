@@ -26,7 +26,7 @@
         </li>
         <li><span>Löschen</span>
             <ul class="sub-menu">
-                <li><span>Buch löschen</span></li>
+                <li class="with-link"><a href="${pageContext.request.contextPath}/deleted-book/">Buch löschen</a></li>
                 <li class="with-link"><a href="${pageContext.request.contextPath}/deleted-author/">Autor löschen</a></li>
             </ul>
         </li>
