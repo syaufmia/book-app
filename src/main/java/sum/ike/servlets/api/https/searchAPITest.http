@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/sa
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/friedrich
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/aaa

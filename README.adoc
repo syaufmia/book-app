@@ -273,56 +273,61 @@ h| Response Format
 Die API Endpunkte sind nach drei Kategorien aufgeteilt:
 
 - link:#Suche[Suche]
-- link:#Bücher[Buch]
+- link:#Buecher[Buch]
 - link:#Autoren[Autor]
 
 [#Suche]
 === Suche
 
-[cols= 2*, frame=topbot, grid=rows]
+==== Suche nach Büchern
+
+
+In der Suche API kann im Bücher-endpunkt nach Büchern gesucht werden, und die Suchergebnisse werden als Liste im JSON Format ausgegeben. +
+
+Eine Büchersuche über die API gibt *immer* den Status Code `200` aus, auch wenn die Suche grundsätzlich keine Ergebnisse vorweist.
+Leere Ergebnisse werden durch eine leere Liste in der JSON Response gekennzeichnet.
+
+
+[cols= 3*, frame=topbot, grid=rows]
 |====
 h| Beschreibung
-| Ermöglicht die Suche in Büchern sowie Autoren
+2+| Ermöglicht die Suche in Büchern nach bestimmten Kategorien
+
 h| Endpunkt URL
-| `\{Root_URL}/api/v1/search/`
+2+| `\{Root_URL}/api/v1/search/book/\{Kategorie}/\{Suchbegriff}`
 
 h| zulässige Methoden
-| GET
+2+| GET
 
-h| Response Format
-| JSON
+h| Response Code
+| 200
+| OK
+
+h| Response Body Format
+2+| JSON
 
 
 h| Datenformat
-| Liste
-
+2+| Liste von Bücherobjekten
 |====
 
-In der Suche API kann, je nach Endpunkt, im Bücherverzeichnis oder Autorenverzeichnis gesucht werden, und die Suchergebnisse werden als Liste im JSON Format ausgegeben. +
-Bei einer Suche ohne Ergebnis wird eine leere Liste ausgegeben.
 
-
-
-[cols=3*, frame=topbot, grid=cols]
+[cols=2*, frame=topbot, grid=cols]
 |====
 ^h| Beschreibung
-^h| Methode
-^h| Endpunkt
-|Büchersuche nach Titel
-| `GET`
-| `/search/book/title/\{Suchbegriff}`
-|Büchersuche nach ISBN
-| `GET`
-| `/search/book/isbn/\{Suchbegriff}`
-|Büchersuche nach Verlag
-| `GET`
-| `/search/book/publisher/\{Suchbegriff}`
-|Büchersuche nach Autor
-| `GET`
-| `/search/book/author/\{Suchbegriff}`
-|Autorensuche nach Name
-| `GET`
-| `/search/author/\{Suchbegriff}`
+^h| \{Kategorie}
+
+|Suche nach Titel
+| `titel`
+
+|Suche nach ISBN
+| `isbn`
+
+|Suche nach Verlag
+| `publisher`
+
+|Suche nach Autor
+| `author`
 |====
 
 ====
@@ -400,27 +405,276 @@ GET http://localhost:8080/book-app/api/v1/search/book/author/goethe
 ----
 ====
 
-[#Bücher]
-=== Bücher
+==== Suche nach Autoren
 
-[cols= 2*, frame=topbot, grid=rows]
+Im Autoren-Endpunkt der Suche API kann speziell nach Autoren gesucht werden. +
+Im Vergleich zur Suche nach Büchern wird bei der Autorensuche eine JSON-Liste nach Autorobjekten ausgegeben. +
+Genauso wie beim Buch-Endpunkt der Suche API wird bei der Suche nach Autoren immer der Status Code `200` ausgegeben.
+
+
+[cols= 3*, frame=topbot, grid=rows]
 |====
 h| Beschreibung
-| Ermöglicht die Modifizierung und Ausgabe von einzelnen Büchern
+2+| Ermöglicht die Suche in Autorendatenbank nach Namen
+
 h| Endpunkt URL
-| `\{Root_URL}/api/v1/book/`
+2+| `\{Root_URL}/api/v1/search/author/\{Suchbegriff}`
 
-h| zulässige Methoden
-| GET \| POST \| DELETE
+h| Request Methode
+2+| GET
 
-h| Response und Request Format
-| JSON
+h| Response Code
+| 200
+| OK
+
+h| Response Body Format
+2+| JSON
 
 
 h| Datenformat
-| Liste, Objekt
+2+| Liste von Autorobjekten
 |====
 
+
+
+====
+
+.Beispiel
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/search/author/friedrich
+----
+*Response:*
+[source,json]
+----
+[
+  {
+    "id": 12,
+    "first_name": "FRIEDRICH",
+    "last_name": "SCHILLER",
+    "books": [
+      {
+        "title": "WILLHELM TELL",
+        "isbn": "978-3-15-000012-0",
+        "publisher": "RECLAM",
+        "year": 2000
+      },
+      {
+        "title": "MARIA STUART",
+        "isbn": "978-3-15-000064-9",
+        "publisher": "RECLAM",
+        "year": 2001
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "first_name": "FRIEDRICH",
+    "last_name": "DUERRENMATT",
+    "books": [
+      {
+        "title": "DER BESUCH DER ALTEN DAME",
+        "isbn": "978-3-257-23045-1",
+        "publisher": "DIOGENES",
+        "year": 1998
+      },
+      {
+        "title": "DIE PHYSIKER",
+        "isbn": "978-3-257-23047-5",
+        "publisher": "DIOGENES",
+        "year": 1998
+      }
+    ]
+  }
+]
+----
+====
+
+
+
+[#Buecher]
+=== Bücher
+
+==== Alle Bücher ausgeben
+
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht die Ausgabe von allen Büchern, die gespeichert sind
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/book/`
+
+h| Request Methode
+2+| GET
+
+h| Response Code
+| 200
+| OK
+
+h| Response Body Format
+2+| JSON
+
+
+h| Datenformat
+2+| Liste von Bücherobjekten
+|====
+
+
+
+==== Bücher eines bestimmten Autors ausgeben
+
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht die Ausgabe von Büchern eines bestimmten Autors nach ID
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/book/author/id/\{Autor_ID}`
+
+h| Request Methode
+2+| GET
+
+.2+h| Response Code
+| 200
+| OK
+| 404
+| Wird gesendet, wenn gegebene ID nicht existiert
+
+h| Response Body Format
+2+| JSON
+
+
+h| Datenformat
+2+| Liste von Bücherobjekten
+|====
+
+====
+.Beispiel
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/book/author/id/21
+----
+*Response:*
+[source,json]
+----
+[
+  {
+    "title": "DER PROZESS",
+    "isbn": "978-3-423-02644-4",
+    "author": {
+      "id": 21,
+      "first_name": "FRANZ",
+      "last_name": "KAFKA"
+    },
+    "publisher": "DTV",
+    "year": 1998
+  },
+  {
+    "title": "DAS SCHLOSS",
+    "isbn": "978-3-86647-106-1",
+    "author": {
+      "id": 21,
+      "first_name": "FRANZ",
+      "last_name": "KAFKA"
+    },
+    "publisher": "ANACONDA VERLAG",
+    "year": 2007
+  }
+]
+----
+====
+
+==== Bestimmte Bücher ausgeben
+
+
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht die Ausgabe von einzelnen Buchobjekten
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/book/isbn/\{isbn}`
+
+h| Request Methode
+2+| GET
+
+.2+h| Response Code
+| 204
+| Wird gesendet, wenn erfolgreich gelöscht
+| 404
+| Wird gesendet, wenn ISBN nicht existiert
+
+h| Response Body Format
+2+| JSON
+
+h| Datenformat
+2+| Buchobjekt
+|====
+
+====
+.Beispiel
+*Request:*
+[source,http request]
+----
+GET http://localhost:8080/book-app/api/v1/book/isbn/978-3-15-006172-5
+----
+*Response:*
+[source,json]
+----
+{
+  "title": "ROMEO UND JULIA AUF DEM DORFE",
+  "isbn": "978-3-15-006172-5",
+  "author": {
+    "id": 6,
+    "first_name": "GOTTFRIED",
+    "last_name": "KELLER"
+  },
+  "publisher": "RECLAM",
+  "year": 1998
+}
+----
+
+
+====
+
+==== Bestimmte Bücher entfernen
+
+
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht die Löschung eines Buchobjektes mit gegebener ISBN
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/book/isbn/\{isbn}`
+
+h| Request Methode
+2+| DELETE
+
+.2+h| Response Code
+| 204
+| Wird gesendet, wenn erfolgreich gelöscht
+| 404
+| Wird gesendet, wenn die angegebene Ressource nicht existiert
+
+h| Response Body Format
+2+| leer
+
+h| Datenformat
+2+^| -
+|====
+
+====
+.Beispiel
+*Request:*
+[source,http request]
+----
+DELETE http://localhost:8080/book-app/api/v1/book/isbn/5555-555-555-5
+----
+====
 
 
 [cols=3*, frame=topbot, grid=cols]
@@ -447,6 +701,8 @@ h| Datenformat
 | `DELETE`
 | `/book/author/id/\{Autor_ID}`
 |====
+
+
 
 ====
 .Beispiel 1

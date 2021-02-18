@@ -2,19 +2,17 @@
 OPTIONS http://localhost:8080/book_manager_war_exploded/api/v1/book/
 
 ###
-PUT http://localhost:8080/book_manager_war_exploded/api/v1/book/
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/book/isbn/5555-55
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/12
-accept: application/json
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/34
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/book/isbn/978-3-15-006172-5
 accept: application/json
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/author/author_id/34
-
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/200
 ###
 POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
 content-type: application/json
