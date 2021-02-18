@@ -26,6 +26,27 @@ Der Anwender kann in der Bücherverwaltungsapplikation folgende Aufgaben erledig
 - vorhandene Büchereinträge löschen
 - vorhandene Autoreneinträge löschen
 
+=== Erwähnenswertes
+Die Projektidee ist im ersten Jahr der Ausbildung entstanden, um bereits gelernte Java Kenntnisse in einem Projekt einzubringen und weiterzuentwickeln. +
+Begonnen hat das Projekt dabei mit einer einfachen Konsolenanwendung, da zu diesem Zeitpunkt erst die Java Grundkenntnisse erlernt werden mussten. +
+Die Konsolenanwendung hat die gleichen Programmstrukturen und -funktionen, allerdings ohne eine Web-UI. +
+Die Anwendung kann im `cmd/app` Branch in GitLab angeschaut werden. +
+Aufbauend auf den bereits erstellten Datenstrukturen ist die Web-Applikation und später die dazugehörige API entstanden.
+
+.geschätzter zeitlicher Aufwand
+[cols=3*]
+|====
+h| Konsolen-Applikation
+h| Web-Applikation
+h| RESTful API
+| ~ 120h
+| ~ 100h
+| ~ 50h
+3+^s| Gesamt: ~270h
+|====
+
+
+
 == Umgebung
 
 === Installation
@@ -269,12 +290,42 @@ h| Response Format
 | JSON
 |====
 
+Es stehen zwei Ressourcen, Buch und Autor, zur Verfügung und die Daten sind nach folgendem Schema aufgebaut:
+[cols=4*, frame= none, grid = all]
+|====
+2+^h| Buch
+2+^h| Autor
+h|Key
+h|Datentyp
+h| Key
+h| Datentyp
+m|title
+|String
+m|first_name
+|String
+m|isbn
+|String
+m|last_name
+|String
+m|publisher
+|String
+m|id
+|int
+m|year
+|int
+m|books
+|List
+m|author
+|Object
+2+|
 
-Die API Endpunkte sind nach drei Kategorien aufgeteilt:
 
-- link:#Suche[Suche]
-- link:#Buecher[Buch]
-- link:#Autoren[Autor]
+
+
+|====
+
+
+Die API Endpunkte können dabei in drei Kategorien unterteilt werden: link:#Suche[Suche], link:#Buecher[Buch] und link:#Autoren[Autor] API.
 
 [#Suche]
 === Suche
@@ -282,10 +333,10 @@ Die API Endpunkte sind nach drei Kategorien aufgeteilt:
 ==== Suche nach Büchern
 
 
-In der Suche API kann im Bücher-endpunkt nach Büchern gesucht werden, und die Suchergebnisse werden als Liste im JSON Format ausgegeben. +
+In der Suche API kann im Bücher-Endpunkt nach Büchern gesucht werden, und die Suchergebnisse werden als Liste im JSON Format ausgegeben. +
 
-Eine Büchersuche über die API gibt *immer* den Status Code `200` aus, auch wenn die Suche grundsätzlich keine Ergebnisse vorweist.
-Leere Ergebnisse werden durch eine leere Liste in der JSON Response gekennzeichnet.
+Eine Büchersuche über die API gibt *immer* den Status Code `200` aus, auch wenn keine mit der Suchanfrage übereinstimmende Ressourcen gefunden werden.
+Suchanfragen ohne Ergebnisse werden durch eine leere Liste in der JSON Response gekennzeichnet.
 
 
 [cols= 3*, frame=topbot, grid=rows]
@@ -408,7 +459,7 @@ GET http://localhost:8080/book-app/api/v1/search/book/author/goethe
 ==== Suche nach Autoren
 
 Im Autoren-Endpunkt der Suche API kann speziell nach Autoren gesucht werden. +
-Im Vergleich zur Suche nach Büchern wird bei der Autorensuche eine JSON-Liste nach Autorobjekten ausgegeben. +
+Im Vergleich zur Suche nach Büchern wird bei der Autorensuche eine JSON-Liste von Autorobjekten ausgegeben. +
 Genauso wie beim Buch-Endpunkt der Suche API wird bei der Suche nach Autoren immer der Status Code `200` ausgegeben.
 
 
@@ -496,6 +547,7 @@ GET http://localhost:8080/book-app/api/v1/search/author/friedrich
 [#Buecher]
 === Bücher
 
+
 ==== Alle Bücher ausgeben
 
 [cols= 3*, frame=topbot, grid=rows]
@@ -540,7 +592,7 @@ h| Request Methode
 | 200
 | OK
 | 404
-| Wird gesendet, wenn gegebene ID nicht existiert
+| Wird gesendet, wenn gegebene Ressource nicht existiert
 
 h| Response Body Format
 2+| JSON
@@ -589,6 +641,8 @@ GET http://localhost:8080/book-app/api/v1/book/author/id/21
 
 ==== Bestimmte Bücher ausgeben
 
+Anders als bei der Ausgabe der Bücher nach Autoren, wo es mehrere Bücher geben kann, werden bei diesem Endpunkt die Bücher einzeln als Objekt ausgegeben. Die Selektion findet über die ISBN statt.
+
 
 [cols= 3*, frame=topbot, grid=rows]
 |====
@@ -605,7 +659,7 @@ h| Request Methode
 | 204
 | Wird gesendet, wenn erfolgreich gelöscht
 | 404
-| Wird gesendet, wenn ISBN nicht existiert
+| Wird gesendet, wenn die angegebene Ressource nicht existiert.
 
 h| Response Body Format
 2+| JSON
@@ -675,74 +729,47 @@ h| Datenformat
 DELETE http://localhost:8080/book-app/api/v1/book/isbn/5555-555-555-5
 ----
 ====
+[#Buecher_eintragen_API]
+==== Neues Buch hinzufügen
 
-
-[cols=3*, frame=topbot, grid=cols]
+Für einen neuen Bucheintrag ist die Einhaltung der Datenstruktur eines Buches nicht notwendig. Wichtig ist nur, dass alle notwendigen Keys im Body angegeben werden.
+====
+Da die Existenz eines Buches ohne Autor nicht möglich ist, ist die Angabe von `first_name` und `last_name` bei einem Buchobjekt Pflicht. Wenn die angegebenen Informationen nicht zu einem existierenden Autor zugeordnet werden können, wir ein neuer Autoreintrag getätigt.
+====
+[cols= 3*, frame=topbot, grid=rows]
 |====
-^h| Beschreibung
-^h| Methode
-^h| Endpunkt
-| Bücherliste aller Bücher ausgeben
-| `GET`
-| `/book`
-| Neues Buchobjekt hinzufügen
-| `POST`
-| `/book`
-| Buchobjekt mit bestimmter ISBN ausgeben
-| `GET`
-| `/book/isbn/\{isbn}`
-| Buchobjekt mit bestimmter ISBN löschen
-| `DELETE`
-| `/book/isbn/\{isbn}`
-|Bücherliste eines bestimmten Autors ausgeben
-| `GET`
-| `/book/author/id/\{Autor_ID}`
-|Bücherliste eines bestimmten Autors löschen
-| `DELETE`
-| `/book/author/id/\{Autor_ID}`
+h| Beschreibung
+2+| Ermöglicht einen neuen Bucheintrag
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/book/`
+
+h| Request Methode
+2+| POST
+
+.3+h| Response Code
+| 201
+| Wird gesendet, wenn Eintrag erfolgreich war
+| 409
+| Wird gesendet, wenn Eintag aufgrund bereits existierender ISBN nicht möglich ist
+| 400
+| Wird gesendet, wenn nicht alle notwendigen Keys angegeben sind
+
+h| Request Body Format
+2+| JSON
+
+h| Response Body Format
+2+| leer
+
+h| Notwendige Keys
+2+|`fist_name, last_name, title, isbn, publisher, year`
+
 |====
 
 
 
 ====
-.Beispiel 1
-*Request:*
-[source,http request]
-----
-GET http://localhost:8080/book-app/api/v1/book/author/id/12 HTTP/1.1
-----
-*Response:*
-[source,json]
-----
-[
-  {
-    "title": "WILLHELM TELL",
-    "isbn": "978-3-15-000012-0",
-    "author": {
-      "id": 12,
-      "first_name": "FRIEDRICH",
-      "last_name": "SCHILLER"
-    },
-    "publisher": "RECLAM",
-    "year": 2000
-  },
-  {
-    "title": "MARIA STUART",
-    "isbn": "978-3-15-000064-9",
-    "author": {
-      "id": 12,
-      "first_name": "FRIEDRICH",
-      "last_name": "SCHILLER"
-    },
-    "publisher": "RECLAM",
-    "year": 2001
-  }
-]
-----
-====
-
-====
-.Beispiel 2
+.Beispiel
 *Request:*
 [source,http request]
 ----
@@ -763,63 +790,67 @@ content-type: application/json
 [#Autoren]
 === Autoren
 
-[cols= 2*, frame=topbot, grid=rows]
+==== Alle Autoren ausgeben
+
+[cols= 3*, frame=topbot, grid=rows]
 |====
 h| Beschreibung
-| Ermöglicht die Modifizierung und Ausgabe von einzelnen Autoren
+2+| Ermöglicht die Ausgabe aller Autoren, die gespeichert sind
+
 h| Endpunkt URL
-| `\{Root_URL}/api/v1/book/`
+2+| `\{Root_URL}/api/v1/author/`
 
-h| zulässige Methoden
-| GET \| POST \| DELETE \| PUT
+h| Request Methode
+2+| GET
 
-h| Response und Request Format
-| JSON
+h| Response Code
+| 200
+| OK
+
+h| Response Body Format
+2+| JSON
 
 
 h| Datenformat
-| Liste, Objekt
+2+| Liste von Autorobjekten
 |====
 
+==== Bestimmten Autor ausgeben
+
+Ähnlich wie bei der Ausgabe einzelner Buchobjekte nach ISBN wird für die Ausgabe von Informationen zu einem Autor die ID benötigt.
 
 
-[cols=3*, frame=topbot, grid=cols]
+[cols= 3*, frame=topbot, grid=rows]
 |====
-^h| Beschreibung
-^h| Methode
-^h| Endpunkt
-| Autorenliste aller Autoren ausgeben
-| `GET`
-| `/author`
-| Neuen Autor hinzufügen
-| `POST`
-| `/author`
-| Autorobjekt mit bestimmter ID ausgeben
-| `GET`
-| `/author/id/\{Autor_ID}`
-| Autorobjekt mit bestimmter ID löschen
-| `DELETE`
-| `/author/id/\{Autor_ID}`
-| Informationen eines Autorobjekts mit bestimmter ID ändern
-| `PUT`
-| `/author/id/\{Autor_ID}`
+h| Beschreibung
+2+| Ermöglicht die Ausgabe von einzelnen Autorobjekten
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/author/id/\{Autor_ID}`
+
+h| Request Methode
+2+| GET
+
+.2+h| Response Code
+| 204
+| Wird gesendet, wenn erfolgreich gelöscht
+| 404
+| Wird gesendet, wenn die angegebene Ressource nicht existiert.
+
+h| Response Body Format
+2+| JSON
+
+h| Datenformat
+2+| Autorobjekt
 |====
+
 
 ====
-.Beispiel 1
+.Beispiel
 *Request:*
 [source,http request]
 ----
 GET http://localhost:8080/book-app/api/v1/author/id/39
-
-{
-  "first_name": "Safiye",
-  "last_name": "Uzun",
-  "title": "Java",
-  "isbn": "111-222-333",
-  "publisher": "goldmann",
-  "year": "2018"
-}
 ----
 *Response:*
 [source,json]
@@ -839,12 +870,141 @@ GET http://localhost:8080/book-app/api/v1/author/id/39
 }
 ----
 ====
+
+==== Bestimmten Autor entfernen
+
 ====
-.Beispiel 2
+Beim Entfernen von Autoren werden aufgrund der Datenstruktur, dass Bücher nicht ohne Autoren existieren können, automatisch auch die Bücher entfernt, die zu diesem Autor zugeordnet waren.
+====
+
+
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht die Löschung eines Autoreintrages mit gegebener ID
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/author/id/\{Autor_ID}`
+
+h| Request Methode
+2+| DELETE
+
+.2+h| Response Code
+| 204
+| Wird gesendet, wenn erfolgreich gelöscht
+| 404
+| Wird gesendet, wenn die angegebene Ressource nicht existiert
+
+h| Response Body Format
+2+| leer
+
+h| Datenformat
+2+^| -
+|====
+
+====
+.Beispiel
 *Request:*
 [source,http request]
 ----
 DELETE http://localhost:8080/book-app/api/v1/author/id/40
+----
+====
+
+==== Informationen zu einem Autor ändern
+
+
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht eine Änderung von bereits existierenden Autoren
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/author/id/\{Autor_ID}`
+
+h| Request Methode
+2+| PUT
+
+.3+h| Response Code
+| 204
+| Wird gesendet, wenn Änderung erfolgreich war
+| 404
+| Wird gesendet, wenn ID nicht exisitert
+| 400
+| Wird gesendet, wenn ein notwendiger Key fehlt
+
+h| Request Body Format
+2+| JSON
+
+h| Response Body Format
+2+| leer
+
+h| Notwendige Keys
+2+|`fist_name, last_name`
+
+|====
+
+====
+.Beispiel
+[source,http request]
+----
+PUT http://localhost:8080/book-app/api/v1/author/id/40
+
+{
+  "first_name": "Michelle",
+  "last_name": "Obama"
+}
+----
+====
+
+==== Neuen Autor eintragen
+
+
+Für einen neuen Autoreintrag ist keine zusätzliche Eintragung von einem Buch möglich. Dazugehörige Bücher müssen über den Endpunkt link:#Buecher_eintragen_API[Bücher eintragen API] gemacht werden.
+[cols= 3*, frame=topbot, grid=rows]
+|====
+h| Beschreibung
+2+| Ermöglicht einen neuen Bucheintrag
+
+h| Endpunkt URL
+2+| `\{Root_URL}/api/v1/autor/`
+
+h| Request Methode
+2+| POST
+
+.3+h| Response Code
+| 201
+| Wird gesendet, wenn Eintrag erfolgreich war
+| 409
+| Wird gesendet, wenn Eintag aufgrund bereits existierenden Autors nicht möglich ist
+| 400
+| Wird gesendet, wenn nicht alle notwendigen Keys angegeben sind
+
+h| Request Body Format
+2+| JSON
+
+h| Response Body Format
+2+| leer
+
+h| Notwendige Keys
+2+|`fist_name, last_name`
+
+|====
+
+
+
+====
+.Beispiel
+*Request:*
+[source,http request]
+----
+POST http://localhost:8080/book-app/api/v1/author/
+content-type: application/json
+
+{
+  "first_name": "Safiye",
+  "last_name": "Uzun"
+}
 ----
 ====
 
