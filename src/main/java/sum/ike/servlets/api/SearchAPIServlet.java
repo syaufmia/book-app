@@ -17,7 +17,6 @@ import java.io.IOException;
 @WebServlet
 public class SearchAPIServlet extends HttpServlet {
 
-
     FileManager fm = new FileManager();
     AuthorDao aDao = new AuthorDao();
     BookDao bDao = new BookDao();
@@ -28,6 +27,7 @@ public class SearchAPIServlet extends HttpServlet {
 
     @Override
     protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setHeader("Allow", "OPTIONS, GET, HEAD");
     }
 
@@ -37,6 +37,7 @@ public class SearchAPIServlet extends HttpServlet {
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
@@ -84,13 +85,16 @@ public class SearchAPIServlet extends HttpServlet {
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setHeader("Allow", "OPTIONS, GET, HEAD");
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+
 
     }
 
     @Override
     protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setHeader("Allow", "OPTIONS, GET, HEAD");
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 
@@ -98,6 +102,7 @@ public class SearchAPIServlet extends HttpServlet {
 
     @Override
     protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setHeader("Allow", "OPTIONS, GET, HEAD");
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }

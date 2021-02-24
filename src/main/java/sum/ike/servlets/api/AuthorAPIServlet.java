@@ -35,6 +35,8 @@ public class AuthorAPIServlet extends HttpServlet {
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
@@ -65,6 +67,7 @@ public class AuthorAPIServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         String[] uri = helper.getSubURI(req);
@@ -99,6 +102,7 @@ public class AuthorAPIServlet extends HttpServlet {
     protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         String[] uri = helper.getSubURI(req);
@@ -138,6 +142,8 @@ public class AuthorAPIServlet extends HttpServlet {
 
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 
 
         resp.setCharacterEncoding("UTF-8");

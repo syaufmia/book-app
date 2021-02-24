@@ -39,6 +39,7 @@ public class BookAPIServlet extends HttpServlet {
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 
         String[] uri = helper.getSubURI(req);
         switch (uri.length) {
@@ -79,6 +80,7 @@ public class BookAPIServlet extends HttpServlet {
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         String[] uri = helper.getSubURI(req);
@@ -114,12 +116,14 @@ public class BookAPIServlet extends HttpServlet {
         }
     }
 
+
     @Override
     protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
@@ -146,5 +150,3 @@ public class BookAPIServlet extends HttpServlet {
     }
 
 }
-
-
