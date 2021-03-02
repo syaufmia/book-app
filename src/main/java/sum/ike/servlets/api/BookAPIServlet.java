@@ -29,6 +29,9 @@ public class BookAPIServlet extends HttpServlet {
     @Override
     protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
         resp.setHeader("Allow", "OPTIONS, GET, HEAD, POST, DELETE");
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        resp.setHeader("Access-Control-Allow-Methods", "POST");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 
     @Override
@@ -80,7 +83,11 @@ public class BookAPIServlet extends HttpServlet {
         aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        resp.setHeader("Access-Control-Allow-Methods", "POST");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+        resp.addHeader("Allow", "POST");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         String[] uri = helper.getSubURI(req);
@@ -108,7 +115,22 @@ public class BookAPIServlet extends HttpServlet {
                 fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                 fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
                 resp.setStatus(HttpServletResponse.SC_CREATED);
-            } else {
+            }
+            else if (json.has("id")
+                    && json.has("title")
+                    && json.has("isbn")
+                    && json.has("publisher")
+                    && json.has("year")
+                    && json.get("year").getAsString().matches("\\d++")) {
+                bDao.addNew(Integer.parseInt(json.get("id").getAsString()),
+                        json.get("isbn").getAsString(),
+                        json.get("title").getAsString(),
+                        json.get("publisher").getAsString(),
+                        Integer.parseInt(json.get("year").getAsString()));
+                fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+                fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            }else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 }
         } else {
