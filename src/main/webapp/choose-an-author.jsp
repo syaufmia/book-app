@@ -17,7 +17,7 @@
         <p class="grey"> ${sentence} </p>
 
         <form class="form" name="select-author" action= "${pageContext.request.contextPath}/added-book/" method="POST">
-            <table class="form-table"border="0">
+            <table class="form-table">
 
             <%
             out.println(request.getAttribute("html-text"));

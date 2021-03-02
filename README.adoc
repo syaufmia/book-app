@@ -964,7 +964,7 @@ Für einen neuen Autoreintrag ist keine zusätzliche Eintragung von einem Buch m
 [cols= 3*, frame=topbot, grid=rows]
 |====
 h| Beschreibung
-2+| Ermöglicht einen neuen Bucheintrag
+2+| Ermöglicht einen neuen Autoreintrag
 
 h| Endpunkt URL
 2+| `\{Root_URL}/api/v1/autor/`

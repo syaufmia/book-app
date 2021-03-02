@@ -14,25 +14,41 @@
     <div class="text-box">
         <h1>Welchen Autor möchtest du löschen?</h1>
         <p>Wähle eine Option.</p>
-        <p class="red">${message}</p>
-        <p class="grey"> ${sentence} </p>
+        <p class="red">${requestScope.message}</p>
+        <p class="grey"> ${requestScope.sentence} </p>
 
         <form class="form" name="select-author" action= "${pageContext.request.contextPath}/deleted-author/" method="POST">
-            <table class="form-table"border="0">
+            <table class="form-table">
 
-                ${requestScope.htmltext}
+                <c:forEach var= "author" items="${requestScope.authorSearchList}">
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="radio" name="selected" value="${author.authorID}" size="100" checked="checked" />
+                            </label>
+
+                        </td>
+                        <td> <label>
+
+                                ${author.firstName}
+                                ${author.lastName}
+                        </label>
+                        </td>
+                    </tr>
+                </c:forEach>
+
+<%--                ${requestScope.htmltext}--%>
 
 
             </table>
             <p class="grey">
                 Wähle einen Autor aus oder gib einen neuen Autor ein. </p>
-            <input type="hidden" name="name" value="${name}">
+<%--            <input type="hidden" name="name" value="${requestScope.name}">--%>
             <input class="button" type="submit" value="Autor auswählen" name="submit" />
-
         </form>
-        <form name="return" action="index.jsp" method="POST">
 
-        <input class="button" type="submit" value="Zurück zu Anfang" name="submit" />
+        <form name="return" action="index.jsp" method="POST">
+            <input class="button" type="submit" value="Zurück zu Anfang" name="submit" />
         </form>
     </div>
 

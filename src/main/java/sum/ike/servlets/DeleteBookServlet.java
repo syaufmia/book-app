@@ -59,8 +59,14 @@ public class DeleteBookServlet extends HttpServlet {
                 }
             }
 
-            req.setAttribute("searchList", filteredList);
-            getServletContext().getRequestDispatcher("/delete-book.jsp").forward(req, resp);
+            if (!filteredList.isEmpty()) {
+                req.setAttribute("searchList", filteredList);
+                getServletContext().getRequestDispatcher("/delete-book.jsp").forward(req, resp);
+            }
+            else {
+                req.setAttribute("message", "Es gibt keine Ergebnisse für dieses Buch.");
+                doGet(req, resp);
+            }
         }
         else if (selected != null){
 

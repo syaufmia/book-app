@@ -28,7 +28,9 @@
             <table class="form-table">
                 <tr>
                     <td>Suchbegriff: </td>
-                    <td><input class="text-field" type="text" name="word" value="" size="50" /> </td>
+                    <td><label>
+                        <input class="text-field" type="text" name="word" value="" size="50" />
+                    </label></td>
                 </tr>
             </table>
             <p class="grey"><i>

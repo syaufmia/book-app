@@ -10,8 +10,8 @@
 <main>
     <div class="text-box">
         <h1>Welchen Autor möchtest du löschen?</h1>
-        <p class="red">${message}</p>
-        <p class="grey"> ${sentence} </p>
+        <p class="red">${requestScope.message}</p>
+        <p class="grey"> ${requestScope.sentence} </p>
         <p>Suche nach dem Autor, den du aus meiner Bibliothek entfernen möchtest. </p>
 
         <p>
@@ -20,7 +20,9 @@
             <table class="form-table">
                     <tr>
                         <td>Name: </td>
-                        <td><input class="text-field" type="text" name="name" value="" size="50" /> </td>
+                        <td><label>
+                            <input class="text-field" type="text" name="name" value="" size="50" />
+                        </label></td>
                     </tr>
             </table>
             <p class="grey"><i>

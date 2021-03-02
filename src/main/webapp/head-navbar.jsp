@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css" />
 </head>
 
@@ -36,5 +36,3 @@
     </ul>
 
 </nav>
-
-

@@ -13,6 +13,6 @@
 </head>
 <body>
 Ups! Etwas ist schiefgelaufen.
-Bitte gehe<a href="index.jsp">zurück zur Startseite</a>.
+Bitte gehe <a href="index.jsp">zurück zur Startseite</a>.
 </body>
 </html>
