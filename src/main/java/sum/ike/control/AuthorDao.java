@@ -5,6 +5,7 @@ import sum.ike.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AuthorDao {
     private final static List<Author> al = new ArrayList<>();
@@ -221,7 +222,7 @@ public class AuthorDao {
         List<Author> searchForList = new ArrayList<>();
         for (String str : name.toUpperCase().split(" ")) {
             for (Author author : al) {
-                if (author.getFirstName().contains(str) || author.getLastName().contains(str)) {
+                if (author.getFirstName().toUpperCase(Locale.ROOT).contains(str) || author.getLastName().toUpperCase(Locale.ROOT).contains(str)) {
                     if (!(searchForList.contains(author))) {
                         searchForList.add(author);
                     }

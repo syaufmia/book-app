@@ -1,5 +1,7 @@
 package sum.ike.model;
 
+import sum.ike.control.StringTrimmer;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -19,17 +21,17 @@ public class Book implements Serializable {
     public Book (String isbn, String title, String publisher, int publishedYear) {
         this.authorID = 0; //when a book is created, the AuthorID is 0 -> until the book is added to the list
         this.isbn = isbn;
-        this.title = title.toUpperCase();
-        this.publisher = publisher.toUpperCase();
+        this.title = StringTrimmer.trim(title);
+        this.publisher = StringTrimmer.trim(publisher);
         this.publishedYear = publishedYear;
     }
     //end::bookConstructor[]
 
     public Book (int authorID, String isbn, String title, String publisher, int publishedYear) {
         this.authorID = authorID;
-        this.title = title;
+        this.title = StringTrimmer.trim(title);
         this.isbn = isbn;
-        this.publisher = publisher;
+        this.publisher = StringTrimmer.trim(publisher);
         this.publishedYear = publishedYear;
     }
 
@@ -84,7 +86,7 @@ public class Book implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Book) {
-            return (this.isbn.equals(((Book) o).isbn));
+            return (this.isbn.equalsIgnoreCase(((Book) o).isbn));
         }
         else {
             return false;

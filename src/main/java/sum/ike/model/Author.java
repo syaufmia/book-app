@@ -1,5 +1,7 @@
 package sum.ike.model;
 
+import sum.ike.control.StringTrimmer;
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Locale;
@@ -19,15 +21,15 @@ public class Author implements Serializable {
     //tag::Constructor[]
     public Author (String firstName, String lastName) {
         this.authorID = authorIDCounter++;
-        this.firstName = firstName.toUpperCase(Locale.ROOT);
-        this.lastName = lastName.toUpperCase(Locale.ROOT);
+        this.firstName = StringTrimmer.trim(firstName);
+        this.lastName = StringTrimmer.trim(lastName);
     }
     //end::Constructor[]
 
     public Author (int authorID, String firstName, String lastName) {
         this.authorID = authorID;
-        this.firstName = firstName.toUpperCase(Locale.ROOT);
-        this.lastName = lastName.toUpperCase(Locale.ROOT);
+        this.firstName = StringTrimmer.trim(firstName);
+        this.lastName = StringTrimmer.trim(lastName);
     }
 
     //tag::setAuthorIDCounter[]

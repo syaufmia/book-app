@@ -28,6 +28,13 @@ public class AuthorAPIServlet extends HttpServlet {
 
     APIHelperServlet helper = new APIHelperServlet();
 
+    @Override
+    protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD, POST, DELETE, PUT");
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        resp.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, DELETE, HEAD, PUT");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
 
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
