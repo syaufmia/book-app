@@ -7,12 +7,15 @@ import sum.ike.control.FileManager;
 import sum.ike.control.connector.AuthorConverter;
 
 import sum.ike.control.connector.BookConverter;
+import sum.ike.model.Author;
 import sum.ike.model.Book;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet
 public class SearchAPIServlet extends HttpServlet {
@@ -48,6 +51,29 @@ public class SearchAPIServlet extends HttpServlet {
             case 6:
                 if (helper.compareSubURITo(req, 4, "author")) {
                     resp.getWriter().println(gson.toJson(aCon.convert(aDao.searchFor(uri[5]))));
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                }
+                else if (helper.compareSubURITo(req, 4, "book")) {
+                    List<Book> filteredList = new ArrayList<>(bDao.getFilteredList(uri[5], Book.Attribute.TITLE));
+
+                    for (Book b : bDao.getFilteredList(uri[5], Book.Attribute.ISBN)) {
+                        if (!filteredList.contains(b)) {
+                            filteredList.add(b);
+                        }
+                    }
+                    for (Book b : bDao.getFilteredList(uri[5], Book.Attribute.PUBLISHER)) {
+                        if (!filteredList.contains(b)) {
+                            filteredList.add(b);
+                        }
+                    }
+                    for (Author a : aDao.searchFor(uri[5])) {
+                        for (Book b : bDao.getListOfAuthor(a)) {
+                            if (!filteredList.contains(b)) {
+                                filteredList.add(b);
+                            }
+                        }
+                    }
+                    resp.getWriter().println(gson.toJson(bCon.convert(filteredList)));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 }
                 else {

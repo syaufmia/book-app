@@ -2,6 +2,9 @@
 GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/friedrich
 
 ###
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/schiller
+
+###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/aaa
 
 ###
@@ -35,4 +38,3 @@ content-type: application/json
   "first_name": "Michelle",
   "last_name": "Obama"
 }
-
