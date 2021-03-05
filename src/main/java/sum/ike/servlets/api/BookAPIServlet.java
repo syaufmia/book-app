@@ -30,7 +30,7 @@ public class BookAPIServlet extends HttpServlet {
     protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
         resp.setHeader("Allow", "OPTIONS, GET, HEAD, POST, DELETE");
         resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        resp.setHeader("Access-Control-Allow-Methods", "POST");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, DELETE");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 
@@ -106,15 +106,20 @@ public class BookAPIServlet extends HttpServlet {
                     && json.has("publisher")
                     && json.has("year")
                     && json.get("year").getAsString().matches("\\d++")) {
-                bDao.addNew(json.get("first_name").getAsString(),
-                        json.get("last_name").getAsString(),
-                        json.get("isbn").getAsString(),
-                        json.get("title").getAsString(),
-                        json.get("publisher").getAsString(),
-                        Integer.parseInt(json.get("year").getAsString()));
-                fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-                fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
-                resp.setStatus(HttpServletResponse.SC_CREATED);
+                if (!bDao.containsIsbn(json.get("isbn").getAsString())) {
+                    bDao.addNew(json.get("first_name").getAsString(),
+                            json.get("last_name").getAsString(),
+                            json.get("isbn").getAsString(),
+                            json.get("title").getAsString(),
+                            json.get("publisher").getAsString(),
+                            Integer.parseInt(json.get("year").getAsString()));
+                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+                    fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
+                }
+                else {
+                    resp.sendError(HttpServletResponse.SC_CONFLICT);
+                }
             }
             else if (json.has("id")
                     && json.has("title")
@@ -122,14 +127,20 @@ public class BookAPIServlet extends HttpServlet {
                     && json.has("publisher")
                     && json.has("year")
                     && json.get("year").getAsString().matches("\\d++")) {
-                bDao.addNew(Integer.parseInt(json.get("id").getAsString()),
-                        json.get("isbn").getAsString(),
-                        json.get("title").getAsString(),
-                        json.get("publisher").getAsString(),
-                        Integer.parseInt(json.get("year").getAsString()));
-                fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-                fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
-                resp.setStatus(HttpServletResponse.SC_CREATED);
+                if (!bDao.containsIsbn(json.get("isbn").getAsString())) {
+                    bDao.addNew(Integer.parseInt(json.get("id").getAsString()),
+                            json.get("isbn").getAsString(),
+                            json.get("title").getAsString(),
+                            json.get("publisher").getAsString(),
+                            Integer.parseInt(json.get("year").getAsString()));
+                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+                    fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
+                }
+                else {
+                    resp.sendError(HttpServletResponse.SC_CONFLICT);
+                }
+
             }else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 }
@@ -146,6 +157,7 @@ public class BookAPIServlet extends HttpServlet {
         bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD, POST, DELETE");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
