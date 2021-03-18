@@ -5,10 +5,7 @@ import bk.set.Author;
 import bk.set.Book;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FileManager {
 
@@ -20,8 +17,8 @@ public class FileManager {
 
     static final String AUTHOR_TABLE_HEADER_ROW = "AuthorID,Vorname,Nachname";
     static final String BOOK_TABLE_HEADER_ROW = "AuthorID,Titel,ISBN,Verlag,Erscheinungsjahr";
-    static final String AUTHOR_TABLE_PATH = "C:\\dev\\projects\\buchverwaltung\\src\\main\\resources\\AuthorTest.csv";
-    static final String BOOK_TABLE_PATH = "C:\\dev\\projects\\buchverwaltung\\src\\main\\resources\\BookTest.csv";
+    static final String AUTHOR_TABLE_FILE_NAME = "AuthorTest.csv";
+    static final String BOOK_TABLE_FILE_NAME = "BookTest.csv";
 
     //TODO: CHECK WRITE AND READ KEY:VALUE PAIR ON JSON FILE
 
@@ -72,12 +69,18 @@ public class FileManager {
 //        return readingList;
 //    }
 
+    private File getFile (String fileName) {
+        return new File(Objects.requireNonNull(FileManager.class.getClassLoader().getResource(fileName)).getPath());
+    }
+
+
 
 
     public void writeAuthorMapToCSV (Map<Integer, Author> map, String path, String header) {
-        File filePath = new File(path);
+        File filePath = null;
 
         try {
+            filePath = getFile(path);
             FileWriter fw = new FileWriter (filePath);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(header);
@@ -97,11 +100,12 @@ public class FileManager {
     }
 
     public void writeObjectFileCSV (List<Object> writingList, String path, String header) {
-        File filePath = new File(path);
+        File filePath = null;
         this.writingList.clear();
         this.writingList = writingList;
 
         try {
+            filePath = getFile(path);
             FileWriter fw = new FileWriter (filePath);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(header);
@@ -120,8 +124,9 @@ public class FileManager {
 
     public List<String[]> readCSVFileAsObjects (String path) {
         readingList.clear();
-        File filePath = new File(path);
+        File filePath = null;
         try {
+            filePath = getFile(path);
             FileReader fr = new FileReader(filePath);
             BufferedReader br = new BufferedReader(fr);
             br.readLine();

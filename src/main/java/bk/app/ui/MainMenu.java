@@ -24,8 +24,8 @@ public class MainMenu {
         AuthorDao aDao = new AuthorDao();
 
 
-        aDao.importData(fm.readCSVFileAsObjects(FileManager.AUTHOR_TABLE_PATH));
-        bDao.importData(fm.readCSVFileAsObjects(FileManager.BOOK_TABLE_PATH));
+        aDao.importData(fm.readCSVFileAsObjects(FileManager.AUTHOR_TABLE_FILE_NAME));
+        bDao.importData(fm.readCSVFileAsObjects(FileManager.BOOK_TABLE_FILE_NAME));
 
         aDao.setAuthorCounterToMax(); //IMPORTANT: lastly we set the counter for the ID to the max number in author list
         System.out.println(bDao.getAll());
@@ -66,8 +66,8 @@ public class MainMenu {
                     selection = sm.getScanInputNum();
                     break;
                 case MenuSelection.EXIT_APP:
-                    fm.writeObjectFileCSV(bDao.exportData(),FileManager.BOOK_TABLE_PATH, FileManager.BOOK_TABLE_HEADER_ROW);
-                    fm.writeObjectFileCSV(aDao.exportData(), FileManager.AUTHOR_TABLE_PATH, FileManager.AUTHOR_TABLE_HEADER_ROW);
+                    fm.writeObjectFileCSV(bDao.exportData(),FileManager.BOOK_TABLE_FILE_NAME, FileManager.BOOK_TABLE_HEADER_ROW);
+                    fm.writeObjectFileCSV(aDao.exportData(), FileManager.AUTHOR_TABLE_FILE_NAME, FileManager.AUTHOR_TABLE_HEADER_ROW);
                     System.out.println("Changes saved.");
                     System.out.println("Thanks for using the app!");
                     exitGame = true;
@@ -75,4 +75,3 @@ public class MainMenu {
         }
     }
 }
-

@@ -18,8 +18,8 @@ public class TestMain {
 
 
 
-        aDao.importData(fm.readCSVFileAsObjects(FileManager.AUTHOR_TABLE_PATH));
-        bDao.importData(fm.readCSVFileAsObjects(FileManager.BOOK_TABLE_PATH));
+        aDao.importData(fm.readCSVFileAsObjects(FileManager.AUTHOR_TABLE_FILE_NAME));
+        bDao.importData(fm.readCSVFileAsObjects(FileManager.BOOK_TABLE_FILE_NAME));
 
         lc.setBookMap();
         System.out.println(lc.getBookMap());
