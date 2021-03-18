@@ -1,31 +1,31 @@
 package bk.app;
 
+import bk.app.ui.FileManager;
 import bk.control.setcntrl.BookDao;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class ObjectFileManager {
 
-
-    private static final String mainListSource = "C:\\dev\\projects\\buchverwaltung\\src\\main\\java\\bk\\data\\booklist\\completebooklist.ser";
-    private static final String mainListTable = "C:\\dev\\projects\\buchverwaltung\\src\\main\\java\\bk\\data\\csvfiles\\completebooklist.csv";
-
-    File file = new File(mainListSource);
-    File file2 = new File(mainListTable);
-
+    private File getFile (String fileName) {
+        return new File(Objects.requireNonNull(FileManager.class.getClassLoader().getResource(fileName)).getPath());
+    }
 
     private List <Object> writingList = new ArrayList<>();
     private List <Object> readingList = new ArrayList<>();
 
 
     public void writeObjectFile (List<Object> writingList, String path) {
+        File file = null;
         this.writingList.clear();
         this.writingList = writingList;
 
         try {
+            file = new File(path);
             FileOutputStream fileOut = new FileOutputStream(path);
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
             for (Object o : writingList) {
@@ -40,10 +40,12 @@ public class ObjectFileManager {
 
     }
 
-
     public List<Object> readObjectFile (String path) {
+        readingList.clear();
+        File file;
         Object o;
         try {
+            file = new File(path);
             FileInputStream fileIn = new FileInputStream(path);
             ObjectInputStream objIn = new ObjectInputStream(fileIn);
             try {

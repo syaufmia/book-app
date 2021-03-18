@@ -9,33 +9,33 @@ import bk.control.setcntrl.ListConnector;
 public class TestMain {
 
     public static void main (String[] args) {
-
-        FileManager fm = new FileManager();
-        BookDao bDao = new BookDao();
-        AuthorDao aDao = new AuthorDao();
-        ListConnector lc = new ListConnector();
-
-
-
-
-        aDao.importData(fm.readCSVFileAsObjects(FileManager.AUTHOR_TABLE_FILE_NAME));
-        bDao.importData(fm.readCSVFileAsObjects(FileManager.BOOK_TABLE_FILE_NAME));
-
-        lc.setBookMap();
-        System.out.println(lc.getBookMap());
-
-        lc.setAuthorMap();
-        System.out.println(lc.getAuthorMap());
-
-        System.out.println(lc.getBookMap().get(15));
-        System.out.println(lc.getAuthorMap().get(15));
-        for (Integer key : lc.getBookMap().keySet()) {
-            System.out.println(key);
-        }
-
-
-        fm.writeBookMapToCSV(lc.getBookMap(),"mapTest.csv", FileManager.BOOK_TABLE_HEADER_ROW);
-        fm.writeAuthorMapToCSV(lc.getAuthorMap(), "mapTestAuthor.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+//
+//        FileManager fm = new FileManager();
+//        BookDao bDao = new BookDao();
+//        AuthorDao aDao = new AuthorDao();
+//        ListConnector lc = new ListConnector();
+//
+//
+//
+//
+//        aDao.importData(fm.readCSVFileAsObjects(FileManager.AUTHOR_TABLE_FILE_NAME));
+//        bDao.importData(fm.readCSVFileAsObjects(FileManager.BOOK_TABLE_FILE_NAME));
+//
+//        lc.setBookMap();
+//        System.out.println(lc.getBookMap());
+//
+//        lc.setAuthorMap();
+//        System.out.println(lc.getAuthorMap());
+//
+//        System.out.println(lc.getBookMap().get(15));
+//        System.out.println(lc.getAuthorMap().get(15));
+//        for (Integer key : lc.getBookMap().keySet()) {
+//            System.out.println(key);
+//        }
+//
+//
+//        fm.writeBookMapToCSV(lc.getBookMap(),"mapTest.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+//        fm.writeAuthorMapToCSV(lc.getAuthorMap(), "mapTestAuthor.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
 
 
 
