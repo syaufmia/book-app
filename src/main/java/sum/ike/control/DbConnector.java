@@ -7,7 +7,7 @@ public class DbConnector {
 
     public void connect(SqlQuery query) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bib", "root", "Nora.LDN");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bib", "root", "root");
             Statement state = con.createStatement();
             ResultSet result = state.executeQuery(query.toString() + " author");
             while (result.next()) {
