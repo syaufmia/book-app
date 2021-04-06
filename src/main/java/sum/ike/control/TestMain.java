@@ -8,6 +8,11 @@ public class TestMain {
 
     public static void main(String[] args) {
 
+
+        DbConnector db = new DbConnector();
+
+        db.connect(DbConnector.SqlQuery.SELECT_ALL);
+
 //        User user = new User();
 //        UserDao uDao = new UserDao();
 //
