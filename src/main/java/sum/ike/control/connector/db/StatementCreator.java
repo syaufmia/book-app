@@ -9,9 +9,6 @@ import java.sql.*;
 public class StatementCreator {
 
 
-
-
-
     public void select(Table table) {
 
         AuthorDao aDao = new AuthorDao();

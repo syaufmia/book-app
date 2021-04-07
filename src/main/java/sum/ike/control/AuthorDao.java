@@ -22,7 +22,6 @@ public class AuthorDao {
     }
 
 
-
     public List<Object> exportData () {
         List <Object> savingList = new ArrayList<>();
         if (!al.contains(null)) {
