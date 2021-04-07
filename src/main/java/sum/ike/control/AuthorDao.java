@@ -3,12 +3,21 @@ package sum.ike.control;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class AuthorDao {
     private final static List<Author> al = new ArrayList<>();
+
+    public void getData(ResultSet result) throws SQLException {
+        addNew(result.getInt("author_id"),
+                result.getString("first_name"),
+                result.getString("last_name")
+        );
+    }
 
 
 
