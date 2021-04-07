@@ -13,10 +13,12 @@ public class AuthorDao {
     private final static List<Author> al = new ArrayList<>();
 
     public void getData(ResultSet result) throws SQLException {
-        addNew(result.getInt("author_id"),
-                result.getString("first_name"),
-                result.getString("last_name")
-        );
+        if (!idExists(result.getInt("author_id"))) {
+            addNew(result.getInt("author_id"),
+                    result.getString("first_name"),
+                    result.getString("last_name")
+            );
+        }
     }
 
 

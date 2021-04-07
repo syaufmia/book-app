@@ -1,17 +1,47 @@
 package sum.ike.control;
 
 
-import sum.ike.model.User;
+import sum.ike.control.connector.db.StatementCreator;
+import sum.ike.model.Author;
 
 public class TestMain {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+
+        Author author1 = new Author.Builder().setAuthorID(36).setFirstName("WERNER").setLastName("SIEMENS").build();
+
+        StatementCreator sc = new StatementCreator();
+        sc.select(StatementCreator.Table.AUTHOR);
+        sc.insert(author1);
+        sc.select(StatementCreator.Table.AUTHOR);
+//
+//        AuthorDao aDao = new AuthorDao();
+//        DbConnector db = new DbConnector();
+//        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+//        Statement state = null;
+//        try {
+//            state = con.createStatement();
+//        ResultSet result = state.executeQuery("SELECT * FROM author");
+//
+//        while (result.next()) {
+//            aDao.getData(result);
+//        }
+//
+//        result.close();
+//        state.close();
+//        con.close();
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        for (Author author : aDao.getAll()) {
+//            System.out.println(author);
+//        }
 
 
-        DbConnector db = new DbConnector();
 
-        db.connect(DbConnector.SqlQuery.SELECT_ALL);
 
 //        User user = new User();
 //        UserDao uDao = new UserDao();
