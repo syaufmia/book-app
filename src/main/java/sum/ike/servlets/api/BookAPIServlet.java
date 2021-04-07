@@ -3,11 +3,11 @@ package sum.ike.servlets.api;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import sum.ike.control.AuthorDao;
-import sum.ike.control.BookDao;
-import sum.ike.control.FileManager;
+import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.dao.BookDao;
+import sum.ike.control.utils.FileManager;
 import sum.ike.control.connector.BookConverter;
-import sum.ike.control.connector.db.DbManager;
+import sum.ike.control.db.DbManager;
 
 
 import javax.servlet.*;
@@ -36,7 +36,6 @@ public class BookAPIServlet extends HttpServlet {
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 
-    //TODO: integrate db
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -86,8 +85,11 @@ public class BookAPIServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.BOOK);
+
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setHeader("Access-Control-Allow-Methods", "POST");

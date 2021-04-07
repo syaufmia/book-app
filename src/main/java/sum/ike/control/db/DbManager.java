@@ -1,7 +1,7 @@
-package sum.ike.control.connector.db;
+package sum.ike.control.db;
 
-import sum.ike.control.AuthorDao;
-import sum.ike.control.BookDao;
+import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.dao.BookDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 

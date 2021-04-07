@@ -1,4 +1,4 @@
-package sum.ike.control;
+package sum.ike.control.dao;
 
 import sum.ike.model.User;
 

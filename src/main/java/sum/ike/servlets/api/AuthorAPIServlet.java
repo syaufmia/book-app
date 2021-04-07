@@ -3,11 +3,11 @@ package sum.ike.servlets.api;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import sum.ike.control.AuthorDao;
-import sum.ike.control.BookDao;
-import sum.ike.control.FileManager;
+import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.dao.BookDao;
+import sum.ike.control.utils.FileManager;
 import sum.ike.control.connector.AuthorConverter;
-import sum.ike.control.connector.db.DbManager;
+import sum.ike.control.db.DbManager;
 
 
 import javax.servlet.*;

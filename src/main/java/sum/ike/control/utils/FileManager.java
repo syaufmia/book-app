@@ -1,4 +1,4 @@
-package sum.ike.control;
+package sum.ike.control.utils;
 
 import com.google.gson.Gson;
 

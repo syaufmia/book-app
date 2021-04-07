@@ -1,4 +1,4 @@
-package sum.ike.control.connector.db;
+package sum.ike.control.db;
 
 
 import java.sql.*;

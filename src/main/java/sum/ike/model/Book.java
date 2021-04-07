@@ -1,6 +1,6 @@
 package sum.ike.model;
 
-import sum.ike.control.StringTrimmer;
+import sum.ike.control.utils.StringTrimmer;
 
 import java.io.Serializable;
 import java.util.Comparator;

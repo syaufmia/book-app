@@ -1,5 +1,6 @@
-package sum.ike.control;
+package sum.ike.control.dao;
 
+import sum.ike.control.dao.AuthorDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 

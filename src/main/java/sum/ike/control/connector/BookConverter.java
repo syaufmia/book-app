@@ -1,6 +1,6 @@
 package sum.ike.control.connector;
 
-import sum.ike.control.AuthorDao;
+import sum.ike.control.dao.AuthorDao;
 import sum.ike.model.Book;
 
 import java.util.ArrayList;

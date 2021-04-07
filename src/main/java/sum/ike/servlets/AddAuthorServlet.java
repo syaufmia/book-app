@@ -1,9 +1,9 @@
 package sum.ike.servlets;
 
-import sum.ike.control.AuthorDao;
-import sum.ike.control.BookDao;
-import sum.ike.control.FileManager;
-import sum.ike.control.StringTrimmer;
+import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.dao.BookDao;
+import sum.ike.control.utils.FileManager;
+import sum.ike.control.utils.StringTrimmer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

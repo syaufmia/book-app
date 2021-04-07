@@ -1,8 +1,8 @@
 package sum.ike.servlets;
 
-import sum.ike.control.AuthorDao;
-import sum.ike.control.BookDao;
-import sum.ike.control.FileManager;
+import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.dao.BookDao;
+import sum.ike.control.utils.FileManager;
 import sum.ike.model.Author;
 
 import javax.servlet.ServletException;

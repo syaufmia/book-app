@@ -1,6 +1,6 @@
 package sum.ike.servlets;
 
-import sum.ike.control.UserDao;
+import sum.ike.control.dao.UserDao;
 import sum.ike.model.User;
 
 import javax.servlet.ServletException;

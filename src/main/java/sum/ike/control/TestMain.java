@@ -1,7 +1,9 @@
 package sum.ike.control;
 
 
-import sum.ike.control.connector.db.DbManager;
+import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.dao.BookDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.model.Author;
 
 public class TestMain {
