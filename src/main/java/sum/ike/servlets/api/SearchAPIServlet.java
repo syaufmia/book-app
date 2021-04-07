@@ -7,6 +7,7 @@ import sum.ike.control.FileManager;
 import sum.ike.control.connector.AuthorConverter;
 
 import sum.ike.control.connector.BookConverter;
+import sum.ike.control.connector.db.DbManager;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 
@@ -27,6 +28,7 @@ public class SearchAPIServlet extends HttpServlet {
     Gson gson = new Gson();
     AuthorConverter aCon = new AuthorConverter();
     APIHelperServlet helper = new APIHelperServlet();
+    DbManager dbManager = new DbManager();
 
     @Override
     protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
@@ -34,11 +36,15 @@ public class SearchAPIServlet extends HttpServlet {
         resp.setHeader("Allow", "OPTIONS, GET, HEAD");
     }
 
+
+    //TODO: integrate db
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.BOOK);
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
