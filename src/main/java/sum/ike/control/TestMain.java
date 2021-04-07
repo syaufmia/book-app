@@ -1,7 +1,7 @@
 package sum.ike.control;
 
 
-import sum.ike.control.connector.db.StatementCreator;
+import sum.ike.control.connector.db.DataManager;
 import sum.ike.model.Author;
 
 public class TestMain {
@@ -11,10 +11,23 @@ public class TestMain {
 
         Author author1 = new Author.Builder().setAuthorID(36).setFirstName("WERNER").setLastName("SIEMENS").build();
 
-        StatementCreator sc = new StatementCreator();
-        sc.select(StatementCreator.Table.AUTHOR);
-        sc.insert(author1);
-        sc.select(StatementCreator.Table.AUTHOR);
+        AuthorDao aDao = new AuthorDao();
+        BookDao bDao = new BookDao();
+        DataManager sc = new DataManager();
+
+        sc.selectAll(DataManager.Table.AUTHOR);
+        System.out.println(aDao.getLastAuthor());
+        aDao.addNew(author1.getFirstName(), author1.getLastName());
+        System.out.println(aDao.getLastAuthor());
+
+
+        sc.insertInDB(aDao.getLastAuthor());
+
+
+
+        System.out.println(bDao.getAll());
+
+
 //
 //        AuthorDao aDao = new AuthorDao();
 //        DbConnector db = new DbConnector();

@@ -6,7 +6,7 @@ GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/39
 accept: application/json
 
 ###
-GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/2
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author/id/1
 accept: application/json
 
 ###
@@ -17,8 +17,8 @@ POST http://localhost:8080/book_manager_war_exploded/api/v1/author/
 content-type: application/json
 
 {
-  "first_name": "Michelle",
-  "last_name": "Obama"
+  "first_name": "LEON",
+  "last_name": "Maurer"
 }
 
 ###
@@ -49,9 +49,3 @@ DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/40
 
 ###
 GET http://localhost:8080/book_manager_war_exploded/api/v1/author
-
-
-
-
-
-

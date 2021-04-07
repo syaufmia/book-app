@@ -19,6 +19,7 @@ public class AuthorDao {
                     result.getString("last_name")
             );
         }
+        setAuthorCounterToMax();
     }
 
 
@@ -46,6 +47,10 @@ public class AuthorDao {
 
     public List<Author> getAll () {
         return al;
+    }
+
+    public Author getLastAuthor () {
+        return al.get(al.size()-1);
     }
 
 

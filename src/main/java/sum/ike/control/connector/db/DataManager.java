@@ -1,17 +1,18 @@
 package sum.ike.control.connector.db;
 
 import sum.ike.control.AuthorDao;
+import sum.ike.control.BookDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 
 import java.sql.*;
+import java.util.Locale;
 
-public class StatementCreator {
+public class DataManager {
 
 
-    public void select(Table table) {
+    public void selectAll (Table table) {
 
-        AuthorDao aDao = new AuthorDao();
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
@@ -19,9 +20,21 @@ public class StatementCreator {
             state = con.createStatement();
             ResultSet result = state.executeQuery("SELECT * FROM " + table);
 
-            while (result.next()) {
-                aDao.getData(result);
+            switch (table) {
+                case AUTHOR:
+                    AuthorDao aDao = new AuthorDao();
+                    while (result.next()) {
+                        aDao.getData(result);
+                    }
+                    break;
+                case BOOK:
+                    BookDao bookDao = new BookDao();
+                    while (result.next()) {
+                        bookDao.getData(result);
+                    }
+                    break;
             }
+
 
             result.close();
             state.close();
@@ -29,10 +42,6 @@ public class StatementCreator {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        for (Author author : aDao.getAll()) {
-            System.out.println(author);
         }
     }
 
@@ -48,7 +57,7 @@ public class StatementCreator {
         }
     }
 
-    public void insert(Author author) {
+    public void insertInDB (Author author) {
 
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
@@ -59,9 +68,9 @@ public class StatementCreator {
                     + " VALUES ("
                     + author.getAuthorID()
                     + ", '"
-                    + author.getFirstName()
+                    + author.getFirstName().toUpperCase(Locale.ROOT)
                     + "', '"
-                    + author.getLastName()
+                    + author.getLastName().toUpperCase(Locale.ROOT)
                     + "');");
             state.close();
             con.close();
@@ -74,7 +83,7 @@ public class StatementCreator {
         }
     }
 
-    public void insert(Book book) {
+    public void insertInDB (Book book) {
 
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
@@ -85,11 +94,11 @@ public class StatementCreator {
                     + " VALUES ("
                     + book.getAuthorID()
                     + ", '"
-                    + book.getTitle()
+                    + book.getTitle().toUpperCase(Locale.ROOT)
                     + "', '"
                     + book.getIsbn()
                     + "', '"
-                    + book.getPublisher()
+                    + book.getPublisher().toUpperCase(Locale.ROOT)
                     + "', '"
                     + book.getPublishedYear()
                     + "');");
