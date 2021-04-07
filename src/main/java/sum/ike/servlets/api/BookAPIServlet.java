@@ -7,6 +7,7 @@ import sum.ike.control.AuthorDao;
 import sum.ike.control.BookDao;
 import sum.ike.control.FileManager;
 import sum.ike.control.connector.BookConverter;
+import sum.ike.control.connector.db.DbManager;
 
 
 import javax.servlet.*;
@@ -23,6 +24,7 @@ public class BookAPIServlet extends HttpServlet {
     BookDao bDao = new BookDao();
     Gson gson = new Gson();
     BookConverter bCon = new BookConverter();
+    DbManager dbManager = new DbManager();
 
     APIHelperServlet helper = new APIHelperServlet();
 
@@ -34,11 +36,14 @@ public class BookAPIServlet extends HttpServlet {
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 
+    //TODO: integrate db
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.BOOK);
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -77,6 +82,7 @@ public class BookAPIServlet extends HttpServlet {
     }
 
 
+    //TODO: integrate db
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -150,6 +156,7 @@ public class BookAPIServlet extends HttpServlet {
     }
 
 
+    //TODO: integrate db
     @Override
     protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
@@ -177,6 +184,7 @@ public class BookAPIServlet extends HttpServlet {
         }
     }
 
+    //TODO: integrate db
     @Override
     protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setHeader("Allow", "OPTIONS, GET, HEAD, POST, DELETE");
