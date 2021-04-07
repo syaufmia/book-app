@@ -119,7 +119,9 @@ public class AuthorAPIServlet extends HttpServlet {
     @Override
     protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setCharacterEncoding("UTF-8");
 //        resp.setContentType("application/json");
@@ -132,6 +134,7 @@ public class AuthorAPIServlet extends HttpServlet {
                 && (aDao.idExists(Integer.parseInt(uri[5])))
                 && ((body = helper.getBody(req)) != null)
                 && !body.isEmpty()))) {
+            int ID = Integer.parseInt(uri[5]);
             JsonParser parser = new JsonParser();
             JsonObject json = parser.parse(body).getAsJsonObject();
             if (json.has("first_name") && json.has("last_name")) {
@@ -142,8 +145,9 @@ public class AuthorAPIServlet extends HttpServlet {
                     getServletContext().getRequestDispatcher("/error-page.jsp").forward(req, resp);
                 }
                 else {
-                    aDao.changeAuthor(Integer.parseInt(uri[5]), firstName, lastName);
-                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
+                    aDao.changeAuthor(ID, firstName, lastName);
+                    dbManager.updateAuthor(ID, firstName, lastName);
+//                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
             }

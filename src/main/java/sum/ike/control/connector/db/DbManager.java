@@ -34,8 +34,6 @@ public class DbManager {
                     }
                     break;
             }
-
-
             result.close();
             state.close();
             con.close();
@@ -102,6 +100,27 @@ public class DbManager {
         }
     }
 
+    public void updateAuthor (int ID, String firstName, String lastName) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+
+        try {
+            state = con.createStatement();
+            state.executeUpdate("UPDATE author SET first_name = '"
+                    + firstName.toUpperCase(Locale.ROOT)
+                    + "', last_name = '"
+                    + lastName.toUpperCase(Locale.ROOT)
+                    + "' WHERE author_id = "
+                    + ID + ";");
+            state.close();
+            con.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteAuthor (int ID) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
@@ -114,9 +133,6 @@ public class DbManager {
             state.close();
             con.close();
         }
-//        catch (SQLIntegrityConstraintViolationException e) {
-//            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
-//        }
         catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,9 +150,6 @@ public class DbManager {
                 state.close();
                 con.close();
             }
-//        catch (SQLIntegrityConstraintViolationException e) {
-//            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
-//        }
             catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -154,9 +167,6 @@ public class DbManager {
             state.close();
             con.close();
         }
-//        catch (SQLIntegrityConstraintViolationException e) {
-//            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
-//        }
         catch (SQLException e) {
             e.printStackTrace();
         }
