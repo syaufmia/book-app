@@ -1,7 +1,7 @@
 package sum.ike.control;
 
 
-import sum.ike.control.connector.db.DataManager;
+import sum.ike.control.connector.db.DbManager;
 import sum.ike.model.Author;
 
 public class TestMain {
@@ -13,9 +13,9 @@ public class TestMain {
 
         AuthorDao aDao = new AuthorDao();
         BookDao bDao = new BookDao();
-        DataManager sc = new DataManager();
+        DbManager sc = new DbManager();
 
-        sc.selectAll(DataManager.Table.AUTHOR);
+        sc.selectAll(DbManager.Table.AUTHOR);
         System.out.println(aDao.getLastAuthor());
         aDao.addNew(author1.getFirstName(), author1.getLastName());
         System.out.println(aDao.getLastAuthor());

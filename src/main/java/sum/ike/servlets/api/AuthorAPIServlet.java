@@ -7,7 +7,7 @@ import sum.ike.control.AuthorDao;
 import sum.ike.control.BookDao;
 import sum.ike.control.FileManager;
 import sum.ike.control.connector.AuthorConverter;
-import sum.ike.control.connector.db.DataManager;
+import sum.ike.control.connector.db.DbManager;
 
 
 import javax.servlet.*;
@@ -26,7 +26,7 @@ public class AuthorAPIServlet extends HttpServlet {
     BookDao bDao = new BookDao();
     Gson gson = new Gson();
     AuthorConverter aCon = new AuthorConverter();
-    DataManager dm = new DataManager();
+    DbManager dm = new DbManager();
 
     APIHelperServlet helper = new APIHelperServlet();
 
@@ -43,8 +43,8 @@ public class AuthorAPIServlet extends HttpServlet {
 
 
 
-        dm.selectAll(DataManager.Table.AUTHOR);
-        dm.selectAll(DataManager.Table.BOOK);
+        dm.selectAll(DbManager.Table.AUTHOR);
+        dm.selectAll(DbManager.Table.BOOK);
 
 //        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 //        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
@@ -80,7 +80,7 @@ public class AuthorAPIServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        dm.selectAll(DataManager.Table.AUTHOR);
+        dm.selectAll(DbManager.Table.AUTHOR);
 
         //aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");

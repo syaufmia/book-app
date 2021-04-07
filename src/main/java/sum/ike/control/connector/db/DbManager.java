@@ -8,7 +8,7 @@ import sum.ike.model.Book;
 import java.sql.*;
 import java.util.Locale;
 
-public class DataManager {
+public class DbManager {
 
 
     public void selectAll (Table table) {
