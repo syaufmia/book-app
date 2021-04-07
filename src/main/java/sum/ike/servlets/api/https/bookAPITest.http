@@ -1,5 +1,5 @@
 ###
-OPTIONS http://localhost:8080/book_manager_war_exploded/api/v1/book/
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/
 
 ###
 DELETE http://localhost:8080/book_manager_war_exploded/api/v1/book/isbn/0000-000-000-0
