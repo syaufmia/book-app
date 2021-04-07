@@ -45,19 +45,8 @@ public class DbManager {
         }
     }
 
-    private String insertInto(Table table) {
 
-        switch (table) {
-            case AUTHOR:
-                return "INSERT INTO " + table + " (author_id, first_name, last_name)";
-            case BOOK:
-                return "INSERT INTO " + table + " (author_id, title, isbn, publisher, year)";
-            default:
-                return null;
-        }
-    }
-
-    public void insertInDB (Author author) {
+    public void insertAuthor (Author author) {
 
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
@@ -83,7 +72,7 @@ public class DbManager {
         }
     }
 
-    public void insertInDB (Book book) {
+    public void insertBook (Book book) {
 
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
@@ -104,13 +93,84 @@ public class DbManager {
                     + "');");
             state.close();
             con.close();
-
         }
         catch (SQLIntegrityConstraintViolationException e) {
             System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
         }
         catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteAuthor (int ID) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+
+        try {
+            state = con.createStatement();
+            state.executeUpdate("DELETE FROM author WHERE author_id = "
+                    + ID + ";");
+            state.close();
+            con.close();
+        }
+//        catch (SQLIntegrityConstraintViolationException e) {
+//            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
+//        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+        public void deleteBook (String isbn) {
+            DbConnector db = new DbConnector();
+            Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+            Statement state;
+
+            try {
+                state = con.createStatement();
+                state.executeUpdate("DELETE FROM book WHERE isbn = '"
+                        + isbn +"';");
+                state.close();
+                con.close();
+            }
+//        catch (SQLIntegrityConstraintViolationException e) {
+//            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
+//        }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public void deleteBook (int ID) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+
+        try {
+            state = con.createStatement();
+            state.executeUpdate("DELETE FROM author WHERE author_id = "
+                    + ID +";");
+            state.close();
+            con.close();
+        }
+//        catch (SQLIntegrityConstraintViolationException e) {
+//            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
+//        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String insertInto(Table table) {
+
+        switch (table) {
+            case AUTHOR:
+                return "INSERT INTO " + table + " (author_id, first_name, last_name)";
+            case BOOK:
+                return "INSERT INTO " + table + " (author_id, title, isbn, publisher, year)";
+            default:
+                return null;
         }
     }
 

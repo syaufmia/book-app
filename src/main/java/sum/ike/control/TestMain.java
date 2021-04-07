@@ -9,23 +9,28 @@ public class TestMain {
 
     public static void main(String[] args){
 
-        Author author1 = new Author.Builder().setAuthorID(36).setFirstName("WERNER").setLastName("SIEMENS").build();
+        Author author1 = new Author.Builder().setAuthorID(36).setFirstName("LEON").setLastName("MAURER").build();
 
         AuthorDao aDao = new AuthorDao();
         BookDao bDao = new BookDao();
         DbManager sc = new DbManager();
 
-        sc.selectAll(DbManager.Table.AUTHOR);
-        System.out.println(aDao.getLastAuthor());
-        aDao.addNew(author1.getFirstName(), author1.getLastName());
-        System.out.println(aDao.getLastAuthor());
+//        sc.selectAll(DbManager.Table.AUTHOR);
+//        System.out.println(aDao.getLastAuthor());
+//        aDao.addNew(author1.getFirstName(), author1.getLastName());
+//        System.out.println(aDao.getLastAuthor());
+//
+//
+////        sc.insertInDB(aDao.getLastAuthor());
+//        sc.deleteInDb(36);
+//        System.out.println(aDao.getAll());
 
-
-        sc.insertInDB(aDao.getLastAuthor());
-
-
-
+        sc.selectAll(DbManager.Table.BOOK);
         System.out.println(bDao.getAll());
+
+//        sc.deleteInDb("5555-55");
+
+
 
 
 //

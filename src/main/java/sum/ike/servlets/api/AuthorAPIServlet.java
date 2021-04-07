@@ -26,7 +26,7 @@ public class AuthorAPIServlet extends HttpServlet {
     BookDao bDao = new BookDao();
     Gson gson = new Gson();
     AuthorConverter aCon = new AuthorConverter();
-    DbManager dm = new DbManager();
+    DbManager dbManager = new DbManager();
 
     APIHelperServlet helper = new APIHelperServlet();
 
@@ -43,8 +43,8 @@ public class AuthorAPIServlet extends HttpServlet {
 
 
 
-        dm.selectAll(DbManager.Table.AUTHOR);
-        dm.selectAll(DbManager.Table.BOOK);
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.BOOK);
 
 //        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 //        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
@@ -80,7 +80,7 @@ public class AuthorAPIServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        dm.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.AUTHOR);
 
         //aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
@@ -100,7 +100,7 @@ public class AuthorAPIServlet extends HttpServlet {
                 String lastName = json.get("last_name").getAsString();
                 if (!aDao.authorExists(firstName, lastName)) {
                     aDao.addNew(firstName, lastName);
-                    dm.insertInDB(aDao.getLastAuthor());
+                    dbManager.insertAuthor(aDao.getLastAuthor());
 //                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                     resp.setStatus(HttpServletResponse.SC_CREATED);
                 } else {
@@ -115,6 +115,7 @@ public class AuthorAPIServlet extends HttpServlet {
         }
     }
 
+    //TODO: integrate db
     @Override
     protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -154,11 +155,14 @@ public class AuthorAPIServlet extends HttpServlet {
         }
     }
 
+
     @Override
     protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.BOOK);
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 
@@ -171,10 +175,13 @@ public class AuthorAPIServlet extends HttpServlet {
             if (helper.compareSubURITo(req, 4, "id", "author_id")
                     && helper.subURIisInt(req, 5)
                     && (aDao.idExists(Integer.parseInt(uri[5])))) {
-                aDao.delete(Integer.parseInt(uri[5]));
+                int ID = Integer.parseInt(uri[5]);
+                dbManager.deleteBook(ID);
+                dbManager.deleteAuthor(ID);
+                aDao.delete(ID);
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
-                fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+//                fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv",FileManager.AUTHOR_TABLE_HEADER_ROW);
+//                fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
