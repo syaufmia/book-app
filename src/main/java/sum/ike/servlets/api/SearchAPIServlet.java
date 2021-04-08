@@ -3,14 +3,11 @@ package sum.ike.servlets.api;
 import com.google.gson.Gson;
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
-import sum.ike.control.utils.FileManager;
 import sum.ike.control.connector.AuthorConverter;
-
 import sum.ike.control.connector.BookConverter;
 import sum.ike.control.db.DbManager;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -21,7 +18,6 @@ import java.util.List;
 @WebServlet
 public class SearchAPIServlet extends HttpServlet {
 
-    FileManager fm = new FileManager();
     AuthorDao aDao = new AuthorDao();
     BookDao bDao = new BookDao();
     BookConverter bCon = new BookConverter();
@@ -32,8 +28,7 @@ public class SearchAPIServlet extends HttpServlet {
 
     @Override
     protected void doOptions (HttpServletRequest req, HttpServletResponse resp) {
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        setAllowAccessHeader(resp);
     }
 
 
@@ -41,15 +36,11 @@ public class SearchAPIServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        setAllowAccessHeader(resp);
+        setContentTypeHeader(resp);
+
         dbManager.selectAll(DbManager.Table.AUTHOR);
         dbManager.selectAll(DbManager.Table.BOOK);
-//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
-
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("application/json");
-
         String[] uri = helper.getSubURI(req);
 
 
@@ -117,25 +108,31 @@ public class SearchAPIServlet extends HttpServlet {
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        setAllowAccessHeader(resp);
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-
-
     }
 
     @Override
     protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        setAllowAccessHeader(resp);
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-
     }
 
     @Override
     protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        setAllowAccessHeader(resp);
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    }
+
+    private void setAllowAccessHeader(HttpServletResponse resp) {
+        resp.setHeader("Allow", "OPTIONS, GET, HEAD");
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        resp.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, HEAD");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
+
+    private void setContentTypeHeader(HttpServletResponse resp) {
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
     }
 }
