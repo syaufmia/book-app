@@ -88,6 +88,10 @@ public class BookDao {
         return b;
     }
 
+    public Book getLastBook () {
+        return bl.get(bl.size()-1);
+    }
+
     public Author getBookAuthor (Book book) {
         AuthorDao aDao = new AuthorDao();
         return (aDao.getAuthorByID(book.getAuthorID()));

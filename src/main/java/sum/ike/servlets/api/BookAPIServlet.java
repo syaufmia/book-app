@@ -81,7 +81,6 @@ public class BookAPIServlet extends HttpServlet {
     }
 
 
-    //TODO: integrate db
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -102,6 +101,7 @@ public class BookAPIServlet extends HttpServlet {
         String body;
 
 
+
         if ((uri.length == 4)
                 && ((body = helper.getBody(req)) != null)
                 && !body.isEmpty()) {
@@ -115,34 +115,42 @@ public class BookAPIServlet extends HttpServlet {
                     && json.has("year")
                     && json.get("year").getAsString().matches("\\d++")) {
                 if (!bDao.containsIsbn(json.get("isbn").getAsString())) {
-                    bDao.addNew(json.get("first_name").getAsString(),
-                            json.get("last_name").getAsString(),
-                            json.get("isbn").getAsString(),
-                            json.get("title").getAsString(),
-                            json.get("publisher").getAsString(),
-                            Integer.parseInt(json.get("year").getAsString()));
-                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-                    fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+                    String firstName = json.get("first_name").getAsString();
+                    String lastName = json.get("last_name").getAsString();
+//                    if (aDao.authorExists(firstName, lastName)) {
+//                        int ID = aDao.getID(firstName, lastName);
+                        bDao.addNew(json.get("first_name").getAsString(),
+                                json.get("last_name").getAsString(),
+                                json.get("isbn").getAsString(),
+                                json.get("title").getAsString(),
+                                json.get("publisher").getAsString(),
+                                Integer.parseInt(json.get("year").getAsString()));
+                        dbManager.insertBook(bDao.getLastBook());
+                        dbManager.insertAuthor(aDao.getAuthorByID(bDao.getLastBook().getAuthorID()));
+                    }
+
+//                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+//                    fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
                     resp.setStatus(HttpServletResponse.SC_CREATED);
-                }
-                else {
-                    resp.sendError(HttpServletResponse.SC_CONFLICT);
-                }
+//                }
             }
             else if (json.has("id")
                     && json.has("title")
                     && json.has("isbn")
                     && json.has("publisher")
                     && json.has("year")
-                    && json.get("year").getAsString().matches("\\d++")) {
-                if (!bDao.containsIsbn(json.get("isbn").getAsString())) {
+                    && json.get("year").getAsString().matches("\\d++")
+                    && json.get("id").getAsString().matches("\\d++")) {
+                if (!bDao.containsIsbn(json.get("isbn").getAsString())
+                        && aDao.idExists(Integer.parseInt(json.get("id").getAsString()))) {
                     bDao.addNew(Integer.parseInt(json.get("id").getAsString()),
                             json.get("isbn").getAsString(),
                             json.get("title").getAsString(),
                             json.get("publisher").getAsString(),
                             Integer.parseInt(json.get("year").getAsString()));
-                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-                    fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+                    dbManager.insertBook(bDao.getLastBook());
+//                    fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+//                    fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
                     resp.setStatus(HttpServletResponse.SC_CREATED);
                 }
                 else {
