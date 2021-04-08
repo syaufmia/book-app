@@ -162,7 +162,7 @@ public class DbManager {
 
         try {
             state = con.createStatement();
-            state.executeUpdate("DELETE FROM author WHERE author_id = "
+            state.executeUpdate("DELETE FROM book WHERE author_id = "
                     + ID +";");
             state.close();
             con.close();

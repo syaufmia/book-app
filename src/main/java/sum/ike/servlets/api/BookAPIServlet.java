@@ -170,8 +170,10 @@ public class BookAPIServlet extends HttpServlet {
     @Override
     protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+        dbManager.selectAll(DbManager.Table.AUTHOR);
+        dbManager.selectAll(DbManager.Table.BOOK);
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.setHeader("Allow", "OPTIONS, GET, HEAD, POST, DELETE");
@@ -183,8 +185,9 @@ public class BookAPIServlet extends HttpServlet {
             if (helper.compareSubURITo(req, 4, "isbn")
                     && (bDao.containsIsbn(uri[5]))) {
                 bDao.delete(bDao.getBook(uri[5]));
+                dbManager.deleteBook(uri[5]);
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+//                fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
