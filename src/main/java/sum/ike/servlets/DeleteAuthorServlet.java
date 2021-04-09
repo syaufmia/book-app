@@ -2,6 +2,7 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.FileManager;
 import sum.ike.model.Author;
 
@@ -23,10 +24,13 @@ public class DeleteAuthorServlet extends HttpServlet {
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FileManager fm = new FileManager();
+//        FileManager fm = new FileManager();
         AuthorDao aDao = new AuthorDao();
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        DbManager dbm = new DbManager();
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.AUTHOR);
 
         String selectedIndex = req.getParameter("selected");
         String name = req.getParameter("name");
@@ -36,15 +40,18 @@ public class DeleteAuthorServlet extends HttpServlet {
 
 
         if (selectedIndex != null) {
+            int ID = Integer.parseInt(selectedIndex);
             BookDao bDao = new BookDao();
-            Author selectedAuthor = aDao.getAuthorByID(Integer.parseInt(selectedIndex));
-            //TODO: METHOD FOR DELETING BOOK BY ID!
-            aDao.delete(Integer.parseInt(selectedIndex));
-            System.out.println(selectedAuthor);
+//            Author selectedAuthor = aDao.getAuthorByID(ID);
+            aDao.delete(ID);
+//            System.out.println(selectedAuthor);
+
+            dbm.deleteBook(ID);
+            dbm.deleteAuthor(ID);
 
 
-            fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-            fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
+//            fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+//            fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
             req.setAttribute("sentence", "Der Autor und alle dessen Bücher wurden entfernt.");
             doGet(req, resp);
         }

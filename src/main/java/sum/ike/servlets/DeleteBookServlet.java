@@ -2,6 +2,7 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.FileManager;
 
 import sum.ike.model.Author;
@@ -27,11 +28,15 @@ public class DeleteBookServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        FileManager fm = new FileManager();
+//        FileManager fm = new FileManager();
         BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+        DbManager dbm = new DbManager();
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+//
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         String word = req.getParameter("word");
         String selected  = req.getParameter("filtered-book");
@@ -71,8 +76,9 @@ public class DeleteBookServlet extends HttpServlet {
         else if (selected != null){
 
             bDao.delete(bDao.getBook(selected));
+            dbm.deleteBook(selected);
 
-            fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
+//            fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
             req.setAttribute("sentence", "Du hast das Buch erfolgreich gelöscht.");
             doGet(req,resp);
         }
@@ -88,7 +94,6 @@ public class DeleteBookServlet extends HttpServlet {
 //            bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 //            Author selectedAuthor = aDao.searchForAndSelect(name,Integer.parseInt(selectedIndex));
 //
-//            //TODO: METHOD FOR DELETING BOOK BY ID!
 //            aDao.delete(Integer.parseInt(selectedIndex));
 //
 //
