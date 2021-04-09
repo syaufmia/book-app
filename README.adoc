@@ -9,6 +9,11 @@ v1.0, 2021-02-11
 Die Bücherverwaltungsapplikation ist eine Webanwendung, die die Verwaltung von Büchern und Autoren ermöglicht. +
 Die Applikation wird in link:#war_datei_[.war Dateiformat] geliefert und beinhaltet bereits eine kleine Sammlung an Beispielbüchern und -autoren.
 
+====
+*Nachträglich eingebaut:* (09.04.2021) +
+Java FileManager durch mySQL Datenbank ersetzt.
+====
+
 === Zielgruppen
 
 Bei dieser Anwendung handelt es sich um ein Prototyp, welches im Lernprozess der Ausbildung entstanden ist und nur im Rahmen der Ausbildung verwendet werden sollte. +
@@ -34,15 +39,17 @@ Die Anwendung kann im `cmd/app` Branch in GitLab angeschaut werden. +
 Aufbauend auf den bereits erstellten Datenstrukturen ist die Web-Applikation und später die dazugehörige API entstanden.
 
 .geschätzter zeitlicher Aufwand
-[cols=3*]
+[cols=4*]
 |====
 h| Konsolen-Applikation
 h| Web-Applikation
 h| RESTful API
+h| JDBC
 | ~ 120h
 | ~ 100h
 | ~ 50h
-3+^s| Gesamt: ~270h
+| ~ 20h
+4+^s| Gesamt: ~290h
 |====
 
 
