@@ -3,11 +3,8 @@ package sum.ike.servlets;
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Author;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,24 +17,17 @@ public class AddBookServlet extends HttpServlet {
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         getServletContext().getRequestDispatcher("/add-book.jsp").forward(req, resp);
-
     }
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        FileManager fm = new FileManager();
         BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
         DbManager dbm = new DbManager();
 
         dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.AUTHOR);
-
-//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
-//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-
-
 
         String selectedIndex = req.getParameter("filtered-author");
         String titel = req.getParameter("titel");
@@ -59,7 +49,6 @@ public class AddBookServlet extends HttpServlet {
             Author selectedAuthor = aDao.searchForAndSelect(name,Integer.parseInt(selectedIndex));
             bDao.addNew(selectedAuthor.getFirstName(), selectedAuthor.getLastName(), isbn, titel, publisher, year);
             dbm.insertBook(bDao.getLastBook());
-//            fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
             req.setAttribute("sentence", "Du hast erfolgreich ein neues Buch von " +
                     StringTrimmer.trim(selectedAuthor.toStringNoID()) +
                     " hinzugefügt. ");

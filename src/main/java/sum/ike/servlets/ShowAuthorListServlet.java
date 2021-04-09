@@ -2,10 +2,8 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Author;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +16,10 @@ public class ShowAuthorListServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        FileManager fm = new FileManager();
+
         AuthorDao aDao = new AuthorDao();
         DbManager dbm = new DbManager();
         dbm.selectAll(DbManager.Table.AUTHOR);
-//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-
 
         StringBuilder htmlText = new StringBuilder();
         htmlText.append("<form name=\"sort-table\" action=\"\" method=\"POST\">\n")
@@ -52,13 +48,12 @@ public class ShowAuthorListServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        FileManager fm = new FileManager();
         AuthorDao aDao = new AuthorDao();
-
+        DbManager dbm = new DbManager();
 
         resp.setContentType("text/html;charset=UTF-8");
 
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        dbm.selectAll(DbManager.Table.AUTHOR);
 
         String sortBy = req.getParameter("by");
 

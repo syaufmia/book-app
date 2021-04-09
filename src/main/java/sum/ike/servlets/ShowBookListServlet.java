@@ -3,10 +3,8 @@ package sum.ike.servlets;
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Book;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,6 @@ public class ShowBookListServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        FileManager fm = new FileManager();
         BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
 
@@ -29,10 +26,6 @@ public class ShowBookListServlet extends HttpServlet {
         dbm.selectAll(DbManager.Table.BOOK);
 
         resp.setContentType("text/html;charset=UTF-8");
-//
-//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
-//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-
 
         StringBuilder htmlText = new StringBuilder();
 
@@ -75,13 +68,11 @@ public class ShowBookListServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        FileManager fm = new FileManager();
         BookDao bDao = new BookDao();
-
+        DbManager dbm = new DbManager();
+        dbm.selectAll(DbManager.Table.BOOK);
 
         resp.setContentType("text/html;charset=UTF-8");
-
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         String sortBy = req.getParameter("by");
 
@@ -101,7 +92,5 @@ public class ShowBookListServlet extends HttpServlet {
                 doGet(req, resp);
             }
         }
-
-
     }
 }

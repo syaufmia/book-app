@@ -1,11 +1,8 @@
 package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
-import sum.ike.control.dao.BookDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.control.utils.FileManager;
 import sum.ike.model.Author;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +21,8 @@ public class DeleteAuthorServlet extends HttpServlet {
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        FileManager fm = new FileManager();
         AuthorDao aDao = new AuthorDao();
         DbManager dbm = new DbManager();
-//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
         dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.AUTHOR);
@@ -41,17 +36,11 @@ public class DeleteAuthorServlet extends HttpServlet {
 
         if (selectedIndex != null) {
             int ID = Integer.parseInt(selectedIndex);
-            BookDao bDao = new BookDao();
-//            Author selectedAuthor = aDao.getAuthorByID(ID);
             aDao.delete(ID);
-//            System.out.println(selectedAuthor);
 
             dbm.deleteBook(ID);
             dbm.deleteAuthor(ID);
 
-
-//            fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
-//            fm.writeObjectFileCSV(bDao.exportData(),"BookList.csv",FileManager.BOOK_TABLE_HEADER_ROW);
             req.setAttribute("sentence", "Der Autor und alle dessen Bücher wurden entfernt.");
             doGet(req, resp);
         }
@@ -77,7 +66,6 @@ public class DeleteAuthorServlet extends HttpServlet {
                     } else {
                         req.setAttribute("message", "Es konnte kein Autor unter diesem Namen gefunden werden. ");
                         doGet(req, resp);
-//                        getServletContext().getRequestDispatcher("/search-author.jsp").forward(req, resp);
                     }
 
                 } else {

@@ -3,9 +3,7 @@ package sum.ike.servlets;
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,15 +26,11 @@ public class AddAuthorServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         DbManager dbm = new DbManager();
-        //FileManager fm = new FileManager();
         AuthorDao aDao = new AuthorDao();
         BookDao bDao = new BookDao();
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
 
-//
-//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
@@ -76,7 +70,6 @@ public class AddAuthorServlet extends HttpServlet {
                                 displayText.append("Dieser Author existiert schon in der Bibliothek. ");
                                 req.setAttribute("message", displayText.toString());
                             }
-//                            fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                         }
                         req.setAttribute("actionURL", "added-author");
                         doGet(req, resp);
@@ -131,8 +124,6 @@ public class AddAuthorServlet extends HttpServlet {
                             dbm.insertAuthor(aDao.getLastAuthor());
                         }
                         req.setAttribute("sentence", displayText.toString());
-//                        fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
-//                        fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                         req.setAttribute("actionURL", "added-book");
                         getServletContext().getRequestDispatcher("/add-book.jsp").forward(req, resp);
                     }
