@@ -2,6 +2,7 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Author;
@@ -53,11 +54,16 @@ public class AddBookSearchAuthorServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        FileManager fm = new FileManager();
-        BookDao bDao = new BookDao();
+//        FileManager fm = new FileManager();
+//        BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        DbManager dbm = new DbManager();
+
+        dbm.selectAll(DbManager.Table.AUTHOR);
+//
+//
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
         String name = req.getParameter("name");
 
