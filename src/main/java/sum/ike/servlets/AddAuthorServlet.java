@@ -2,6 +2,7 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 
@@ -26,11 +27,16 @@ public class AddAuthorServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        FileManager fm = new FileManager();
+        DbManager dbm = new DbManager();
+        //FileManager fm = new FileManager();
         AuthorDao aDao = new AuthorDao();
         BookDao bDao = new BookDao();
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+
+//
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
 
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
@@ -62,6 +68,7 @@ public class AddAuthorServlet extends HttpServlet {
                             boolean exists = aDao.authorExists(firstName, lastName);
                             if (!exists) {
                                 aDao.addNew(firstName, lastName);
+                                dbm.insertAuthor(aDao.getLastAuthor());
                                 req.setAttribute("firstName", StringTrimmer.trim(firstName));
                                 req.setAttribute("lastName", StringTrimmer.trim(lastName));
                                 req.setAttribute("sentence", "wurde erfolgreich hinzugefügt. ");
@@ -69,7 +76,7 @@ public class AddAuthorServlet extends HttpServlet {
                                 displayText.append("Dieser Author existiert schon in der Bibliothek. ");
                                 req.setAttribute("message", displayText.toString());
                             }
-                            fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+//                            fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                         }
                         req.setAttribute("actionURL", "added-author");
                         doGet(req, resp);
@@ -114,15 +121,18 @@ public class AddAuthorServlet extends HttpServlet {
                         req.setAttribute("lastName", lastName);
                         if (!added) {
                             //Buch aus existierendem Autor
+                            dbm.insertBook(bDao.getLastBook());
                             displayText.append("Diesen Autor gab es schon. Dein neues Buch wurde dem vorhandenen Autor zugewiesen. ");
                         }
                         else {
                             //Buch aus neuem Autor
                             displayText.append("Du hast erfolgreich ein neues Buch mit einem neuen Autor in meiner Bibliothek gespeichert. ");
+                            dbm.insertBook(bDao.getLastBook());
+                            dbm.insertAuthor(aDao.getLastAuthor());
                         }
                         req.setAttribute("sentence", displayText.toString());
-                        fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
-                        fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
+//                        fm.writeObjectFileCSV(bDao.exportData(), "BookList.csv", FileManager.BOOK_TABLE_HEADER_ROW);
+//                        fm.writeObjectFileCSV(aDao.exportData(), "AuthorList.csv", FileManager.AUTHOR_TABLE_HEADER_ROW);
                         req.setAttribute("actionURL", "added-book");
                         getServletContext().getRequestDispatcher("/add-book.jsp").forward(req, resp);
                     }

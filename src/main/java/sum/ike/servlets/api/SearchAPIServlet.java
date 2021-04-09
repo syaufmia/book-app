@@ -32,7 +32,6 @@ public class SearchAPIServlet extends HttpServlet {
     }
 
 
-    //TODO: integrate db
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

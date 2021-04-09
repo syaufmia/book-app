@@ -2,6 +2,7 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Book;
@@ -18,14 +19,19 @@ public class ShowBookListServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        FileManager fm = new FileManager();
+//        FileManager fm = new FileManager();
         BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
 
-        resp.setContentType("text/html;charset=UTF-8");
+        DbManager dbm = new DbManager();
 
-        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+
+        resp.setContentType("text/html;charset=UTF-8");
+//
+//        bDao.importData(fm.readCSVFileAsObjects("BookList.csv"));
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
 
         StringBuilder htmlText = new StringBuilder();

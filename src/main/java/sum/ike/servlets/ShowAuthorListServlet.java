@@ -1,6 +1,7 @@
 package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
+import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.FileManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Author;
@@ -17,9 +18,11 @@ public class ShowAuthorListServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        FileManager fm = new FileManager();
+//        FileManager fm = new FileManager();
         AuthorDao aDao = new AuthorDao();
-        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
+        DbManager dbm = new DbManager();
+        dbm.selectAll(DbManager.Table.AUTHOR);
+//        aDao.importData(fm.readCSVFileAsObjects("AuthorList.csv"));
 
 
         StringBuilder htmlText = new StringBuilder();
