@@ -1,0 +1,17 @@
+== Feature Bücher ausleihen
+
+=== User Stories
+- Als Nutzer möchte ich Bücher ausleihen, um sie zu lesen
+- Als Nutzer möchte ich meine ausgeliehenen Bücher einsehen können
+- Als Nutzer möchte Bücher vor Ablauf der Abgabefrist abgeben können
+- Als Verwalter der Applikation möchte ich, dass Nutzer nur eine begrenzte Anzahl von Büchern gleichzeitig ausleihen können, damit es noch genug Bücher zum Ausleihen gibt
+- Als Verwalter der Applikation möchte ich, dass sich Nutzer zum Ausleihen erst anmelden müssen, um zu vermeiden, dass sich Unbefugte Bücher ausleihen können
+
+=== Tasks
+- Book Objekte benötigen eine ID
+- Lending als Objekt für Reservierungen
+- LendingDao zum Verwalten der Reservierungen (End Datum mit aktuellem Datum verlgleichen?)
+- Wenn End-Datum bereits vorbei -> Buch wieder verfügbar
+- Lending Datenbank enthält: User (ID), Book (ID), end & start datum
+- User benötigen List<Lending> von Büchern, die sie momentan ausgeliehen haben (d.h. wenn aktuelles Datum zwischen Start- und Enddate -> wenn nicht mehr, liegt Lending in der Vergangenheit)
+- Lending Datenbank enthält Einträge bis zu einer gewissen Zeit (z.B. 2 Wochen lang) und sie werden danach gelöscht
