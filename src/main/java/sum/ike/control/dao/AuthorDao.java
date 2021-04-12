@@ -1,8 +1,6 @@
 package sum.ike.control.dao;
 
 import sum.ike.model.Author;
-import sum.ike.model.Book;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +10,11 @@ import java.util.Locale;
 public class AuthorDao {
     private final static List<Author> al = new ArrayList<>();
 
+    /**
+     * gets Data from a DB ResultSet and sets the authorCounter to
+     * the highest authorId from Database.
+     * Doesn't add author if authorId already in list.
+     */
     public void getData(ResultSet result) throws SQLException {
         if (!authorIdExists(result.getInt("author_id"))) {
             addNew(result.getInt("author_id"),
@@ -22,30 +25,7 @@ public class AuthorDao {
         setAuthorCounterToMax();
     }
 
-
-    public List<Object> exportData () {
-        List <Object> savingList = new ArrayList<>();
-        if (!al.contains(null)) {
-            savingList.addAll(al);
-        }
-        return savingList;
-    }
-
-    //importing from a CSV
-    public void importData (List<String[]> list) {
-        al.clear();
-        for (String[] element : list) {
-            if (element.length == 3) {
-                addNew(Integer.parseInt(element[0]), //each index is column
-                        element[1],
-                        element[2]);
-            }
-        }
-        setAuthorCounterToMax();
-    }
-
-
-    public List<Author> getAll () {
+    public List<Author> getAuthorList () {
         return al;
     }
 
@@ -73,17 +53,15 @@ public class AuthorDao {
     }
 
     /**
-     * sets the authorIDCounter to the Max-ID + 1 that exists in the list
+     * sets the authorIDCounter to the max id + 1 that exists in the list
      */
     public void setAuthorCounterToMax () {
         Author.setAuthorIdCounter(getMaxAuthorId()+1);
     }
 
     /**
-     *
-     * @param index index of the the element, that should be returned
-     * @param list any List of Author
-     * @return returns an Author element from the list or NULL when idex out of bounds
+     * returns an Author element at a given index from a given autorList
+     * or returns NULL when index out of bounds
      */
     public Author select (int index, List<Author> list) {
         if (!(list.isEmpty()) && (index > 0) && (index <= list.size()) ) {
@@ -94,24 +72,8 @@ public class AuthorDao {
     }
 
     /**
-     * Compare a given Author object to all elements ins Authorlist. When found equivalence, set the
-     * ID of given Author object to the same ID from element in list.
-     *
-     * @param author Author object, that is compared to all Author objects inside the AuthorList.
+     * checks if author with same firstName and lastName already exists.
      */
-    public void setAuthorIdToExistingId (Author author) {
-        if (al.contains(author)) {
-            for (Author a : al) {
-                if (author.equals(a)) {
-                    author.setAuthorId(a.getAuthorId());
-                    break;
-                }
-            }
-        }
-    }
-
-
-
     public boolean authorExists (String firstName, String lastName) {
         boolean exists = false;
         for (Author author : al) {
@@ -124,19 +86,11 @@ public class AuthorDao {
         }
         return exists;
     }
-    /*
-    //TODO:
-            for (int i = 0; i < al.size(); i++) {
-            if (!(author.getID() == al.get(i).getID())) {
-                al.add(author);
-            }
-        }
-    check other options: we have to iterate through whole list, even though we know that
-    there is only ONE or NONE (not many etc). if ONE = don't add. if none = add. but if
-    NONE, then why do we have to iterate to begin with? but if we choose al.contains() method,
-    we cannot check if ID is contained, but actually check, if ID of author == al.get(i).getID
-     */
 
+    /**
+     * returns author by given authorId.
+     * returns NULL if id doesn't exist
+     */
     public Author getAuthorById (int id) {
         Author author = null;
         for (Author a : al) {
@@ -148,6 +102,10 @@ public class AuthorDao {
         return author;
     }
 
+    /**
+     * returns authorId of a combination of firstName and lastName.
+     * returns 0 if such person does not exist.
+     */
     public int getAuthorId (String firstName, String lastName) {
         int id = 0;
         for (Author author : al) {
@@ -174,29 +132,30 @@ public class AuthorDao {
     }
 
 
-    public void addNew (Author author) {
-        setAuthorIdToExistingId(author);
-        if (!al.contains(author)) {
-            al.add(author);
-        }
-    }
-
-    //this addNew() is only for reading from CSV!
-    public void addNew(int id, String firstName, String lastName) {
+    /**
+     * adds author from db with existing authorId.
+     * used only within the class.
+     */
+    private void addNew(int id, String firstName, String lastName) {
         Author author = new Author.Builder()
                 .setAuthorId(id)
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .build();   //id created with counter++
-        //author.setAuthorID(id);   //id overwritten with hard set from csv
-        //addNew(author);
         al.add(author);
     }
 
-    //this addNew() is only for input from User
-    public void addNew (String firstName, String lastName) {
-        Author author = new Author(firstName, lastName); //id created with counter++
-        addNew(author);   //change id if in List available. Otherwise keep counter++
+    /**
+     * adds a new author if author with this name does not exists in list.
+     * If already exists, then returns false and does not add author.
+     */
+    public boolean addNew (String firstName, String lastName) {
+        Author author = new Author(firstName, lastName);//id created with counter++
+        if (!authorExists(firstName, lastName)) { //if author doesnt exists yet
+            al.add(author);// then add author
+            return true;
+        }
+        else return false;
     }
 
 
@@ -205,33 +164,21 @@ public class AuthorDao {
             getAuthorById(id).setLastName(lastName);
     }
 
-    public void delete (int authorID) {
-        if (authorIdExists(authorID)) {
+    /**
+     * deletes an author by authorId and all books of this author.
+     * Does nothing if authorId does not exist.
+     */
+    public void delete (int authorId) {
+        if (authorIdExists(authorId)) {
             BookDao bDao = new BookDao();
-            bDao.delete(authorID);
-            al.remove(getAuthorById(authorID));
-        }
-    }
-
-
-    public void delete (Author author) {
-        BookDao bDao = new BookDao();
-        al.remove(author);
-        List<Book> books = new ArrayList<>();
-        for (int i = 0; i < bDao.getAll().size(); i++) {
-            if (author.getAuthorId() == bDao.getAll().get(i).getAuthorId()) {
-                books.add(bDao.getAll().get(i));
-            }
-            for (Book book : books) {
-                bDao.delete(book);
-            }
+            bDao.delete(authorId);
+            al.remove(getAuthorById(authorId));
         }
     }
 
     /**
-     *
-     * @param name String name, or many names (separated by space)
-     * @return a filtered list of Author, that contain all entered String in Last name or first name.
+     * searches for authors by any name. Multiple names separated by space.
+     * returns a list of Author, that contain all names (if entered many).
      */
     public List<Author> searchFor (String name) {
         List<Author> searchForList = new ArrayList<>();
@@ -247,9 +194,4 @@ public class AuthorDao {
         return searchForList;
     }
 
-
-    //TODO: ALTERNATIVE
-//    public void delete (String input, Author.Attribute field) {
-//        al.removeIf(author -> input.equalsIgnoreCase(author.getStringField(field)));
-//    }
 }

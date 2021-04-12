@@ -27,13 +27,13 @@ public class ShowAuthorListServlet extends HttpServlet {
                 .append("<th><input type=\"submit\" class=\"invisible-button\" value=\"Nachname\" name=\"by\" /></th>\n")
                 .append("</tr>\n")
                 .append("</form>");
-        for (int i = 0; i < aDao.getAll().size(); i++) {
+        for (int i = 0; i < aDao.getAuthorList().size(); i++) {
             htmlText.append("<tr>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(aDao.getAll().get(i).getFirstName()))
+                    .append(StringTrimmer.trim(aDao.getAuthorList().get(i).getFirstName()))
                     .append("\n</td>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(aDao.getAll().get(i).getLastName()))
+                    .append(StringTrimmer.trim(aDao.getAuthorList().get(i).getLastName()))
                     .append("\n</td>\n")
                 .append("</tr>\n");
         }
@@ -59,12 +59,12 @@ public class ShowAuthorListServlet extends HttpServlet {
 
         if (sortBy != null) {
             if (sortBy.equalsIgnoreCase("vorname")) {
-                aDao.getAll().sort(new Author.AuthorFirstNameComparator());
+                aDao.getAuthorList().sort(new Author.AuthorFirstNameComparator());
                 doGet(req, resp);
 
             }
             if (sortBy.equalsIgnoreCase("nachname")) {
-                aDao.getAll().sort(new Author.AuthorLastNameComparator());
+                aDao.getAuthorList().sort(new Author.AuthorLastNameComparator());
                 doGet(req, resp);
 
             }

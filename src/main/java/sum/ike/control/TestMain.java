@@ -1,10 +1,8 @@
 package sum.ike.control;
 
 
-import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.model.Author;
 import sum.ike.model.Loan;
 import sum.ike.model.User;
 
@@ -18,10 +16,21 @@ public class TestMain {
         DbManager dbm = new DbManager();
 
         dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.AUTHOR);
 
         BookDao bDao = new BookDao();
 
-        System.out.println(bDao.getAll());
+        bDao.addNew("Sarah",
+                "Maas",
+                "978-1-5266-2064-4",
+                "A Court of Silver Flames",
+                "Bloomsbury",
+                2021);
+
+        System.out.println(bDao.getLastBook());
+
+
+        System.out.println(bDao.getBookList());
 
         Loan loan = new Loan(bDao.getBook("978-3-15-000001-4"),user);
 

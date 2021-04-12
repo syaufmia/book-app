@@ -48,7 +48,7 @@ public class DeleteBookServlet extends HttpServlet {
             }
 
             for (Author a : aDao.searchFor(word)) {
-                for (Book b : bDao.getListOfAuthor(a)) {
+                for (Book b : bDao.getBookListOfAuthor(a)) {
                     if (!filteredList.contains(b)) {
                         filteredList.add(b);
                     }

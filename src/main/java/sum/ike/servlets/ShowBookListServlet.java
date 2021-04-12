@@ -36,22 +36,22 @@ public class ShowBookListServlet extends HttpServlet {
                 .append("<th><input type=\"submit\" class=\"invisible-button\" value=\"Verlag\" name=\"by\" /></th>\n")
                 .append("<th>Jahr</th>\n</tr>\n")
                 .append("</form>");
-        for (int i = 0; i < bDao.getAll().size(); i++) {
+        for (int i = 0; i < bDao.getBookList().size(); i++) {
             htmlText.append("<tr>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(bDao.getAll().get(i).getTitle()))
+                    .append(StringTrimmer.trim(bDao.getBookList().get(i).getTitle()))
                     .append("\n</td>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(bDao.getAll().get(i).getIsbn()))
+                    .append(StringTrimmer.trim(bDao.getBookList().get(i).getIsbn()))
                     .append("\n</td>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(aDao.getAuthorById(bDao.getAll().get(i).getAuthorId()).toStringNoId()))
+                    .append(StringTrimmer.trim(aDao.getAuthorById(bDao.getBookList().get(i).getAuthorId()).toStringNoId()))
                     .append("\n</td>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(bDao.getAll().get(i).getPublisher()))
+                    .append(StringTrimmer.trim(bDao.getBookList().get(i).getPublisher()))
                     .append("\n</td>\n")
                     .append("<td>\n")
-                    .append(bDao.getAll().get(i).getPublishedYear())
+                    .append(bDao.getBookList().get(i).getPublishedYear())
                     .append("\n</td>\n")
                     .append("</tr>\n");
         }
@@ -78,17 +78,17 @@ public class ShowBookListServlet extends HttpServlet {
 
         if (sortBy != null) {
             if (sortBy.equalsIgnoreCase("titel")) {
-                bDao.getAll().sort(new Book.BookTitleComparator());
+                bDao.getBookList().sort(new Book.BookTitleComparator());
                 doGet(req, resp);
 
             }
             if (sortBy.equalsIgnoreCase("isbn")) {
-                bDao.getAll().sort(new Book.BookIsbnComparator());
+                bDao.getBookList().sort(new Book.BookIsbnComparator());
                 doGet(req, resp);
 
             }
             if (sortBy.equalsIgnoreCase("verlag")) {
-                bDao.getAll().sort(new Book.BookPublisherComparator());
+                bDao.getBookList().sort(new Book.BookPublisherComparator());
                 doGet(req, resp);
             }
         }

@@ -41,7 +41,7 @@ public class AuthorAPIServlet extends HttpServlet {
         String[] uri = helper.getSubURI(req);
         switch (uri.length) {
             case 4:
-                resp.getWriter().println(gson.toJson(aCon.convert(aDao.getAll())));
+                resp.getWriter().println(gson.toJson(aCon.convert(aDao.getAuthorList())));
                 resp.setStatus(HttpServletResponse.SC_OK);
                 break;
             case 6:

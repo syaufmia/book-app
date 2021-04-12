@@ -2,7 +2,6 @@ package sum.ike.control.dao;
 
 import sum.ike.model.Author;
 import sum.ike.model.Book;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,60 +11,26 @@ import java.util.Locale;
 public class BookDao {
 
     private static final List<Book> bl = new ArrayList<>();
-    //AuthorDao aDao = new AuthorDao();
 
-    public void getData(ResultSet result) throws SQLException {
-        addNew(result.getInt("book_id"),
-                result.getInt("author_id"),
-                result.getString("isbn"),
-                result.getString("title"),
-                result.getString("publisher"),
-                result.getInt("year"));
-        setBookCounterToMax();
-    }
-
-
-
-    public List<Object> exportData () {
-        List <Object> savingList = new ArrayList<>();
-        if (!bl.contains(null)) {
-            savingList.addAll(bl);
+    /**
+     * gets the Data from a Database ResultSet and sets the bookCounter to the
+     * highest bookId from Database.
+     * Doesn't add book if bookId already in list.
+     */
+    public void readDataToList (ResultSet result) throws SQLException {
+        if (!bookIdExists(result.getInt("book_id"))) {
+            addNew(result.getInt("book_id"),
+                    result.getInt("author_id"),
+                    result.getString("isbn"),
+                    result.getString("title"),
+                    result.getString("publisher"),
+                    result.getInt("year"));
+            setBookCounterToMax();
         }
-        return savingList;
     }
 
-
-//    public void importData (List<String[]> list) {
-//        for (String[] s : list) {
-//            if (s.length == 5) {
-//                addNew(Integer.parseInt(s[0]), //each index is a column
-//                        s[2],
-//                        s[1],
-//                        s[3],
-//                        Integer.parseInt(s[4]));
-//            }
-//        }
-
-    public int getMaxAuthorId () {
-        int max = 0;
-        for (Book book : bl) {
-            if (book.getAuthorId() > max) {
-                max = book.getAuthorId();
-            }
-        } return max;
-    }
-
-
-    public List<Book> getAll () {
+    public List<Book> getBookList () {
         return bl;
-    }
-
-    //default "add" method (for within the class)
-
-    public void addNew (Book book) {
-        if (!bl.contains(book)) {
-            bl.add(book);
-        }
     }
 
     public int getMaxBookId () {
@@ -135,7 +100,16 @@ public class BookDao {
         return (aDao.getAuthorById(book.getAuthorId()));
     }
 
-    public List<Book> getListOfAuthor (Author author) {
+    public List<Book> getBookListOfAuthor (int authorId) {
+        List<Book> blOfAuthor = new ArrayList<>();
+        for (Book book : bl) {
+            if (authorId == book.getAuthorId()) {
+                blOfAuthor.add(book);
+            }
+        } return blOfAuthor;
+    }
+
+    public List<Book> getBookListOfAuthor (Author author) {
         List<Book> blOfAuthor = new ArrayList<>();
         for (Book book : bl) {
             if (author.getAuthorId() == book.getAuthorId()) {
@@ -145,60 +119,55 @@ public class BookDao {
     }
 
     /**
-     * add new book from already existing author (given id)
+     * adds a new book from already existing author with given authorId.
+     * Returns false, if ISBN already existed, therefore not added
      */
-    public void addNew(int authorId, String isbn, String title, String publisher, int year) {
-        Book book = new Book.Builder()
-                .setIsbn(isbn)
-                .setTitle(title)
-                .setPublisher(publisher)
-                .setYear(year)
-                .build();
-        book.setAuthorId(authorId);
-        addNew(book);
-    }
-
-    /**
-     * add book from db (existing author and existing bookId)
-     */
-    public void addNew(int bookId, int authorId, String isbn, String title, String publisher, int year) {
-        Book book = new Book.Builder()
-                .setBookId(bookId)
-                .setIsbn(isbn)
-                .setTitle(title)
-                .setPublisher(publisher)
-                .setYear(year)
-                .build();
-        book.setAuthorId(authorId);
-        addNew(book);
-    }
-
-    /**
-     * add new book with new author
-     */
-    public boolean addNew (String firstName, String lastName, String isbn, String title, String publisher, int year) {
-        boolean added;
-        AuthorDao aDao = new AuthorDao();
-        Author author;
-        int aID;
-        if ((aID = aDao.getAuthorId(firstName, lastName)) != 0) {
-            author = aDao.getAuthorById(aID);
-            added = false;
-        } else {
-            author = new Author(firstName, lastName);
-            aDao.addNew(author);
+    public boolean addNew(int authorId, String isbn, String title, String publisher, int year) {
+        boolean added = false;
+        if (!containsIsbn(isbn)) {
+            Book book = new Book.Builder()
+                    .setAuthorId(authorId)
+                    .setIsbn(isbn)
+                    .setTitle(title)
+                    .setPublisher(publisher)
+                    .setYear(year)
+                    .build();
+            bl.add(book);
             added = true;
         }
-        //add new author to list (if not already exists) -> sets the ID of author.
+        return added;
+    }
+
+    /**
+     * adds book from db (existing author and existing bookId).
+     * No boolean return value because no check required.
+     * Only used within the class.
+     */
+    private void addNew(int bookId, int authorId, String isbn, String title, String publisher, int year) {
         Book book = new Book.Builder()
+                .setBookId(bookId)
+                .setAuthorId(authorId)
                 .setIsbn(isbn)
                 .setTitle(title)
                 .setPublisher(publisher)
                 .setYear(year)
-                .build();
-        book.setAuthorId(author.getAuthorId()); //sets the ID of Autor to aID in book! same ID
-        addNew(book);  //add the book to booklist (including the aID == ID of author)
-        return added;
+                .buildWithId();
+        bl.add(book);
+    }
+
+    /**
+     * adds new book with new author. If author existed already,
+     * no new author will be added.
+     * Returns true if ISBN did not exist yet. Else returns false and does not add book.
+     */
+    public boolean addNew (String firstName, String lastName, String isbn, String title, String publisher, int year) {
+        AuthorDao aDao = new AuthorDao();
+        aDao.addNew(firstName, lastName); //checks if author exists, if yes, does not add
+        return addNew(aDao.getAuthorId(firstName, lastName),
+               isbn,
+               title,
+               publisher,
+               year);
     }
 
     public void delete (Book book) {
@@ -208,14 +177,13 @@ public class BookDao {
     public List<Book> getBookListFromAuthorList (List<Author> authorList) {
         List<Book> bookList = new ArrayList<>();
         for (Author author: authorList) {
-            bookList.addAll(getListOfAuthor(author));
+            bookList.addAll(getBookListOfAuthor(author));
         }
         return bookList;
     }
 
     public void delete (int authorId) {
-        AuthorDao aDao = new AuthorDao();
-        bl.removeAll(getListOfAuthor(aDao.getAuthorById(authorId)));
+        bl.removeAll(getBookListOfAuthor(authorId));
     }
 
     //TODO: CHECK ALTERNATIVE! (deleting while iterating -- with Iterator??)

@@ -21,17 +21,14 @@ public class Book implements Serializable {
 
     //tag::bookConstructor[]
 
-    /**
-     * book with unknown Author (authorId = 0) and self-generated bookId
-     */
-    public Book (String isbn, String title, String publisher, int publishedYear) {
-        this.bookId = bookIdCounter++;
-        this.authorId = 0; //when a book is created, the AuthorID is 0 -> until the book is added to the list
-        this.isbn = isbn;
-        this.title = StringTrimmer.trim(title);
-        this.publisher = StringTrimmer.trim(publisher);
-        this.publishedYear = publishedYear;
-    }
+//    public Book (String isbn, String title, String publisher, int publishedYear) {
+//        this.bookId = bookIdCounter++;
+//        this.authorId = 0; //when a book is created, the AuthorID is 0 -> until the book is added to the list
+//        this.isbn = isbn;
+//        this.title = StringTrimmer.trim(title);
+//        this.publisher = StringTrimmer.trim(publisher);
+//        this.publishedYear = publishedYear;
+//    }
 
     /**
      * book with known Author and assigned bookId (from db)
@@ -49,6 +46,7 @@ public class Book implements Serializable {
      * book with known author and self-generated bookId
      */
     public Book (int authorId, String isbn, String title, String publisher, int publishedYear) {
+        this.bookId = bookIdCounter++;
         this.authorId = authorId;
         this.title = StringTrimmer.trim(title);
         this.isbn = isbn;
@@ -285,8 +283,12 @@ public class Book implements Serializable {
             return this;
         }
 
-        public Book build() {
+        public Book buildWithId () {
             return new Book(bookId, authorId, isbn, title, publisher, publishedYear);
+        }
+
+        public Book build() {
+            return new Book(authorId, isbn, title, publisher, publishedYear);
         }
     }
     //end::BuilderClass[]

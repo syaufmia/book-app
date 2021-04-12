@@ -36,7 +36,7 @@ public class AuthorConverter {
                     author.getAuthorId(),
                     author.getFirstName(),
                     author.getLastName(),
-                    bCon.convertForAuthor(bDao.getListOfAuthor(author))));
+                    bCon.convertForAuthor(bDao.getBookListOfAuthor(author))));
         }
         return authorYList;
     }
@@ -49,7 +49,7 @@ public class AuthorConverter {
                 author.getAuthorId(),
                 author.getFirstName(),
                 author.getLastName(),
-                bCon.convertForAuthor(bDao.getListOfAuthor(author)));
+                bCon.convertForAuthor(bDao.getBookListOfAuthor(author)));
     }
 
 }

@@ -40,7 +40,7 @@ public class BookAPIServlet extends HttpServlet {
         String[] uri = helper.getSubURI(req);
         switch (uri.length) {
             case 4:
-                resp.getWriter().println(gson.toJson(bCon.convert(bDao.getAll())));
+                resp.getWriter().println(gson.toJson(bCon.convert(bDao.getBookList())));
                 resp.setStatus(HttpServletResponse.SC_OK);
                 break;
             case 6:
@@ -56,7 +56,7 @@ public class BookAPIServlet extends HttpServlet {
                     && helper.compareSubURITo(req, 5, "id", "author_id")
                     && helper.subURIisInt(req, 6)
                     && (aDao.authorIdExists(Integer.parseInt(uri[6])))) {
-                    resp.getWriter().println(gson.toJson(bCon.convert(bDao.getListOfAuthor(aDao.getAuthorById(Integer.parseInt(uri[6]))))));
+                    resp.getWriter().println(gson.toJson(bCon.convert(bDao.getBookListOfAuthor(aDao.getAuthorById(Integer.parseInt(uri[6]))))));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 }
                 else {

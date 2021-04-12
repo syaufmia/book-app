@@ -4,7 +4,6 @@ import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
-
 import java.sql.*;
 import java.util.Locale;
 
@@ -30,7 +29,7 @@ public class DbManager {
                 case BOOK:
                     BookDao bookDao = new BookDao();
                     while (result.next()) {
-                        bookDao.getData(result);
+                        bookDao.readDataToList(result);
                     }
                     break;
             }

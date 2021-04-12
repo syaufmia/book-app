@@ -105,19 +105,21 @@ public class AddAuthorServlet extends HttpServlet {
                          * Dieser Fall trifft genau dann ein, wenn nichts null und nichts leer ist.
                          * Dann wird aus den aus den verfügbaren Daten ein Buch erstellt.
                          */
-                        boolean added = bDao.addNew(firstName, lastName, isbn, titel, publisher, Integer.parseInt(yearStr));
+                        boolean authorExists = aDao.authorExists(firstName, lastName);
                         req.setAttribute("titel", titel);
                         req.setAttribute("isbn", isbn);
                         req.setAttribute("publisher", publisher);
                         req.setAttribute("year", yearStr);
                         req.setAttribute("firstName", firstName);
                         req.setAttribute("lastName", lastName);
-                        if (!added) {
+                        if (authorExists) {
+                            bDao.addNew(aDao.getAuthorId(firstName, lastName), isbn, titel, publisher, Integer.parseInt(yearStr));
                             //Buch aus existierendem Autor
                             dbm.insertBook(bDao.getLastBook());
                             displayText.append("Diesen Autor gab es schon. Dein neues Buch wurde dem vorhandenen Autor zugewiesen. ");
                         }
                         else {
+                            bDao.addNew(firstName, lastName, isbn, titel, publisher, Integer.parseInt(yearStr));
                             //Buch aus neuem Autor
                             displayText.append("Du hast erfolgreich ein neues Buch mit einem neuen Autor in meiner Bibliothek gespeichert. ");
                             dbm.insertBook(bDao.getLastBook());
