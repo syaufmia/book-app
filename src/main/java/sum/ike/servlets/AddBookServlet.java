@@ -50,7 +50,7 @@ public class AddBookServlet extends HttpServlet {
             bDao.addNew(selectedAuthor.getFirstName(), selectedAuthor.getLastName(), isbn, titel, publisher, year);
             dbm.insertBook(bDao.getLastBook());
             req.setAttribute("sentence", "Du hast erfolgreich ein neues Buch von " +
-                    StringTrimmer.trim(selectedAuthor.toStringNoID()) +
+                    StringTrimmer.trim(selectedAuthor.toStringNoId()) +
                     " hinzugefügt. ");
             req.setAttribute("actionURL", "added-book");
             getServletContext().getRequestDispatcher("/add-book.jsp").forward(req, resp);

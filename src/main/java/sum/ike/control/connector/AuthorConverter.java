@@ -22,7 +22,7 @@ public class AuthorConverter {
 
     protected AuthorX convertForBook (Author author) {
         return new AuthorX(
-                author.getAuthorID(),
+                author.getAuthorId(),
                 author.getFirstName(),
                 author.getLastName());
     }
@@ -33,7 +33,7 @@ public class AuthorConverter {
         List<AuthorY> authorYList = new ArrayList<>();
         for (Author author : authorList) {
             authorYList.add(new AuthorY(
-                    author.getAuthorID(),
+                    author.getAuthorId(),
                     author.getFirstName(),
                     author.getLastName(),
                     bCon.convertForAuthor(bDao.getListOfAuthor(author))));
@@ -46,7 +46,7 @@ public class AuthorConverter {
         BookConverter bCon = new BookConverter();
 
         return new AuthorY(
-                author.getAuthorID(),
+                author.getAuthorId(),
                 author.getFirstName(),
                 author.getLastName(),
                 bCon.convertForAuthor(bDao.getListOfAuthor(author)));

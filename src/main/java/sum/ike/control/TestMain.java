@@ -5,60 +5,40 @@ import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.db.DbManager;
 import sum.ike.model.Author;
+import sum.ike.model.Loan;
+import sum.ike.model.User;
 
 public class TestMain {
 
 
     public static void main(String[] args){
 
-        Author author1 = new Author.Builder().setAuthorID(36).setFirstName("LEON").setLastName("MAURER").build();
+        User user = new User("safi", "password", "Safiye");
 
-        AuthorDao aDao = new AuthorDao();
+        DbManager dbm = new DbManager();
+
+        dbm.selectAll(DbManager.Table.BOOK);
+
         BookDao bDao = new BookDao();
-        DbManager sc = new DbManager();
 
-//        sc.selectAll(DbManager.Table.AUTHOR);
-//        System.out.println(aDao.getLastAuthor());
-//        aDao.addNew(author1.getFirstName(), author1.getLastName());
-//        System.out.println(aDao.getLastAuthor());
-//
-//
-////        sc.insertInDB(aDao.getLastAuthor());
-//        sc.deleteInDb(36);
-//        System.out.println(aDao.getAll());
-
-        sc.selectAll(DbManager.Table.BOOK);
         System.out.println(bDao.getAll());
 
-//        sc.deleteInDb("5555-55");
+        Loan loan = new Loan(bDao.getBook("978-3-15-000001-4"),user);
+
+        System.out.println(loan.getStartDate());
+
+        System.out.println(loan.getEndDate());
+
+        loan.extendReturnDate(7);
+
+        System.out.println(loan.getEndDate());
+
+        loan.extendReturnDate(1);
+
+        System.out.println(loan.getEndDate());
 
 
 
-
-//
-//        AuthorDao aDao = new AuthorDao();
-//        DbConnector db = new DbConnector();
-//        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
-//        Statement state = null;
-//        try {
-//            state = con.createStatement();
-//        ResultSet result = state.executeQuery("SELECT * FROM author");
-//
-//        while (result.next()) {
-//            aDao.getData(result);
-//        }
-//
-//        result.close();
-//        state.close();
-//        con.close();
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        for (Author author : aDao.getAll()) {
-//            System.out.println(author);
-//        }
 
 
 

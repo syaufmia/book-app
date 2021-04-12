@@ -71,7 +71,7 @@ public class AddBookSearchAuthorServlet extends HttpServlet {
                                 .append(i)
                                 .append("\" size=\"100\" checked=\"checked\" />")
                                 .append("</td> <td> <label> ")
-                                .append(StringTrimmer.trim(list.get(i).toStringNoID()))
+                                .append(StringTrimmer.trim(list.get(i).toStringNoId()))
                                 .append( "</td></tr>");
                     }
                     req.setAttribute("html-text", htmlText);

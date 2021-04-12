@@ -47,8 +47,8 @@ public class AuthorAPIServlet extends HttpServlet {
             case 6:
                 if (helper.compareSubURITo(req, 4, "id", "author_id")
                         && helper.subURIisInt(req, 5)
-                        && (aDao.idExists(Integer.parseInt(uri[5])))) {
-                    resp.getWriter().println(gson.toJson(aCon.convert(aDao.getAuthorByID(Integer.parseInt(uri[5])))));
+                        && (aDao.authorIdExists(Integer.parseInt(uri[5])))) {
+                    resp.getWriter().println(gson.toJson(aCon.convert(aDao.getAuthorById(Integer.parseInt(uri[5])))));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 }
                 else {
@@ -110,7 +110,7 @@ public class AuthorAPIServlet extends HttpServlet {
         if ((uri.length == 6)
                 && (helper.compareSubURITo(req, 4, "id", "author_id")
                 && (helper.subURIisInt(req, 5)
-                && (aDao.idExists(Integer.parseInt(uri[5])))
+                && (aDao.authorIdExists(Integer.parseInt(uri[5])))
                 && ((body = helper.getBody(req)) != null)
                 && !body.isEmpty()))) {
             int ID = Integer.parseInt(uri[5]);
@@ -149,7 +149,7 @@ public class AuthorAPIServlet extends HttpServlet {
         if (uri.length == 6) {
             if (helper.compareSubURITo(req, 4, "id", "author_id")
                     && helper.subURIisInt(req, 5)
-                    && (aDao.idExists(Integer.parseInt(uri[5])))) {
+                    && (aDao.authorIdExists(Integer.parseInt(uri[5])))) {
                 int ID = Integer.parseInt(uri[5]);
                 dbManager.deleteBook(ID);
                 dbManager.deleteAuthor(ID);

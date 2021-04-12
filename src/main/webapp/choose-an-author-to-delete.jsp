@@ -24,7 +24,7 @@
                     <tr>
                         <td>
                             <label>
-                                <input type="radio" name="selected" value="${author.authorID}" size="100" checked="checked" />
+                                <input type="radio" name="selected" value="${author.authorId}" size="100" checked="checked" />
                             </label>
 
                         </td>

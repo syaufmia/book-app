@@ -13,7 +13,7 @@ public class AuthorDao {
     private final static List<Author> al = new ArrayList<>();
 
     public void getData(ResultSet result) throws SQLException {
-        if (!idExists(result.getInt("author_id"))) {
+        if (!authorIdExists(result.getInt("author_id"))) {
             addNew(result.getInt("author_id"),
                     result.getString("first_name"),
                     result.getString("last_name")
@@ -63,11 +63,11 @@ public class AuthorDao {
         else return null;
     }
 
-    public int getMaxID () {
+    public int getMaxAuthorId () {
         int max = 0;
         for (Author a : al) {
-            if (a.getAuthorID() > max) {
-                max = a.getAuthorID();
+            if (a.getAuthorId() > max) {
+                max = a.getAuthorId();
             }
         } return max;
     }
@@ -76,7 +76,7 @@ public class AuthorDao {
      * sets the authorIDCounter to the Max-ID + 1 that exists in the list
      */
     public void setAuthorCounterToMax () {
-        Author.setAuthorIDCounter(getMaxID()+1);
+        Author.setAuthorIdCounter(getMaxAuthorId()+1);
     }
 
     /**
@@ -99,11 +99,11 @@ public class AuthorDao {
      *
      * @param author Author object, that is compared to all Author objects inside the AuthorList.
      */
-    public void setAuthorIDToExistingID (Author author) {
+    public void setAuthorIdToExistingId (Author author) {
         if (al.contains(author)) {
             for (Author a : al) {
                 if (author.equals(a)) {
-                    author.setAuthorID(a.getAuthorID());
+                    author.setAuthorId(a.getAuthorId());
                     break;
                 }
             }
@@ -137,10 +137,10 @@ public class AuthorDao {
     we cannot check if ID is contained, but actually check, if ID of author == al.get(i).getID
      */
 
-    public Author getAuthorByID (int ID) {
+    public Author getAuthorById (int id) {
         Author author = null;
         for (Author a : al) {
-            if (ID == a.getAuthorID()) {
+            if (id == a.getAuthorId()) {
                 author = a;
                 break;
             }
@@ -148,24 +148,24 @@ public class AuthorDao {
         return author;
     }
 
-    public int getID (String firstName, String lastName) {
-        int ID = 0;
+    public int getAuthorId (String firstName, String lastName) {
+        int id = 0;
         for (Author author : al) {
             if (author.getFirstName().equalsIgnoreCase(firstName)) {
                 if (author.getLastName().equalsIgnoreCase(lastName)) {
-                    ID = author.getAuthorID();
+                    id = author.getAuthorId();
                     break;
                 }
             }
         }
-        return ID;
+        return id;
     }
 
 
-    public boolean idExists (int ID) {
+    public boolean authorIdExists (int id) {
         boolean exists = false;
         for (Author a: al) {
-            if (ID == a.getAuthorID()) {
+            if (id == a.getAuthorId()) {
                 exists = true;
                 break;
             }
@@ -175,7 +175,7 @@ public class AuthorDao {
 
 
     public void addNew (Author author) {
-        setAuthorIDToExistingID(author);
+        setAuthorIdToExistingId(author);
         if (!al.contains(author)) {
             al.add(author);
         }
@@ -184,7 +184,7 @@ public class AuthorDao {
     //this addNew() is only for reading from CSV!
     public void addNew(int id, String firstName, String lastName) {
         Author author = new Author.Builder()
-                .setAuthorID(id)
+                .setAuthorId(id)
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .build();   //id created with counter++
@@ -201,15 +201,15 @@ public class AuthorDao {
 
 
     public void changeAuthor (int id, String firstName, String lastName) {
-            getAuthorByID(id).setFirstName(firstName);
-            getAuthorByID(id).setLastName(lastName);
+            getAuthorById(id).setFirstName(firstName);
+            getAuthorById(id).setLastName(lastName);
     }
 
     public void delete (int authorID) {
-        if (idExists(authorID)) {
+        if (authorIdExists(authorID)) {
             BookDao bDao = new BookDao();
             bDao.delete(authorID);
-            al.remove(getAuthorByID(authorID));
+            al.remove(getAuthorById(authorID));
         }
     }
 
@@ -219,7 +219,7 @@ public class AuthorDao {
         al.remove(author);
         List<Book> books = new ArrayList<>();
         for (int i = 0; i < bDao.getAll().size(); i++) {
-            if (author.getAuthorID() == bDao.getAll().get(i).getAuthorID()) {
+            if (author.getAuthorId() == bDao.getAll().get(i).getAuthorId()) {
                 books.add(bDao.getAll().get(i));
             }
             for (Book book : books) {

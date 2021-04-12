@@ -55,8 +55,8 @@ public class BookAPIServlet extends HttpServlet {
                 if (helper.compareSubURITo(req, 4, "author")
                     && helper.compareSubURITo(req, 5, "id", "author_id")
                     && helper.subURIisInt(req, 6)
-                    && (aDao.idExists(Integer.parseInt(uri[6])))) {
-                    resp.getWriter().println(gson.toJson(bCon.convert(bDao.getListOfAuthor(aDao.getAuthorByID(Integer.parseInt(uri[6]))))));
+                    && (aDao.authorIdExists(Integer.parseInt(uri[6])))) {
+                    resp.getWriter().println(gson.toJson(bCon.convert(bDao.getListOfAuthor(aDao.getAuthorById(Integer.parseInt(uri[6]))))));
                     resp.setStatus(HttpServletResponse.SC_OK);
                 }
                 else {
@@ -102,12 +102,12 @@ public class BookAPIServlet extends HttpServlet {
                                 json.get("publisher").getAsString(),
                                 Integer.parseInt(json.get("year").getAsString()));
                         dbManager.insertBook(bDao.getLastBook());
-                        dbManager.insertAuthor(aDao.getAuthorByID(bDao.getLastBook().getAuthorID()));
+                        dbManager.insertAuthor(aDao.getAuthorById(bDao.getLastBook().getAuthorId()));
                         resp.setStatus(HttpServletResponse.SC_CREATED);
                     }
                     else if (json.has("id")
                             && json.get("id").getAsString().matches("\\d++")
-                            && aDao.idExists(Integer.parseInt(json.get("id").getAsString()))) {
+                            && aDao.authorIdExists(Integer.parseInt(json.get("id").getAsString()))) {
                         bDao.addNew(Integer.parseInt(json.get("id").getAsString()),
                                 json.get("isbn").getAsString(),
                                 json.get("title").getAsString(),

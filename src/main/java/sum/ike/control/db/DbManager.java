@@ -53,7 +53,7 @@ public class DbManager {
             state = con.createStatement();
             state.executeUpdate(insertInto(Table.AUTHOR)
                     + " VALUES ("
-                    + author.getAuthorID()
+                    + author.getAuthorId()
                     + ", '"
                     + author.getFirstName().toUpperCase(Locale.ROOT)
                     + "', '"
@@ -79,7 +79,7 @@ public class DbManager {
             state = con.createStatement();
             state.executeUpdate(insertInto(Table.BOOK)
                     + " VALUES ("
-                    + book.getAuthorID()
+                    + book.getAuthorId()
                     + ", '"
                     + book.getTitle().toUpperCase(Locale.ROOT)
                     + "', '"

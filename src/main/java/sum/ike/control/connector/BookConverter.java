@@ -14,7 +14,7 @@ public class BookConverter {
         List<BookX> bookXList = new ArrayList<>();
         for (Book book : bookList) {
             bookXList.add(new BookX(
-                    aCon.convertForBook(aDao.getAuthorByID(book.getAuthorID())),
+                    aCon.convertForBook(aDao.getAuthorById(book.getAuthorId())),
                     book.getTitle(),
                     book.getIsbn(),
                     book.getPublisher(),
@@ -26,7 +26,7 @@ public class BookConverter {
     public BookX convert (Book book){
         AuthorConverter aCon = new AuthorConverter();
         AuthorDao aDao = new AuthorDao();
-        return new BookX(aCon.convertForBook(aDao.getAuthorByID(book.getAuthorID())),
+        return new BookX(aCon.convertForBook(aDao.getAuthorById(book.getAuthorId())),
                 book.getTitle(),
                 book.getIsbn(),
                 book.getPublisher(),

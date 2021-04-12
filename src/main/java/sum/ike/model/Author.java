@@ -12,41 +12,48 @@ public class Author implements Serializable {
 
     //tag::Fields[]
     private static final long serialVersionUID = 2L;
-    private int authorID;
+    private int authorId;
     private  String firstName;
     private  String lastName;
-    private static int authorIDCounter = 1;
+    private static int authorIdCounter = 1;
     //end::Fields[]
 
     //tag::Constructor[]
+
+    /**
+     * author with self-generated authorId
+     */
     public Author (String firstName, String lastName) {
-        this.authorID = authorIDCounter++;
+        this.authorId = authorIdCounter++;
+        this.firstName = StringTrimmer.trim(firstName);
+        this.lastName = StringTrimmer.trim(lastName);
+    }
+
+    /**
+     * author with assigned authorId (from db)
+     */
+    public Author (int authorId, String firstName, String lastName) {
+        this.authorId = authorId;
         this.firstName = StringTrimmer.trim(firstName);
         this.lastName = StringTrimmer.trim(lastName);
     }
     //end::Constructor[]
 
-    public Author (int authorID, String firstName, String lastName) {
-        this.authorID = authorID;
-        this.firstName = StringTrimmer.trim(firstName);
-        this.lastName = StringTrimmer.trim(lastName);
-    }
-
     //tag::setAuthorIDCounter[]
-    public static void setAuthorIDCounter (int authorIDCounter) {
-        Author.authorIDCounter = authorIDCounter;
+    public static void setAuthorIdCounter (int authorIdCounter) {
+        Author.authorIdCounter = authorIdCounter;
     }
     //end::setAuthorIDCounter[]
 
     //tag::hardSetAuthorID[]
-    public void setAuthorID (int authorID) {
-        this.authorID = authorID;
+    public void setAuthorId (int authorId) {
+        this.authorId = authorId;
     }
     //end::hardSetAuthorID[]
 
     //tag::normalGetters[]
-    public int getAuthorID () {
-        return authorID;
+    public int getAuthorId () {
+        return authorId;
     }
 
     public String getFirstName () {
@@ -57,9 +64,6 @@ public class Author implements Serializable {
         return lastName;
     }
 
-//    public List<Book> getBookList () {
-//        return bookList;
-//    }
     //end::normalGetters[]
 
 
@@ -71,9 +75,6 @@ public class Author implements Serializable {
         this.lastName = lastName.toUpperCase(Locale.ROOT);
     }
 
-//    public void setBookList(List<Book> bookList) {
-//        this.bookList = bookList;
-//    }
 
     @Override
     public int hashCode () { //TODO: maybe change the hashCode to ID?
@@ -92,10 +93,10 @@ public class Author implements Serializable {
 
     @Override
     public String toString() {
-        return getAuthorID() + "," + getFirstName() + "," + getLastName();
+        return getAuthorId() + "," + getFirstName() + "," + getLastName();
     }
 
-    public String toStringNoID() {
+    public String toStringNoId () {
         return getFirstName() + " " + getLastName();
     }
 
@@ -116,10 +117,10 @@ public class Author implements Serializable {
     }
     //end::AuthorFirstNameComparator[]
 
-    public static class AuthorIDComparator implements Comparator<Author> {
+    public static class AuthorIdComparator implements Comparator<Author> {
         @Override
         public int compare (Author author1, Author author2) {
-            return Integer.compare(author1.getAuthorID(), author2.getAuthorID());
+            return Integer.compare(author1.getAuthorId(), author2.getAuthorId());
 
         }
     }
@@ -144,15 +145,15 @@ public class Author implements Serializable {
     public static class Builder {
         private String firstName;
         private String lastName;
-        private int authorID;
+        private int authorId;
 
         public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public Builder setAuthorID(int authorID) {
-            this.authorID = authorID;
+        public Builder setAuthorId (int authorId) {
+            this.authorId = authorId;
             return this;
         }
 
@@ -162,7 +163,7 @@ public class Author implements Serializable {
         }
 
         public Author build() {
-            return new Author(authorID, firstName, lastName);
+            return new Author(authorId, firstName, lastName);
         }
     }
     //end::BuilderClass[]
