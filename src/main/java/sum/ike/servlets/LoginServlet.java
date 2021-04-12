@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
                     httpSession.setAttribute("user", uDao.getDefaultAdmin());
                     req.setAttribute("sentence","Du bist jetzt eingeloggt.");
                 }
-                else if (uDao.UserExists(username, password)) {
+                else if (uDao.UserLoginCorrect(username, password)) {
                     httpSession.setAttribute("UID",uDao.getUser(username, password));
                     req.setAttribute("sentence","Du bist jetzt eingeloggt.");
                 }

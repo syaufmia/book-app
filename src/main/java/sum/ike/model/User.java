@@ -1,52 +1,64 @@
 package sum.ike.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
 
     private static final long serialVersionUID = 3L;
-    String UID;
+    private int userId;
     private String username;
     private String password;
-    private String fullName;
-    private boolean admin;
+    private String eMail;
+    private int personId;
+    private static int userIdCounter = 1;
 
     public User () { }
 
-
-    public User (String username, String password, String fullName) {
+    public User (String username, String password, String eMail, int personId) {
+        userId = userIdCounter++;
+        this.personId = personId;
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
-        this.admin = false;
-        this.UID = createUID();
+        this.eMail = eMail;
     }
 
-    public User (String username, String password, String fullName, String UID) {
+
+    public User (int userId, int personId, String username, String password, String eMail) {
+        this.userId = userId;
+        this.personId = personId;
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
-        this.UID = UID;
-        this.admin = UID.charAt(UID.length() - 1) == 'A';
-
+        this.eMail = eMail;
     }
 
-    public String getUID () {
-        return UID;
+    public static void setUserIdCounter (int userIdCounter) {
+        User.userIdCounter = userIdCounter;
     }
 
-    public void setUID (String UID) {
-        this.UID = UID;
+    public int getUserId () {
+        return userId;
     }
 
-    private String createUID () {
-        char[] s = new char[username.length()];
-        int code = 0;
-        for (int i = 0; i < username.length(); i++) {
-            s[i] = username.charAt(i);
-            code += (s[i]*Math.pow(3,(username.length()-1)-i));
-        }
-        return Integer.toHexString(code);
+    public void setUserId (int userId) {
+        this.userId = userId;
+    }
+
+    public String getEMail () {
+        return eMail;
+    }
+
+    public void setEMail (String eMail) {
+        this.eMail = eMail;
+    }
+
+    public int getPersonId () {
+        return personId;
+    }
+
+    public void setPersonId (int personId) {
+        this.personId = personId;
     }
 
     public String getUsername () {
@@ -65,36 +77,9 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getFullName () {
-        return fullName;
-    }
-
-    public void setFullName (String fullName) {
-        this.fullName = fullName;
-    }
-
-    public boolean isAdmin () {
-        return admin;
-    }
-
-    public void setAdmin (boolean admin) {
-        this.admin = admin;
-        if ((admin) && (UID.charAt(UID.length() -1) != 'A'))  {
-            UID += "A";
-        }
-    }
-
-
-    @Override
-    public boolean equals (Object obj) {
-        if (obj instanceof User) {
-            return ((User) obj).getUID().equalsIgnoreCase(this.UID);
-        }
-        else return false;
-    }
 
     @Override
     public String toString () {
-        return username + "," + password + "," + fullName+ "," + UID;
+        return userId + ","  + personId + "," + username + "," + password + "," + eMail;
     }
 }

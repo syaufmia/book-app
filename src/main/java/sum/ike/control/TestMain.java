@@ -11,7 +11,7 @@ public class TestMain {
 
     public static void main(String[] args){
 
-        User user = new User("safi", "password", "Safiye");
+        User user = new User("safi", "password", "Safiye", "Uzun");
 
         DbManager dbm = new DbManager();
 
