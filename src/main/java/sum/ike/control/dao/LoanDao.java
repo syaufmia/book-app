@@ -1,4 +1,4 @@
 package sum.ike.control.dao;
 
-public class LendingDao {
+public class LoanDao {
 }

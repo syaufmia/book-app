@@ -9,9 +9,9 @@
 
 === Tasks
 - Book Objekte benötigen eine ID
-- Lending als Objekt für Reservierungen
-- LendingDao zum Verwalten der Reservierungen (End Datum mit aktuellem Datum verlgleichen?)
+- Loan als Objekt für BuchVerleihe
+- LoanDao zum Verwalten der Verleihe (End Datum mit aktuellem Datum verlgleichen?)
 - Wenn End-Datum bereits vorbei -> Buch wieder verfügbar
-- Lending Datenbank enthält: User (ID), Book (ID), end & start datum
-- User benötigen List<Lending> von Büchern, die sie momentan ausgeliehen haben (d.h. wenn aktuelles Datum zwischen Start- und Enddate -> wenn nicht mehr, liegt Lending in der Vergangenheit)
-- Lending Datenbank enthält Einträge bis zu einer gewissen Zeit (z.B. 2 Wochen lang) und sie werden danach gelöscht
+- Loan Datenbank enthält: User (ID), Book (ID), end & start datum
+- User benötigen List<Loan> von Büchern, die sie momentan ausgeliehen haben (d.h. wenn aktuelles Datum zwischen Start- und Enddate -> wenn nicht mehr, liegt Lending in der Vergangenheit)
+- Loan Datenbank enthält Einträge bis zu einer gewissen Zeit (z.B. 2 Wochen lang) und sie werden danach gelöscht
