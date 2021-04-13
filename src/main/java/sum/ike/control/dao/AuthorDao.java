@@ -22,7 +22,7 @@ public class AuthorDao {
                     result.getString("last_name")
             );
         }
-        setAuthorCounterToMax();
+        setAuthorIdCounterToMax();
     }
 
     public List<Author> getAuthorList () {
@@ -55,7 +55,7 @@ public class AuthorDao {
     /**
      * sets the authorIDCounter to the max id + 1 that exists in the list
      */
-    public void setAuthorCounterToMax () {
+    public void setAuthorIdCounterToMax () {
         Author.setAuthorIdCounter(getMaxAuthorId()+1);
     }
 
@@ -184,7 +184,8 @@ public class AuthorDao {
         List<Author> searchForList = new ArrayList<>();
         for (String str : name.toUpperCase().split(" ")) {
             for (Author author : al) {
-                if (author.getFirstName().toUpperCase(Locale.ROOT).contains(str) || author.getLastName().toUpperCase(Locale.ROOT).contains(str)) {
+                if (author.getFirstName().toUpperCase(Locale.ROOT).contains(str)
+                        || author.getLastName().toUpperCase(Locale.ROOT).contains(str)) {
                     if (!(searchForList.contains(author))) {
                         searchForList.add(author);
                     }
