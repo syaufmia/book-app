@@ -2,7 +2,6 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.UserDao;
 import sum.ike.model.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,18 +28,14 @@ public class LoginServlet extends HttpServlet {
 
 
         if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
-            req.setAttribute("sentence", "Hallo " + user.getFullName() + ".");
+            req.setAttribute("sentence", "Hallo " + user.getFirstName() + " " + user.getLastName() + ".");
         }
         else {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
 
             if (username != null && password != null) {
-                if (uDao.isDefaultAdmin(username, password)) {
-                    httpSession.setAttribute("user", uDao.getDefaultAdmin());
-                    req.setAttribute("sentence","Du bist jetzt eingeloggt.");
-                }
-                else if (uDao.UserLoginCorrect(username, password)) {
+                if (uDao.userLoginCorrect(username, password)) {
                     httpSession.setAttribute("UID",uDao.getUser(username, password));
                     req.setAttribute("sentence","Du bist jetzt eingeloggt.");
                 }

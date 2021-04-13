@@ -1,8 +1,7 @@
 package sum.ike.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class User implements Serializable {
 
@@ -11,26 +10,31 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String eMail;
-    private int personId;
+    private String firstName;
+    private String lastName;
     private static int userIdCounter = 1;
 
     public User () { }
 
-    public User (String username, String password, String eMail, int personId) {
+    public User (String username, String password, String eMail, String firstName, String lastName) {
         userId = userIdCounter++;
-        this.personId = personId;
         this.username = username;
         this.password = password;
         this.eMail = eMail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+
     }
 
 
-    public User (int userId, int personId, String username, String password, String eMail) {
+    public User (int userId, String username, String password, String eMail, String firstName, String lastName) {
         this.userId = userId;
-        this.personId = personId;
         this.username = username;
         this.password = password;
         this.eMail = eMail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+
     }
 
     public static void setUserIdCounter (int userIdCounter) {
@@ -53,12 +57,20 @@ public class User implements Serializable {
         this.eMail = eMail;
     }
 
-    public int getPersonId () {
-        return personId;
+    public String getFirstName () {
+        return firstName;
     }
 
-    public void setPersonId (int personId) {
-        this.personId = personId;
+    public void setFirstName (String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName () {
+        return lastName;
+    }
+
+    public void setLastName (String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername () {
@@ -80,6 +92,6 @@ public class User implements Serializable {
 
     @Override
     public String toString () {
-        return userId + ","  + personId + "," + username + "," + password + "," + eMail;
+        return userId + "," + username + "," + password + "," + eMail + "," + firstName + "," + lastName;
     }
 }
