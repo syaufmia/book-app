@@ -1,5 +1,6 @@
 package sum.ike.control.dao;
 
+import sum.ike.model.Book;
 import sum.ike.model.Loan;
 
 import java.sql.ResultSet;
@@ -39,6 +40,42 @@ public class LoanDao {
         return loan;
     }
 
+    /**
+     * returns book with a specific date between startDate and endDate.
+     * Does not check, if book is already in booklist, since a book
+     * should be only available once.
+     */
+    public List<Book> getListOfBorrowedBooksOnDate (LocalDate date) {
+        List<Book> borrowedBooks = new ArrayList<>();
+        for (Loan l : ll) {
+            if (date.isBefore(l.getEndDate()) && date.isAfter(l.getStartDate().minusDays(1))) {
+                borrowedBooks.add(l.getBook());
+            }
+        }
+        return borrowedBooks;
+    }
+
+    public List<Loan> getLoanListByUser (int userId) {
+        List<Loan> loanListByUser = new ArrayList<>();
+        UserDao uDao = new UserDao();
+        for (Loan l : ll) {
+            if (l.getUser().getUserId() == userId) {
+                loanListByUser.add(l);
+            }
+        }
+        return loanListByUser;
+    }
+
+
+    public List<Loan> getLoanListByEndDate (LocalDate endDate) {
+        List<Loan> loanListByEndDate = new ArrayList<>();
+        for (Loan l : ll) {
+            if (l.getEndDate() == endDate) {
+                loanListByEndDate.add(l);
+            }
+        }
+        return loanListByEndDate;
+    }
     //TODO: get list<loan> to be returned today
 
     public List<Loan> getAll () {
