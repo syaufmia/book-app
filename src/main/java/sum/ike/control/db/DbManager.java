@@ -2,6 +2,7 @@ package sum.ike.control.db;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.dao.UserDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
 import java.sql.*;
@@ -27,11 +28,16 @@ public class DbManager {
                     }
                     break;
                 case BOOK:
-                    BookDao bookDao = new BookDao();
+                    BookDao bDao = new BookDao();
                     while (result.next()) {
-                        bookDao.readDataToList(result);
+                        bDao.readDataToList(result);
                     }
                     break;
+                case USER:
+                    UserDao uDao = new UserDao();
+                    while (result.next()) {
+                        uDao.getData(result);
+                    }
             }
             result.close();
             state.close();
@@ -60,11 +66,9 @@ public class DbManager {
                     + "');");
             state.close();
             con.close();
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
             System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -90,11 +94,9 @@ public class DbManager {
                     + "');");
             state.close();
             con.close();
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
             System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -114,8 +116,7 @@ public class DbManager {
                     + ID + ";");
             state.close();
             con.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -131,27 +132,25 @@ public class DbManager {
                     + ID + ";");
             state.close();
             con.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-        public void deleteBook (String isbn) {
-            DbConnector db = new DbConnector();
-            Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
-            Statement state;
+    public void deleteBook (String isbn) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
 
-            try {
-                state = con.createStatement();
-                state.executeUpdate("DELETE FROM book WHERE isbn = '"
-                        + isbn +"';");
-                state.close();
-                con.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            state = con.createStatement();
+            state.executeUpdate("DELETE FROM book WHERE isbn = '"
+                    + isbn + "';");
+            state.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteBook (int ID) {
@@ -162,16 +161,15 @@ public class DbManager {
         try {
             state = con.createStatement();
             state.executeUpdate("DELETE FROM book WHERE author_id = "
-                    + ID +";");
+                    + ID + ";");
             state.close();
             con.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private String insertInto(Table table) {
+    private String insertInto (Table table) {
 
         switch (table) {
             case AUTHOR:
@@ -185,13 +183,18 @@ public class DbManager {
 
     public enum Table {
         AUTHOR {
-            public String toString() {
+            public String toString () {
                 return "author";
             }
         },
         BOOK {
-            public String toString() {
+            public String toString () {
                 return "book";
+            }
+        },
+        USER {
+            public String toString () {
+                return "user";
             }
         }
     }

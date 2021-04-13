@@ -1,14 +1,27 @@
 package sum.ike.control.dao;
 
-import sum.ike.model.Person;
 import sum.ike.model.User;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    private final List<User> ul = new ArrayList<>();
+    private static final List<User> ul = new ArrayList<>();
 
+    public void getData(ResultSet result) throws SQLException {
+        if (!userIdExists(result.getInt("user_id"))) {
+            addUser(result.getInt("user_id"),
+                    result.getString("username"),
+                    result.getString("password"),
+                    result.getString("email"),
+                    result.getString("first_name"),
+                    result.getString("last_name")
+            );
+        }
+        setUserIdCounterToMax();
+    }
 
     public User getUser (String username, String password) {
         User us = null;
@@ -21,6 +34,22 @@ public class UserDao {
             }
         } return us;
     }
+
+    public int getMaxUserId () {
+        int max = 0;
+        for (User u : ul) {
+            if (u.getUserId() > max) {
+                max = u.getUserId();
+            }
+        }
+        return max;
+    }
+
+    public void setUserIdCounterToMax () {
+        User.setUserIdCounter(getMaxUserId() + 1);
+    }
+
+
 
 
     public int getUserId (String username, String password) {
@@ -35,6 +64,16 @@ public class UserDao {
         } return userId;
     }
 
+    public boolean userIdExists (int userId) {
+        boolean exists = false;
+        for (User user : ul) {
+            if (user.getUserId() == userId) {
+                exists = true;
+                break;
+            }
+        } return exists;
+    }
+
 
     public boolean usernameExists (String username) {
         boolean exists = false;
@@ -46,7 +85,7 @@ public class UserDao {
         } return exists;
     }
 
-    public boolean UserLoginCorrect (String username, String password) {
+    public boolean userLoginCorrect (String username, String password) {
         boolean correct = false;
         for (User user : ul) {
             if (user.getUsername().equals(username)) {
@@ -65,21 +104,26 @@ public class UserDao {
         }
     }
 
+    /**
+     * adds a new User by creating new user
+     */
     public void addUser (String username, String password, String eMail, String firstName, String lastName) {
-        Person person = new Person (firstName, lastName);
         if (!usernameExists(username)) {
-            User user = new User(username, password, eMail, person.getPersonId());
+            User user = new User(username, password, eMail, firstName, lastName);
             ul.add(user);
         }
 
     }
 
-    public void addUser (int userId, int personId, String username, String password, String eMail) {
-        User user = new User(userId, personId, username, password, eMail);
+    /**
+     * adds user from db
+     */
+    public void addUser (int userId, String username, String password, String eMail, String firstName, String lastName) {
+        User user = new User(userId, username, password, eMail, firstName, lastName);
         ul.add(user);
     }
 
-    public List<User> getUl () {
+    public List<User> getUserList () {
         return ul;
     }
 }

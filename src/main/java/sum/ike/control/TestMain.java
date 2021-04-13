@@ -12,44 +12,49 @@ public class TestMain {
 
     public static void main(String[] args){
 
+        DbManager dbm = new DbManager();
         UserDao uDao = new UserDao();
 
-        uDao.addUser("Safi", "1234", "safi@uzun.de", "Safiye", "Uzun");
+        dbm.selectAll(DbManager.Table.USER);
+        System.out.println(uDao.getUserList());
+        uDao.addUser("syaufmia", "1234", "safi@uzun.com", "Safiye", "uzun");
 
-        DbManager dbm = new DbManager();
+        System.out.println(uDao.getUserList());
+//
+//        DbManager dbm = new DbManager();
+//
+//        dbm.selectAll(DbManager.Table.BOOK);
+//        dbm.selectAll(DbManager.Table.AUTHOR);
+//
+//        BookDao bDao = new BookDao();
+//
+//        bDao.addNew("Sarah",
+//                "Maas",
+//                "978-1-5266-2064-4",
+//                "A Court of Silver Flames",
+//                "Bloomsbury",
+//                2021);
 
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.AUTHOR);
-
-        BookDao bDao = new BookDao();
-
-        bDao.addNew("Sarah",
-                "Maas",
-                "978-1-5266-2064-4",
-                "A Court of Silver Flames",
-                "Bloomsbury",
-                2021);
-
-        System.out.println(bDao.getLastBook());
-
-
-        System.out.println(bDao.getBookList());
-
-        Loan loan = new Loan(bDao.getBook("978-3-15-000001-4"), uDao.getUser("Safi", "1234"));
-
-        System.out.println(loan.getStartDate());
-
-        System.out.println(loan.getEndDate());
-
-        loan.extendReturnDate(7);
-
-        System.out.println(loan.getEndDate());
-
-        loan.extendReturnDate(1);
-
-        System.out.println(loan.getEndDate());
-
-
+//        System.out.println(bDao.getLastBook());
+//
+//
+//        System.out.println(bDao.getBookList());
+//
+//        Loan loan = new Loan(bDao.getBook("978-3-15-000001-4"), uDao.getUser("Safi", "1234"));
+//
+//        System.out.println(loan.getStartDate());
+//
+//        System.out.println(loan.getEndDate());
+//
+//        loan.extendReturnDate(7);
+//
+//        System.out.println(loan.getEndDate());
+//
+//        loan.extendReturnDate(1);
+//
+//        System.out.println(loan.getEndDate());
+//
+//
 
 
 
