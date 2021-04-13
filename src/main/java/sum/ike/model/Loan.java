@@ -12,16 +12,46 @@ public class Loan implements Serializable {
     private User user;
     private LocalDate startDate;
     private LocalDate endDate;
+    private static int loanIdCounter = 1;
 
+    /**
+     * when borrowing a new book, self-created date
+     */
     public Loan (Book book, User user) {
+        this.loanId = loanIdCounter++;
         this.book = book;
         this.user = user;
         this.startDate = LocalDate.now();
         this.endDate = LocalDate.now().plusDays(14);
     }
 
+    /**
+     * when calling Loan-Data from db
+     */
+    public Loan (int loanId, Book book, User user, LocalDate startDate, LocalDate endDate) {
+        this.loanId = loanId;
+        this.book = book;
+        this.user = user;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+
+
     public void extendReturnDate (int days) {
         endDate = endDate.plusDays(days);
+    }
+
+    public static void setLoanIdCounter (int loanIdCounter) {
+        Loan.loanIdCounter = loanIdCounter;
+    }
+
+    public int getLoanId () {
+        return loanId;
+    }
+
+    public void setLoanId (int loanId) {
+        this.loanId = loanId;
     }
 
     public Book getBook () {
