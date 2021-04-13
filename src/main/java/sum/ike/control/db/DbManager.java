@@ -2,6 +2,7 @@ package sum.ike.control.db;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.dao.LoanDao;
 import sum.ike.control.dao.UserDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
@@ -37,6 +38,11 @@ public class DbManager {
                     UserDao uDao = new UserDao();
                     while (result.next()) {
                         uDao.getData(result);
+                    }
+                case LOAN:
+                    LoanDao lDao = new LoanDao();
+                    while (result.next()) {
+                        lDao.getData(result);
                     }
             }
             result.close();
@@ -195,6 +201,11 @@ public class DbManager {
         USER {
             public String toString () {
                 return "user";
+            }
+        },
+        LOAN {
+            public String toString () {
+                return "loan";
             }
         }
     }

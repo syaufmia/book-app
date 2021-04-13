@@ -37,11 +37,6 @@ public class Loan implements Serializable {
     }
 
 
-
-    public void extendReturnDate (int days) {
-        endDate = endDate.plusDays(days);
-    }
-
     public static void setLoanIdCounter (int loanIdCounter) {
         Loan.loanIdCounter = loanIdCounter;
     }
@@ -84,5 +79,16 @@ public class Loan implements Serializable {
 
     public void setEndDate (LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString () {
+        return "Loan{" +
+                "loanId=" + loanId +
+                ", book=" + book +
+                ", user=" + user +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }

@@ -2,6 +2,7 @@ package sum.ike.control;
 
 
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.dao.LoanDao;
 import sum.ike.control.dao.UserDao;
 import sum.ike.control.db.DbManager;
 import sum.ike.model.Loan;
@@ -14,12 +15,20 @@ public class TestMain {
 
         DbManager dbm = new DbManager();
         UserDao uDao = new UserDao();
+        LoanDao lDao = new LoanDao();
+        BookDao bDao = new BookDao();
+        dbm.selectAll(DbManager.Table.BOOK);
 
         dbm.selectAll(DbManager.Table.USER);
         System.out.println(uDao.getUserList());
         uDao.addUser("syaufmia", "1234", "safi@uzun.com", "Safiye", "uzun");
+        dbm.selectAll(DbManager.Table.LOAN);
+
+        System.out.println(lDao.getAll());
+        lDao.addLoan(22, 2);
 
         System.out.println(uDao.getUserList());
+        System.out.println(lDao.getAll());
 //
 //        DbManager dbm = new DbManager();
 //
