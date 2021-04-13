@@ -35,6 +35,17 @@ public class UserDao {
         } return us;
     }
 
+    public User getUser (int userId) {
+        User user = null;
+        for (User u : ul) {
+            if (u.getUserId() == userId) {
+                user = u;
+                break;
+            }
+        }
+        return user;
+    }
+
     public int getMaxUserId () {
         int max = 0;
         for (User u : ul) {
