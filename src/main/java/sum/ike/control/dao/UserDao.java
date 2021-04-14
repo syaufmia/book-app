@@ -85,6 +85,10 @@ public class UserDao {
         } return exists;
     }
 
+    public User getLastUser () {
+        return ul.get(ul.size() - 1);
+    }
+
 
     public boolean usernameExists (String username) {
         boolean exists = false;

@@ -6,6 +6,9 @@ import sum.ike.control.dao.LoanDao;
 import sum.ike.control.dao.UserDao;
 import sum.ike.model.Author;
 import sum.ike.model.Book;
+import sum.ike.model.Loan;
+import sum.ike.model.User;
+
 import java.sql.*;
 import java.util.Locale;
 
@@ -77,6 +80,59 @@ public class DbManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void insertUser (User user) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+        try {
+            state = con.createStatement();
+            state.executeUpdate(insertInto(Table.USER)
+                    + " VALUES ("
+                    + user.getUserId()
+                    + ", '"
+                    + user.getPassword()
+                    + "', '"
+                    + user.getUsername()
+                    + "', '"
+                    + user.getEMail()
+                    + "', '"
+                    + user.getFirstName()
+                    + "', '"
+                    + user.getLastName()
+                    + "');");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertLoan (Loan loan) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+        try {
+            state = con.createStatement();
+            state.executeUpdate(insertInto(Table.LOAN)
+                    + " VALUES ("
+                    + loan.getLoanId()
+                    + ", "
+                    + loan.getBook().getBookId()
+                    + ", "
+                    + loan.getUser().getUserId()
+                    + ", '"
+                    + loan.getStartDate()
+                    + "', '"
+                    + loan.getEndDate()
+                    + "');");
+            state.close();
+            con.close();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void insertBook (Book book) {
@@ -182,8 +238,12 @@ public class DbManager {
                 return "INSERT INTO " + table + " (author_id, first_name, last_name)";
             case BOOK:
                 return "INSERT INTO " + table + " (author_id, title, isbn, publisher, year)";
+            case USER:
+                return "INSERT INTO " + table + " (user_id, password, username, email, first_name, last_name)";
+            case LOAN:
+                return "INSERT INTO " + table + " ( loan_id, book_id, user_id, start_date, end_date)";
             default:
-                return null;
+            return null;
         }
     }
 

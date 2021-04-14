@@ -40,6 +40,10 @@ public class LoanDao {
         return loan;
     }
 
+    public Loan getLastLoan () {
+        return ll.get(ll.size() - 1);
+    }
+
     /**
      * returns book with a specific date between startDate and endDate.
      * Does not check, if book is already in booklist, since a book

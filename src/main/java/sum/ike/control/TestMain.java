@@ -8,6 +8,8 @@ import sum.ike.control.db.DbManager;
 import sum.ike.model.Loan;
 import sum.ike.model.User;
 
+import java.time.LocalDate;
+
 public class TestMain {
 
 
@@ -22,10 +24,16 @@ public class TestMain {
         dbm.selectAll(DbManager.Table.USER);
         System.out.println(uDao.getUserList());
         uDao.addUser("syaufmia", "1234", "safi@uzun.com", "Safiye", "uzun");
+        dbm.insertUser(uDao.getLastUser());
         dbm.selectAll(DbManager.Table.LOAN);
 
         System.out.println(lDao.getAll());
-        lDao.addLoan(22, 2);
+
+//
+//        lDao.addLoan(22, 2);
+//        dbm.insertLoan(lDao.getLastLoan());
+
+        System.out.println(lDao.getListOfBorrowedBooksOnDate(LocalDate.of(2021,4,12)));
 
         System.out.println(uDao.getUserList());
         System.out.println(lDao.getAll());
