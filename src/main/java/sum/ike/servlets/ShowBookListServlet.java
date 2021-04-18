@@ -53,7 +53,7 @@ public class ShowBookListServlet extends HttpServlet {
                     .append(StringTrimmer.trim(bDao.getBookList().get(i).getIsbn()))
                     .append("\n</td>\n")
                     .append("<td>\n")
-                    .append(StringTrimmer.trim(aDao.getAuthorById(bDao.getBookList().get(i).getAuthorId()).toStringNoId()))
+                    .append(StringTrimmer.trim(aDao.getAuthorById(bDao.getBookList().get(i).getAuthor().getAuthorId()).toStringNoId()))
                     .append("\n</td>\n")
                     .append("<td>\n")
                     .append(StringTrimmer.trim(bDao.getBookList().get(i).getPublisher()))

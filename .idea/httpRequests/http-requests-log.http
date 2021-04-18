@@ -1,0 +1,516 @@
+GET http://localhost:8080/book_manager_war_exploded/api/v1/author
+
+<> 2021-04-18T181147.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/1
+
+<> 2021-04-18T181050.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/35
+
+<> 2021-04-18T181043.404.html
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/author/id/34
+
+<> 2021-04-18T181026.404.html
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/bj
+
+<> 2021-04-08T213641.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/saf
+
+<> 2021-04-08T213625.200.json
+
+###
+
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/33
+
+###
+
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/32
+
+###
+
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/35
+
+###
+
+PUT http://localhost:8080/book_manager_war_exploded/api/v1/author/id/37
+content-type: application/json
+
+{
+  "first_name": "Angela",
+  "last_name": "Merkel"
+}
+
+###
+
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/34
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "id": 34,
+  "title": "Ein Test Buch",
+  "isbn": "000-000",
+  "publisher": "Mein Verlag",
+  "year": "2020"
+}
+
+###
+
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/book/isbn/111-222-333
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "irin",
+  "last_name": "carmon",
+  "title": "Notorious RBG",
+  "isbn": "978-0-06-241583-7",
+  "publisher": "HarperCollins",
+  "year": "2015"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Ruth bader",
+  "last_name": "ginsburg",
+  "title": "My Own Words",
+  "isbn": "978-1-5011-4525-4",
+  "publisher": "simon and schuster",
+  "year": "2018"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Robin",
+  "last_name": "diAngelo",
+  "title": "White Fragility",
+  "isbn": "978-0-8070-4741-5",
+  "publisher": "Penguin",
+  "year": "2018"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Michelle",
+  "last_name": "Obama",
+  "title": "Becoming",
+  "isbn": "978-1-5247-6314-5",
+  "publisher": "Random House",
+  "year": "2021"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Trevor",
+  "last_name": "Noah",
+  "title": "Born a Crime",
+  "isbn": "978-0-525-50902-8",
+  "publisher": "Random House",
+  "year": "2017"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "tom",
+  "last_name": "rath",
+  "title": "Entwickle deine Staerken",
+  "isbn": "978-3-86881-529-0",
+  "publisher": "Redline Verlag",
+  "year": "2019"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "miri",
+  "last_name": "masuda",
+  "title": "Yappari, boku no neechan",
+  "isbn": "978-4-344-43080-8",
+  "publisher": "Gentosha",
+  "year": "2021"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "yoon",
+  "last_name": "Woongdae",
+  "title": "Sayounara, otoko shakai",
+  "isbn": "978-4-7505-1676-9",
+  "publisher": "Akishobo",
+  "year": "2020"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Kazuko",
+  "last_name": "Watanabe",
+  "title": "OKARETA BASHO DE SAKINASAI",
+  "isbn": "978-4-344-02174-7",
+  "publisher": "Gentosha",
+  "year": "2012"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Makoto",
+  "last_name": "Shinkai",
+  "title": "Kimi no na wa",
+  "isbn": "978-4-04-102622-9",
+  "publisher": "Kodawa",
+  "year": "2016"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Banana",
+  "last_name": "Yoshimoto",
+  "title": "Kitchen",
+  "isbn": "978-3-257-22700-0",
+  "publisher": "Diogenes",
+  "year": "1994"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Banana",
+  "last_name": "Yoshimoto",
+  "title": "Lebensgeister",
+  "isbn": "978-3-257-24460-1",
+  "publisher": "Diogenes",
+  "year": "2018"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Kazuo",
+  "last_name": "Ishiguro",
+  "title": "Nocturnes",
+  "isbn": "978-0-571-24501-7",
+  "publisher": "Faber und faber",
+  "year": "2010"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Kazuo",
+  "last_name": "Ishiguro",
+  "title": "A Pale View of Hills",
+  "isbn": "978-0-571-25825-3",
+  "publisher": "Faber und faber",
+  "year": "2010"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Mia",
+  "last_name": "Mercado",
+  "title": "Weird but Normal",
+  "isbn": "978-0-06-294280-7",
+  "publisher": "HarperCollins",
+  "year": "2020"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Kazuo",
+  "last_name": "Ishiguro",
+  "title": "Klara and the Sun",
+  "isbn": "978-0-571-36488-6",
+  "publisher": "Faber und faber",
+  "year": "2021"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Bernardine",
+  "last_name": "Evaristo",
+  "title": "Girl, Woman, Other",
+  "isbn": "978-0-241-98499-4",
+  "publisher": "Penguin",
+  "year": "2020"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Madeline",
+  "last_name": "Miller",
+  "title": "The Song of Achilles",
+  "isbn": "978-1-4088-9138-4",
+  "publisher": "Bloomsbury Academic",
+  "year": "2017"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Thomas",
+  "last_name": "Theis",
+  "title": "Einstieg in Unity",
+  "isbn": "978-3-8362-8332-8",
+  "publisher": "Rheinwerk",
+  "year": "2021"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Thomas",
+  "last_name": "Theis",
+  "title": "Einstieg in JavaScript",
+  "isbn": "978-3-8362-6370-2",
+  "publisher": "Rheinwerk",
+  "year": "2018"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Christian",
+  "last_name": "Ullenboom",
+  "title": "Java ist auch eine Insel",
+  "isbn": "978-3-8362-7737-2",
+  "publisher": "Rheinwerk",
+  "year": "2020"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "George",
+  "last_name": "Orwell",
+  "title": "1984",
+  "isbn": "978-3-7306-0976-7",
+  "publisher": "Anaconda Verlag",
+  "year": "2021"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "George",
+  "last_name": "Orwell",
+  "title": "1984",
+  "isbn": "978-3-7306-0976-7",
+  "publisher": "Anaconda Verlag",
+  "year": "2021"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "id": 12,
+  "title": "Don Carlos",
+  "isbn": "978-3-86647-118-4",
+  "publisher": "Anaconda Verlag",
+  "year": "2007"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "id": 39,
+  "title": "Effi Briest",
+  "isbn": "978-3-938484-18-0",
+  "publisher": "Anaconda Verlag",
+  "year": "2005"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Heinrich",
+  "last_name": "Kleist",
+  "title": "Michael Kohlhaas",
+  "isbn": "978-3-86647-115-3",
+  "publisher": "Anaconda Verlag",
+  "year": "2007"
+}
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/book/
+content-type: application/json
+
+{
+  "first_name": "Safiye",
+  "last_name": "Uzun",
+  "title": "Java",
+  "isbn": "111-222-333",
+  "publisher": "goldmann",
+  "year": "2018"
+}
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/book/
+
+<> 2021-04-07T213719.200.json
+
+###
+
+OPTIONS http://localhost:8080/book_manager_war_exploded/api/v1/book/
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/author/goethe
+
+<> 2021-04-07T204537.200.json
+
+###
+
+POST http://localhost:8080/book_manager_war_exploded/api/v1/search/book/author/
+content-type: application/json
+
+{
+  "first_name": "Michelle",
+  "last_name": "Obama"
+}
+
+<> 2021-04-07T204529.405.html
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/title/das
+
+<> 2021-04-07T204448.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/title/a
+
+<> 2021-04-07T204437.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/aaa
+
+<> 2021-04-07T204433.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/book/schiller
+
+<> 2021-04-07T204411.200.json
+
+###
+
+GET http://localhost:8080/book_manager_war_exploded/api/v1/search/author/ange
+
+<> 2021-04-07T204404.200.json
+
+###
+
+DELETE http://localhost:8080/book_manager_war_exploded/api/v1/author/id/41
+
+###

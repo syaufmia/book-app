@@ -96,15 +96,15 @@ public class BookDao {
         return bl.get(bl.size()-1);
     }
 
-    public Author getBookAuthor (Book book) {
-        AuthorDao aDao = new AuthorDao();
-        return (aDao.getAuthorById(book.getAuthorId()));
-    }
+//    public Author getBookAuthor (Book book) {
+//        AuthorDao aDao = new AuthorDao();
+//        return (aDao.getAuthorById(book.getAuthorId()));
+//    }
 
     public List<Book> getBookListOfAuthor (int authorId) {
         List<Book> blOfAuthor = new ArrayList<>();
         for (Book book : bl) {
-            if (authorId == book.getAuthorId()) {
+            if (authorId == book.getAuthor().getAuthorId()) {
                 blOfAuthor.add(book);
             }
         } return blOfAuthor;
@@ -113,7 +113,7 @@ public class BookDao {
     public List<Book> getBookListOfAuthor (Author author) {
         List<Book> blOfAuthor = new ArrayList<>();
         for (Book book : bl) {
-            if (author.getAuthorId() == book.getAuthorId()) {
+            if (author.getAuthorId() == book.getAuthor().getAuthorId()) {
                 blOfAuthor.add(book);
             }
         }return blOfAuthor;
@@ -124,10 +124,12 @@ public class BookDao {
      * Returns false, if ISBN already existed, therefore not added
      */
     public boolean addNew(int authorId, String isbn, String title, String publisher, int year) {
+        AuthorDao aDao = new AuthorDao();
         boolean added = false;
         if (!containsIsbn(isbn)) {
             Book book = new Book.Builder()
-                    .setAuthorId(authorId)
+                    .setAuthor(aDao.getAuthorById(authorId))
+//                    .setAuthorId(authorId)
                     .setIsbn(isbn)
                     .setTitle(title)
                     .setPublisher(publisher)
@@ -145,9 +147,10 @@ public class BookDao {
      * Only used within the class.
      */
     private void addNew(int bookId, int authorId, String isbn, String title, String publisher, int year) {
+        AuthorDao aDao = new AuthorDao();
         Book book = new Book.Builder()
                 .setBookId(bookId)
-                .setAuthorId(authorId)
+                .setAuthor(aDao.getAuthorById(authorId))
                 .setIsbn(isbn)
                 .setTitle(title)
                 .setPublisher(publisher)

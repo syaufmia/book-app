@@ -1,7 +1,6 @@
 package sum.ike.control.dao;
 
 import sum.ike.model.User;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

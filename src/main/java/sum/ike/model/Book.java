@@ -10,7 +10,8 @@ public class Book implements Serializable {
     //tag::Fields[]
     //TODO: AUTHOR author
     private int bookId;
-    private int authorId; //by default = 0, unless it is inside a List | bookID == authorID when book written of author.
+    private Author author;
+//    private int authorId; //by default = 0, unless it is inside a List | bookID == authorID when book written of author.
     private static final long serialVersionUID = 1L;
     private final String title;
     private final String isbn;
@@ -33,9 +34,10 @@ public class Book implements Serializable {
     /**
      * book with known Author and assigned bookId (from db)
      */
-    public Book (int bookId, int authorId, String isbn, String title, String publisher, int publishedYear) {
+    public Book (int bookId, Author author, String isbn, String title, String publisher, int publishedYear) {
         this.bookId = bookId;
-        this.authorId = authorId;
+        this.author = author;
+//        this.authorId = authorId;
         this.title = StringTrimmer.trim(title);
         this.isbn = isbn;
         this.publisher = StringTrimmer.trim(publisher);
@@ -45,9 +47,10 @@ public class Book implements Serializable {
     /**
      * book with known author and self-generated bookId
      */
-    public Book (int authorId, String isbn, String title, String publisher, int publishedYear) {
+    public Book (Author author, String isbn, String title, String publisher, int publishedYear) {
         this.bookId = bookIdCounter++;
-        this.authorId = authorId;
+        this.author = author;
+//        this.authorId = authorId;
         this.title = StringTrimmer.trim(title);
         this.isbn = isbn;
         this.publisher = StringTrimmer.trim(publisher);
@@ -67,12 +70,21 @@ public class Book implements Serializable {
         this.bookId = bookId;
     }
 
-    public int getAuthorId () {
-        return authorId;
+    public Author getAuthor () {
+        return author;
     }
 
-    public void setAuthorId (int authorId) {
-        this.authorId = authorId;}
+    public void setAuthor (Author author) {
+        this.author = author;
+    }
+
+    //
+//    public int getAuthorId () {
+//        return authorId;
+//    }
+//
+//    public void setAuthorId (int authorId) {
+//        this.authorId = authorId;}
 
     public String getIsbn () {
         return isbn;
@@ -98,13 +110,13 @@ public class Book implements Serializable {
             default: return "";
         }
     }
-    public int getIntField (Attribute field) {
-        switch (field) {
-            case AUTHOR_ID: return authorId;
-            case YEAR: return publishedYear;
-            default: return 0;
-        }
-    }
+//    public int getIntField (Attribute field) {
+//        switch (field) {
+//            case AUTHOR_ID: return authorId;
+//            case YEAR: return publishedYear;
+//            default: return 0;
+//        }
+//    }
     //end::getFieldValue[]
 
     public int getPublishedYear () {
@@ -129,7 +141,7 @@ public class Book implements Serializable {
     //tag::toStringMethod[]
     @Override
     public String toString() {
-        return bookId + "," + authorId + "," + title + "," + isbn + "," + publisher + "," + publishedYear;
+        return bookId + "," + author + "," + title + "," + isbn + "," + publisher + "," + publishedYear;
     }
 
     public String toStringNoID () {
@@ -190,20 +202,20 @@ public class Book implements Serializable {
 
     //end::BookPublisherComparatorClass[]
 
-    public static class BookIDComparator implements Comparator<Book> {
-
-        @Override
-        public int compare (Book book1, Book book2) {
-            int IDCompare = Integer.compare(book1.getAuthorId(), book2.getAuthorId());
-            int yearCompare = Integer.compare(book1.getPublishedYear(), book2.getPublishedYear());
-
-            if (IDCompare == 0) {
-                return yearCompare;
-            } else {
-                return IDCompare;
-            }
-        }
-    }
+//    public static class BookIDComparator implements Comparator<Book> {
+//
+//        @Override
+//        public int compare (Book book1, Book book2) {
+//            int IDCompare = Integer.compare(book1.getAuthorId(), book2.getAuthorId());
+//            int yearCompare = Integer.compare(book1.getPublishedYear(), book2.getPublishedYear());
+//
+//            if (IDCompare == 0) {
+//                return yearCompare;
+//            } else {
+//                return IDCompare;
+//            }
+//        }
+//    }
 
     //tag::BookAuthorComparatorClass[]
 //    public static class BookAuthorLastNameComparator implements Comparator<Book> {
@@ -245,7 +257,8 @@ public class Book implements Serializable {
     public static class Builder {
 
         private int bookId;
-        private int authorId;
+        private Author author;
+//        private int authorId;
         private String isbn;
         private String title;
         private String publisher;
@@ -258,10 +271,15 @@ public class Book implements Serializable {
             return this;
         }
 
-        public Builder setAuthorId (int authorId) {
-            this.authorId = authorId;
+        public Builder setAuthor (Author author) {
+            this.author = author;
             return this;
         }
+//
+//        public Builder setAuthorId (int authorId) {
+//            this.authorId = authorId;
+//            return this;
+//        }
 
         public Builder setIsbn (String isbn) {
             this.isbn = isbn;
@@ -284,11 +302,11 @@ public class Book implements Serializable {
         }
 
         public Book buildWithId () {
-            return new Book(bookId, authorId, isbn, title, publisher, publishedYear);
+            return new Book(bookId, author, isbn, title, publisher, publishedYear);
         }
 
         public Book build() {
-            return new Book(authorId, isbn, title, publisher, publishedYear);
+            return new Book(author, isbn, title, publisher, publishedYear);
         }
     }
     //end::BuilderClass[]

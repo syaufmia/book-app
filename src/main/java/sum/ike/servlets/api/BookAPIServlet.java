@@ -102,7 +102,7 @@ public class BookAPIServlet extends HttpServlet {
                                 json.get("publisher").getAsString(),
                                 Integer.parseInt(json.get("year").getAsString()));
                         dbManager.insertBook(bDao.getLastBook());
-                        dbManager.insertAuthor(aDao.getAuthorById(bDao.getLastBook().getAuthorId()));
+                        dbManager.insertAuthor(aDao.getAuthorById(bDao.getLastBook().getAuthor().getAuthorId()));
                         resp.setStatus(HttpServletResponse.SC_CREATED);
                     }
                     else if (json.has("id")

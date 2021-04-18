@@ -144,7 +144,7 @@ public class DbManager {
             state = con.createStatement();
             state.executeUpdate(insertInto(Table.BOOK)
                     + " VALUES ("
-                    + book.getAuthorId()
+                    + book.getAuthor().getAuthorId()
                     + ", '"
                     + book.getTitle().toUpperCase(Locale.ROOT)
                     + "', '"
