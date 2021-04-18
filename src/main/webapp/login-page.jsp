@@ -14,76 +14,64 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<body>
-<main>
-    <div class="text-box">
-        <c:choose>
-            <c:when test="${sessionScope.user != null}">
+    <body>
+        <main>
+            <div class="text-box">
+                <c:choose>
+                    <c:when test="${sessionScope.user != null}">
 
-                <p class="grey"> Hallo ${sessionScope.user.firstName} ${sessionScope.user.lastName}. </p>
-                <h1>Verwalte deine Bücher.</h1>
-                <form class="form" name="select-author" action= "${pageContext.request.contextPath}/deleted-author/" method="POST">
-                    <table class="form-table">
-
-                        <c:forEach var= "book" items="${sessionScope.borrowedBooks}">
+                        <p class="grey"> Hallo ${sessionScope.user.firstName} ${sessionScope.user.lastName}. </p>
+                        <h1>Ausgeliehene Bücher</h1>
+                            <table class="real-table">
+                                <tr>
+                                    <th>Buchtitel</th>
+                                    <th>Isbn</th>
+                                    <th>ausgeliehen seit</th>
+                                    <th>ausgeliehen bis</th>
+                                </tr>
+                                <c:forEach var= "loan" items="${sessionScope.loanList}">
+                                    <tr>
+                                        <td>${loan.book.title}</td>
+                                        <td>${loan.book.isbn}</td>
+                                        <td>${loan.startDate}</td>
+                                        <td>${loan.endDate}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                </c:when>
+                <c:otherwise>
+                    <div class="text-box">
+                    <h1>Melde dich an</h1>
+                    <p>Bitte gib deinen Benutzernamen und Passwort ein.</p>
+                    <p class="red">${requestScope.message}</p>
+                    <p class="grey"> ${requestScope.sentence} </p>
+                    <%-- actionURl => URL depending on the outcome of the addAuthorServlet --%>
+                    <form class="form" name="login" action="${pageContext.request.contextPath}/login/" method="POST">
+                        <table class="form-table">
                             <tr>
+                                <td>Benutzername: </td>
                                 <td>
                                     <label>
-                                        <input type="radio" name="selected" value="${book.bookId}" size="100" checked="checked" />
+                                    <input class="text-field" type="text" name="username" value="" size="50" />
                                     </label>
-
-                                </td>
-                                <td> <label>
-
-                                        ${book.title}
-                                        ${book.isbn}
-                                </label>
                                 </td>
                             </tr>
-                        </c:forEach>
-                    </table>
-
-                </form>
-
-                            <%--                ${requestScope.htmltext}--%>
-
-                <span>In dieser Applikation sind alle Informationen über die Bücher in meiner Bibliothek zu finden.</span>
-                <span>Im Menü kannst du neue Bücher oder Autoren hinzufügen, bereits vorhandene wieder löschen und mehr.</span>
-
-        </div>
-        </c:when>
-        <c:otherwise>
-            <div class="text-box">
-            <h1>Melde dich an</h1>
-            <p>Bitte gib deinen Benutzernamen und Passwort ein.</p>
-            <p class="red">${requestScope.message}</p>
-            <p class="grey"> ${requestScope.sentence} </p>
-            <%-- actionURl => URL depending on the outcome of the addAuthorServlet --%>
-            <form class="form" name="login" action="${pageContext.request.contextPath}/login/" method="POST">
-                <table class="form-table">
-                    <tr>
-                        <td>Benutzername: </td>
-                        <td><label>
-                            <input class="text-field" type="text" name="username" value="" size="50" />
-                        </label></td>
-                    </tr>
-                    <tr>
-                        <td>Passwort: </td>
-                        <td><label>
-                            <input class="text-field" type="password" name="password" value="" size="50" />
-                        </label></td>
-                    </tr>
-
-                </table>
-                <input class="button" type="reset" value="Felder leeren" name="clear" />
-                <input class="button" type="submit" value="Hinzufügen" name="submit" />
-            </form>
+                            <tr>
+                                <td>Passwort: </td>
+                                <td>
+                                    <label>
+                                    <input class="text-field" type="password" name="password" value="" size="50" />
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                        <input class="button" type="reset" value="Felder leeren" name="clear" />
+                        <input class="button" type="submit" value="Hinzufügen" name="submit" />
+                    </form>
+                    </div>
+                </c:otherwise>
+                </c:choose>
             </div>
-        </c:otherwise>
-        </c:choose>
-    </div>
-
-</main>
-
-</body>
+        </main>
+    </body>
 </html>

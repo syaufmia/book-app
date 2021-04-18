@@ -60,7 +60,7 @@ public class ShowBookListServlet extends HttpServlet {
             dbm.insertLoan(lDao.getLastLoan());
         }
 
-        req.setAttribute("sentence", "Du hast das Buch" + lDao.getLastLoan().getBook().getTitle() + "ausgeliehen");
+        req.setAttribute("sentence", "Du hast das Buch " + lDao.getLastLoan().getBook().getTitle() + " ausgeliehen");
         doGet(req, resp);
 
     }

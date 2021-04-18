@@ -17,6 +17,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        UserDao uDao = new UserDao();
+        LoanDao lDao = new LoanDao();
+        User user = null;
+        DbManager dbm = new DbManager();
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
+
+        HttpSession httpSession = req.getSession();
+
+
+        if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
+            user = (User) httpSession.getAttribute("user");
+            httpSession.setAttribute("borrowedBooks", lDao.getListOfBorrowedBooksOnDateByUser(user.getUserId(), LocalDate.now()));
+            httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDate.now()));
+        }
         getServletContext().getRequestDispatcher("/login-page.jsp").forward(req, resp);
 
     }
@@ -27,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
         UserDao uDao = new UserDao();
         LoanDao lDao = new LoanDao();
-        User user = new User();
+        User user = null;
         DbManager dbm = new DbManager();
         dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.USER);
@@ -37,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 
 
         if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
-            req.setAttribute("sentence", "Hallo " + user.getFirstName() + " " + user.getLastName() + ".");
+            user = (User) httpSession.getAttribute("user");
         }
         else {
             String username = req.getParameter("username");
@@ -48,6 +64,7 @@ public class LoginServlet extends HttpServlet {
                     user = uDao.getUser(username, password);
                     httpSession.setAttribute("user", user);
                     httpSession.setAttribute("borrowedBooks", lDao.getListOfBorrowedBooksOnDateByUser(user.getUserId(), LocalDate.now()));
+                    httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDate.now()));
                     req.setAttribute("sentence","Du bist jetzt eingeloggt.");
                 }
                 else {
