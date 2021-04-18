@@ -5,6 +5,7 @@ import sum.ike.control.dao.BookDao;
 import sum.ike.control.dao.LoanDao;
 import sum.ike.control.dao.UserDao;
 import sum.ike.control.db.DbManager;
+import sum.ike.model.Book;
 import sum.ike.model.Loan;
 import sum.ike.model.User;
 
@@ -22,9 +23,14 @@ public class TestMain {
         BookDao bDao = new BookDao();
 //        dbm.selectAll(DbManager.Table.BOOK);
 
+        dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.USER);
         dbm.selectAll(DbManager.Table.LOAN);
+
+        for (Book book : bDao.getBookList()) {
+            System.out.println(book.getAuthor().toStringNoId());
+        }
 
 
 
