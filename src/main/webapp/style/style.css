@@ -105,7 +105,7 @@ main {
 }
 .button {
     display: inline-block;
-    background-color: #376E6F;
+    background-color: #376e6f;
     border: none;
     width: 40%;
     color: #EAE7DC;
@@ -115,9 +115,41 @@ main {
     margin: 15px;
     font-size: large;
 }
+
+.table-button {
+    display: inline-block;
+    background-color: #376E6F;
+    border: none;
+    width: 100%;
+    color: #EAE7DC;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 15px;
+    margin: 0;
+    font-size: medium;
+}
+
+.no-click-table-button {
+    display: inline-block;
+    background-color: #636b6b;
+    border: none;
+    width: 100%;
+    color: #EAE7DC;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 15px;
+    margin: 0;
+    font-size: medium;
+}
+
 .button:hover {
     background-color:#e85a4f;
 }
+
+.table-button:hover {
+    background-color:#e85a4f;
+}
+
 .invisible-button {
     appearance: none;
     cursor: pointer;
@@ -155,7 +187,7 @@ main {
   }
 
 .real-table th, .real-table td {
-    padding: 10px 25px;
+    padding: 10px 15px;
   }
 .real-table tr:nth-child(even) {
     background:  #EAE7DC;

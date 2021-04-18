@@ -7,10 +7,13 @@ import sum.ike.control.dao.UserDao;
 import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Book;
+import sum.ike.model.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -39,28 +42,26 @@ public class ShowBookListServlet extends HttpServlet {
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         BookDao bDao = new BookDao();
+        LoanDao lDao = new LoanDao();
+        UserDao uDao = new UserDao();
         DbManager dbm = new DbManager();
+        dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
-        resp.setContentType("text/html;charset=UTF-8");
+        HttpSession httpSession = req.getSession();
+        String bookId = req.getParameter("bookId");
 
-        String sortBy = req.getParameter("by");
-
-        if (sortBy != null) {
-            if (sortBy.equalsIgnoreCase("titel")) {
-                bDao.getBookList().sort(new Book.BookTitleComparator());
-                doGet(req, resp);
-
-            }
-            if (sortBy.equalsIgnoreCase("isbn")) {
-                bDao.getBookList().sort(new Book.BookIsbnComparator());
-                doGet(req, resp);
-
-            }
-            if (sortBy.equalsIgnoreCase("verlag")) {
-                bDao.getBookList().sort(new Book.BookPublisherComparator());
-                doGet(req, resp);
-            }
+        if (httpSession.getAttribute("user") != null
+                && bookId != null) {
+            User user = (User) httpSession.getAttribute("user");
+            lDao.addLoan(Integer.parseInt(bookId), user.getUserId());
+            dbm.insertLoan(lDao.getLastLoan());
         }
+
+        req.setAttribute("sentence", "Du hast das Buch" + lDao.getLastLoan().getBook().getTitle() + "ausgeliehen");
+        doGet(req, resp);
+
     }
 }

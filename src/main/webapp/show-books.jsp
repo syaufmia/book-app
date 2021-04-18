@@ -17,7 +17,7 @@
                 <h1>Bücherliste</h1>
                 <p class="grey">${requestScope.sentence}</p>
                 <p class="red">${requestScope.message}</p>
-                <div class="text-box">
+<%--                <div class="text-box">--%>
                     <table class="real-table">
                         <tr>
                             <th>Titel</th>
@@ -31,6 +31,7 @@
                                 </c:when>
                             </c:choose>
                         </tr>
+                        <form action="${pageContext.request.contextPath}/showed-blist/" method="post">
                         <c:forEach var="book" items="${requestScope.bookList}">
                             <tr>
                                 <td>${book.title}</td>
@@ -42,18 +43,19 @@
                                     <c:when test="${sessionScope.user != null}">
                                         <c:choose>
                                             <c:when test="${requestScope.borrowedBookList.contains(book)}">
-                                                <td>NEIN</td>
+                                                <td><span class="no-click-table-button">NEIN</span></td>
                                             </c:when>
                                             <c:otherwise>
-                                                <td>JA</td>
+                                                <td><button class="table-button" name="bookId" type="submit" value="${book.bookId}">JA</button></td>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:when>
                                 </c:choose>
                             </tr>
                         </c:forEach>
+                        </form>
                     </table>
-                </div>
+<%--                </div>--%>
             </div>
         </main>
     </body>
