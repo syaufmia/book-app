@@ -18,25 +18,27 @@ public class TestMain {
         DbManager dbm = new DbManager();
         UserDao uDao = new UserDao();
         LoanDao lDao = new LoanDao();
-        BookDao bDao = new BookDao();
-        dbm.selectAll(DbManager.Table.BOOK);
 
+        BookDao bDao = new BookDao();
+//        dbm.selectAll(DbManager.Table.BOOK);
+
+        dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.USER);
-        System.out.println(uDao.getUserList());
-        uDao.addUser("syaufmia", "1234", "safi@uzun.com", "Safiye", "uzun");
-        dbm.insertUser(uDao.getLastUser());
         dbm.selectAll(DbManager.Table.LOAN);
 
-        System.out.println(lDao.getAll());
 
+
+        System.out.println(lDao.getListOfBorrowedBooksOnDateByUser(2, LocalDate.now()));
 //
+        System.out.println(lDao.getLoanListByUser(2));
 //        lDao.addLoan(22, 2);
 //        dbm.insertLoan(lDao.getLastLoan());
+//
+//        System.out.println(lDao.getListOfBorrowedBooksOnDate(LocalDate.of(2021,4,12)));
+//
+//        System.out.println(uDao.getUserList());
+//        System.out.println(lDao.getAll());
 
-        System.out.println(lDao.getListOfBorrowedBooksOnDate(LocalDate.of(2021,4,12)));
-
-        System.out.println(uDao.getUserList());
-        System.out.println(lDao.getAll());
 //
 //        DbManager dbm = new DbManager();
 //

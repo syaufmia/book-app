@@ -70,6 +70,35 @@ public class LoanDao {
         return loanListByUser;
     }
 
+    /**
+     * gets a booklist with all borrowed books by a user on a specific date.
+     * In order to work correctly, database for books and for users has to be called first!
+     */
+    public List<Book> getListOfBorrowedBooksOnDateByUser (int userId, LocalDate date) {
+        List<Book> borrowedBooks = new ArrayList<>();
+        for (Loan l : ll) {
+            if (date.isBefore(l.getEndDate())
+                    && date.isAfter(l.getStartDate().minusDays(1))
+                    && l.getUser().getUserId() == userId) {
+                borrowedBooks.add(l.getBook());
+            }
+        }
+        return borrowedBooks;
+    }
+
+    public boolean bookIsAvailable (Book book, LocalDate date) {
+        boolean available = true;
+        for (Loan l : ll) {
+            if (date.isBefore(l.getEndDate())
+                    && date.isAfter(l.getStartDate().minusDays(1))
+                    && l.getBook().getBookId() == book.getBookId()) {
+                available = false;
+                break;
+            }
+        }
+        return available;
+    }
+
 
     public List<Loan> getLoanListByEndDate (LocalDate endDate) {
         List<Loan> loanListByEndDate = new ArrayList<>();

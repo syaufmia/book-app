@@ -19,12 +19,38 @@
     <div class="text-box">
         <c:choose>
             <c:when test="${sessionScope.user != null}">
-            <div class="text-box">
-                <p class="grey"> Hallo ${sessionScope.user.fullName}. </p>
-                <h1>Willkommen in meiner Bibliothek.</h1>
+
+                <p class="grey"> Hallo ${sessionScope.user.firstName} ${sessionScope.user.lastName}. </p>
+                <h1>Verwalte deine Bücher.</h1>
+                <form class="form" name="select-author" action= "${pageContext.request.contextPath}/deleted-author/" method="POST">
+                    <table class="form-table">
+
+                        <c:forEach var= "book" items="${sessionScope.borrowedBooks}">
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input type="radio" name="selected" value="${book.bookId}" size="100" checked="checked" />
+                                    </label>
+
+                                </td>
+                                <td> <label>
+
+                                        ${book.title}
+                                        ${book.isbn}
+                                </label>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+                </form>
+
+                            <%--                ${requestScope.htmltext}--%>
+
                 <span>In dieser Applikation sind alle Informationen über die Bücher in meiner Bibliothek zu finden.</span>
                 <span>Im Menü kannst du neue Bücher oder Autoren hinzufügen, bereits vorhandene wieder löschen und mehr.</span>
-            </div>
+
+        </div>
         </c:when>
         <c:otherwise>
             <div class="text-box">

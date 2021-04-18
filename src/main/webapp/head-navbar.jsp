@@ -31,7 +31,7 @@
             </ul>
         </li>
         <li><span>Sonstiges</span></li>
-        <li class="with-link"><a href="${pageContext.request.contextPath}/login/">Login</a>
+        <li class="with-link"><a href="${pageContext.request.contextPath}/login/">My page</a>
         </li>
     </ul>
 

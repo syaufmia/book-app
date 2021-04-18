@@ -2,6 +2,8 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
+import sum.ike.control.dao.LoanDao;
+import sum.ike.control.dao.UserDao;
 import sum.ike.control.db.DbManager;
 import sum.ike.control.utils.StringTrimmer;
 import sum.ike.model.Book;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 
 
 public class ShowBookListServlet extends HttpServlet {
@@ -19,15 +22,20 @@ public class ShowBookListServlet extends HttpServlet {
 
         BookDao bDao = new BookDao();
         AuthorDao aDao = new AuthorDao();
-
         DbManager dbm = new DbManager();
+        UserDao uDao = new UserDao();
+        LoanDao lDao = new LoanDao();
 
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.LOAN);
+
 
         resp.setContentType("text/html;charset=UTF-8");
 
         StringBuilder htmlText = new StringBuilder();
+        req.setAttribute("bookList", bDao.getBookList());
+        req.setAttribute("borrowedBookList", lDao.getListOfBorrowedBooksOnDate(LocalDate.now()));
 
         htmlText.append("<form name=\"sort-table\" action=\"\" method=\"POST\">\n")
                 .append("<tr>\n<th> <input type=\"submit\" class=\"invisible-button\" value=\"Titel\" name=\"by\" /></th>\n")
@@ -61,7 +69,7 @@ public class ShowBookListServlet extends HttpServlet {
 
 
 
-        getServletContext().getRequestDispatcher("/show-list.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/show-books.jsp").forward(req, resp);
     }
 
 
