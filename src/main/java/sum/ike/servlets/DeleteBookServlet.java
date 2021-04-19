@@ -14,24 +14,20 @@ import java.util.List;
 
 @WebServlet (name = "DeleteBookServlet", value = "/deleted-book/")
 public class DeleteBookServlet extends HttpServlet {
+
+    BookDao bDao = new BookDao();
+    AuthorDao aDao = new AuthorDao();
+    DbManager dbm = new DbManager();
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         getServletContext().getRequestDispatcher("/search-book.jsp").forward(req,resp);
     }
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        BookDao bDao = new BookDao();
-        AuthorDao aDao = new AuthorDao();
-        DbManager dbm = new DbManager();
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
+        callDb();
         String word = req.getParameter("word");
         String selected  = req.getParameter("filtered-book");
 
@@ -74,7 +70,6 @@ public class DeleteBookServlet extends HttpServlet {
             req.setAttribute("sentence", "Du hast das Buch erfolgreich gelöscht.");
             doGet(req,resp);
         }
-
         else {
             doGet(req,resp);
         }
@@ -131,5 +126,11 @@ public class DeleteBookServlet extends HttpServlet {
 //            }
 //        }
 
+    }
+    protected void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }

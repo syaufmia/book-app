@@ -14,10 +14,12 @@ import java.io.IOException;
 @WebServlet
 public class AddAuthorServlet extends HttpServlet {
 
+    DbManager dbm = new DbManager();
+    AuthorDao aDao = new AuthorDao();
+    BookDao bDao = new BookDao();
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         getServletContext().getRequestDispatcher("/add-author.jsp").forward(req, resp);
 
     }
@@ -25,15 +27,7 @@ public class AddAuthorServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        DbManager dbm = new DbManager();
-        AuthorDao aDao = new AuthorDao();
-        BookDao bDao = new BookDao();
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
-
+        callDb();
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String titel = req.getParameter("titel");
@@ -42,7 +36,6 @@ public class AddAuthorServlet extends HttpServlet {
         String yearStr = req.getParameter("year");
 
         StringBuilder displayText = new StringBuilder();
-
 
         //Buch sollte nie leer sein, sonst Fehler
         if ((titel != null && isbn != null && publisher != null && yearStr != null)) {
@@ -162,5 +155,11 @@ public class AddAuthorServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
 
         }
+    }
+    public void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }

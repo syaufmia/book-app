@@ -1,14 +1,10 @@
 package sum.ike.servlets;
 
-import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.dao.LoanDao;
 import sum.ike.control.dao.UserDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.control.utils.StringTrimmer;
-import sum.ike.model.Book;
 import sum.ike.model.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +16,15 @@ import java.time.LocalDate;
 
 public class ShowBookListServlet extends HttpServlet {
 
+
+    BookDao bDao = new BookDao();
+    LoanDao lDao = new LoanDao();
+    DbManager dbm = new DbManager();
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        DbManager dbm = new DbManager();
-        BookDao bDao = new BookDao();
-        LoanDao lDao = new LoanDao();
-
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
+        callDb();
 
         resp.setContentType("text/html;charset=UTF-8");
         req.setAttribute("bookList", bDao.getBookList());
@@ -42,14 +36,7 @@ public class ShowBookListServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        BookDao bDao = new BookDao();
-        LoanDao lDao = new LoanDao();
-        UserDao uDao = new UserDao();
-        DbManager dbm = new DbManager();
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
+        callDb();
 
         HttpSession httpSession = req.getSession();
         String bookId = req.getParameter("bookId");
@@ -64,5 +51,11 @@ public class ShowBookListServlet extends HttpServlet {
         req.setAttribute("sentence", "Du hast das Buch " + lDao.getLastLoan().getBook().getTitle() + " ausgeliehen");
         doGet(req, resp);
 
+    }
+    protected void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }

@@ -2,7 +2,6 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.AuthorDao;
 import sum.ike.control.db.DbManager;
-import sum.ike.model.Author;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,17 +11,13 @@ import java.io.IOException;
 
 public class ShowAuthorListServlet extends HttpServlet {
 
+    AuthorDao aDao = new AuthorDao();
+    DbManager dbm = new DbManager();
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-        AuthorDao aDao = new AuthorDao();
-        DbManager dbm = new DbManager();
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
+        callDb();
         resp.setContentType("text/html;charset=UTF-8");
 
         req.setAttribute("authorList", aDao.getAuthorList());
@@ -32,29 +27,28 @@ public class ShowAuthorListServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        AuthorDao aDao = new AuthorDao();
-        DbManager dbm = new DbManager();
+        callDb();
+//
+//        String sortBy = req.getParameter("by");
+//
+//        if (sortBy != null) {
+//            if (sortBy.equalsIgnoreCase("vorname")) {
+//                aDao.getAuthorList().sort(new Author.AuthorFirstNameComparator());
+//                doGet(req, resp);
+//
+//            }
+//            if (sortBy.equalsIgnoreCase("nachname")) {
+//                aDao.getAuthorList().sort(new Author.AuthorLastNameComparator());
+//                doGet(req, resp);
+//
+//            }
+//        }
+    }
 
-        resp.setContentType("text/html;charset=UTF-8");
-
+    protected void callDb () {
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.USER);
         dbm.selectAll(DbManager.Table.LOAN);
-
-        String sortBy = req.getParameter("by");
-
-        if (sortBy != null) {
-            if (sortBy.equalsIgnoreCase("vorname")) {
-                aDao.getAuthorList().sort(new Author.AuthorFirstNameComparator());
-                doGet(req, resp);
-
-            }
-            if (sortBy.equalsIgnoreCase("nachname")) {
-                aDao.getAuthorList().sort(new Author.AuthorLastNameComparator());
-                doGet(req, resp);
-
-            }
-        }
     }
 }

@@ -13,6 +13,9 @@ import java.util.List;
 
 public class AddBookSearchAuthorServlet extends HttpServlet {
 
+    AuthorDao aDao = new AuthorDao();
+    DbManager dbm = new DbManager();
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -50,17 +53,9 @@ public class AddBookSearchAuthorServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        AuthorDao aDao = new AuthorDao();
-        DbManager dbm = new DbManager();
-
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
+        callDb();
         String name = req.getParameter("name");
         StringBuilder sb = new StringBuilder();
-
 
         if (name != null) { //if not null
             if (!name.isEmpty()) { //if not empty
@@ -96,5 +91,11 @@ public class AddBookSearchAuthorServlet extends HttpServlet {
             req.setAttribute("message",sb.toString());
             getServletContext().getRequestDispatcher("/added-book").forward(req, resp);
         }
+    }
+    protected void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }

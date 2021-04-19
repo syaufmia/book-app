@@ -12,6 +12,9 @@ import java.util.List;
 
 public class DeleteAuthorServlet extends HttpServlet {
 
+    AuthorDao aDao = new AuthorDao();
+    DbManager dbm = new DbManager();
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             getServletContext().getRequestDispatcher("/search-author.jsp").forward(req, resp);
@@ -21,14 +24,8 @@ public class DeleteAuthorServlet extends HttpServlet {
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        AuthorDao aDao = new AuthorDao();
-        DbManager dbm = new DbManager();
 
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
+        callDb();
         String selectedIndex = req.getParameter("selected");
         String name = req.getParameter("name");
 
@@ -39,7 +36,6 @@ public class DeleteAuthorServlet extends HttpServlet {
         if (selectedIndex != null) {
             int ID = Integer.parseInt(selectedIndex);
             aDao.delete(ID);
-
             dbm.deleteBook(ID);
             dbm.deleteAuthor(ID);
 
@@ -82,5 +78,11 @@ public class DeleteAuthorServlet extends HttpServlet {
             }
         }
 
+    }
+    protected void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }

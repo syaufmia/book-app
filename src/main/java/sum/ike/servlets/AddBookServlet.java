@@ -12,24 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AddBookServlet extends HttpServlet {
+    BookDao bDao = new BookDao();
+    AuthorDao aDao = new AuthorDao();
+    DbManager dbm = new DbManager();
 
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         getServletContext().getRequestDispatcher("/add-book.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        BookDao bDao = new BookDao();
-        AuthorDao aDao = new AuthorDao();
-        DbManager dbm = new DbManager();
-
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
 
         String selectedIndex = req.getParameter("filtered-author");
         String titel = req.getParameter("titel");
@@ -86,5 +79,11 @@ public class AddBookServlet extends HttpServlet {
             doGet(req, resp);
         }
 
+    }
+    protected void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }

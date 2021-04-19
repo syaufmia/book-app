@@ -14,24 +14,19 @@ import java.time.LocalDate;
 
 public class LoginServlet extends HttpServlet {
 
+    DbManager dbm = new DbManager();
+    UserDao uDao = new UserDao();
+    LoanDao lDao = new LoanDao();
+
+
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LoanDao lDao = new LoanDao();
-        User user;
-        DbManager dbm = new DbManager();
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
+        callDb();
         HttpSession httpSession = req.getSession();
 
-
-
         if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
-            user = (User) httpSession.getAttribute("user");
-//            httpSession.setAttribute("borrowedBooks", lDao.getListOfBorrowedBooksOnDateByUser(user.getUserId(), LocalDate.now()));
+            User user = (User) httpSession.getAttribute("user");
             httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDate.now()));
         }
         getServletContext().getRequestDispatcher("/login-page.jsp").forward(req, resp);
@@ -40,20 +35,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-        UserDao uDao = new UserDao();
-        LoanDao lDao = new LoanDao();
-        User user;
-        DbManager dbm = new DbManager();
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
+        callDb();
 
         HttpSession httpSession = req.getSession();
 
         if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
-            user = (User) httpSession.getAttribute("user");
             String loanIdReturn = req.getParameter("loanIdReturn");
             String loanIdExtend = req.getParameter("loanIdExtend");
             String logout = req.getParameter("logout");
@@ -70,7 +56,6 @@ public class LoginServlet extends HttpServlet {
             }
             else if (logout != null && logout.equalsIgnoreCase("true")) {
                 httpSession.removeAttribute("user");
-                httpSession.removeAttribute("borrowedBooks");
                 httpSession.removeAttribute("loanList");
             }
         }
@@ -80,9 +65,8 @@ public class LoginServlet extends HttpServlet {
 
             if (username != null && password != null) {
                 if (uDao.userLoginCorrect(username, password)) {
-                    user = uDao.getUser(username, password);
+                    User user = uDao.getUser(username, password);
                     httpSession.setAttribute("user", user);
-                    httpSession.setAttribute("borrowedBooks", lDao.getListOfBorrowedBooksOnDate(LocalDate.now()));
                     httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDate.now()));
                 }
                 else {
@@ -92,8 +76,12 @@ public class LoginServlet extends HttpServlet {
         }
         doGet(req,resp);
 
+    }
 
-
-
+    protected void callDb () {
+        dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
     }
 }
