@@ -54,6 +54,9 @@ public class AddBookSearchAuthorServlet extends HttpServlet {
         DbManager dbm = new DbManager();
 
         dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
         String name = req.getParameter("name");
         StringBuilder sb = new StringBuilder();

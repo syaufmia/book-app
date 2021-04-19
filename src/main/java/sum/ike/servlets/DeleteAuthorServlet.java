@@ -24,8 +24,10 @@ public class DeleteAuthorServlet extends HttpServlet {
         AuthorDao aDao = new AuthorDao();
         DbManager dbm = new DbManager();
 
-        dbm.selectAll(DbManager.Table.BOOK);
         dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
         String selectedIndex = req.getParameter("selected");
         String name = req.getParameter("name");

@@ -19,6 +19,9 @@ public class ShowAuthorListServlet extends HttpServlet {
         AuthorDao aDao = new AuthorDao();
         DbManager dbm = new DbManager();
         dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
         resp.setContentType("text/html;charset=UTF-8");
 
@@ -35,6 +38,9 @@ public class ShowAuthorListServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
 
         dbm.selectAll(DbManager.Table.AUTHOR);
+        dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
         String sortBy = req.getParameter("by");
 

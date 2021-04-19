@@ -127,6 +127,23 @@ public class LoanDao {
         return ll;
     }
 
+    public void changeEndDate (int loanId, LocalDate date) {
+        for (Loan l : ll) {
+            if (l.getLoanId() == loanId) {
+                l.setEndDate(date);
+            }
+        }
+    }
+
+    public void extendEndDate (int loanId, int days) {
+        for (Loan l : ll) {
+            if (l.getLoanId() == loanId) {
+                LocalDate date = l.getEndDate();
+                l.setEndDate(date.plusDays(days));
+            }
+        }
+    }
+
     public boolean loanIdExists (int loanId) {
         boolean exists = false;
         for (Loan l : ll) {

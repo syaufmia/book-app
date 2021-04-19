@@ -29,6 +29,8 @@ public class DeleteBookServlet extends HttpServlet {
         DbManager dbm = new DbManager();
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
         String word = req.getParameter("word");
         String selected  = req.getParameter("filtered-book");

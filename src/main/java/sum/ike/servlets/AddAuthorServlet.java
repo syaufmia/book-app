@@ -30,6 +30,8 @@ public class AddAuthorServlet extends HttpServlet {
         BookDao bDao = new BookDao();
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
+        dbm.selectAll(DbManager.Table.LOAN);
 
 
         String firstName = req.getParameter("firstName");

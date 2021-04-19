@@ -29,6 +29,7 @@ public class ShowBookListServlet extends HttpServlet {
 
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);
+        dbm.selectAll(DbManager.Table.USER);
         dbm.selectAll(DbManager.Table.LOAN);
 
         resp.setContentType("text/html;charset=UTF-8");

@@ -10,6 +10,7 @@ import sum.ike.model.Loan;
 import sum.ike.model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Locale;
 
 public class DbManager {
@@ -163,7 +164,7 @@ public class DbManager {
         }
     }
 
-    public void updateAuthor (int ID, String firstName, String lastName) {
+    public void updateAuthor (int authorId, String firstName, String lastName) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
@@ -175,7 +176,7 @@ public class DbManager {
                     + "', last_name = '"
                     + lastName.toUpperCase(Locale.ROOT)
                     + "' WHERE author_id = "
-                    + ID + ";");
+                    + authorId + ";");
             state.close();
             con.close();
         } catch (SQLException e) {
@@ -183,7 +184,25 @@ public class DbManager {
         }
     }
 
-    public void deleteAuthor (int ID) {
+    public void updateLoan (int loanId, LocalDate endDate) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+
+        try {
+            state = con.createStatement();
+            state.executeUpdate("UPDATE loan SET end_date = '"
+                    + endDate
+                    + "' WHERE loan_id = "
+                    + loanId + ";");
+            state.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAuthor (int authorId) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
@@ -191,7 +210,7 @@ public class DbManager {
         try {
             state = con.createStatement();
             state.executeUpdate("DELETE FROM author WHERE author_id = "
-                    + ID + ";");
+                    + authorId + ";");
             state.close();
             con.close();
         } catch (SQLException e) {
@@ -215,15 +234,14 @@ public class DbManager {
         }
     }
 
-    public void deleteBook (int ID) {
+    public void deleteBook (int authorId) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
-
         try {
             state = con.createStatement();
             state.executeUpdate("DELETE FROM book WHERE author_id = "
-                    + ID + ";");
+                    + authorId + ";");
             state.close();
             con.close();
         } catch (SQLException e) {
@@ -241,7 +259,7 @@ public class DbManager {
             case USER:
                 return "INSERT INTO " + table + " (user_id, password, username, email, first_name, last_name)";
             case LOAN:
-                return "INSERT INTO " + table + " ( loan_id, book_id, user_id, start_date, end_date)";
+                return "INSERT INTO " + table + " (loan_id, book_id, user_id, start_date, end_date)";
             default:
             return null;
         }
