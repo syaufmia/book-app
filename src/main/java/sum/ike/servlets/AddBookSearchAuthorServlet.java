@@ -64,15 +64,17 @@ public class AddBookSearchAuthorServlet extends HttpServlet {
                     req.setAttribute("list-empty", false);
                     StringBuilder htmlText = new StringBuilder();
                     //for-Schleife zum Erstellen der Liste (mit HTML tags) als String
-                    for (int i = 0; i < list.size(); i++) {
-                        htmlText.append("<tr><td><input type=\"radio\" name=\"filtered-author\" value=\"")
-                                .append(i)
-                                .append("\" size=\"100\" checked=\"checked\" />")
-                                .append("</td> <td> <label> ")
-                                .append(StringTrimmer.trim(list.get(i).toStringNoId()))
-                                .append( "</td></tr>");
-                    }
-                    req.setAttribute("html-text", htmlText);
+                    //TODO: use jstl
+                    req.setAttribute("filteredAuthorList", list);
+//                    for (int i = 0; i < list.size(); i++) {
+//                        htmlText.append("<tr><td><input type=\"radio\" name=\"filtered-author\" value=\"")
+//                                .append(i)
+//                                .append("\" size=\"100\" checked=\"checked\" />")
+//                                .append("</td> <td> <label> ")
+//                                .append(StringTrimmer.trim(list.get(i).toStringNoId()))
+//                                .append( "</td></tr>");
+//                    }
+//                    req.setAttribute("html-text", htmlText);
 
                     req.setAttribute("name", name);
                 }

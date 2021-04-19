@@ -1,7 +1,7 @@
 body {
     background-color: #EAE7DC;
     margin: 0;
-  font-family: "Lucida Sans Unicode", "Tahoma", "Lucida Console", serif;
+    font-family: "Lucida Sans Unicode", "Tahoma", "Lucida Console", serif;
     color: black;
     padding-left: 220px;
 }
@@ -9,14 +9,18 @@ main {
 
 }
 .text-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    float: left;
     background: rgba(255, 255, 255, 0.25);
     padding: 25px;
     margin: 50px;
     text-align: center;
     border-radius: 20px;
     font-size: 16px;
-    display: block;
-    float: none;
+
 }
 .text-box h1 {
     margin-block-start: 0;
@@ -104,10 +108,25 @@ main {
     padding: 0;
 }
 .button {
+    font-family: inherit;
     display: inline-block;
     background-color: #376e6f;
-    border: none;
-    width: 40%;
+    border: 1px solid silver;
+    width: 190px;
+    color: #EAE7DC;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 15px;
+    margin: 15px;
+    font-size: large;
+}
+
+.darker-button {
+    font-family: inherit;
+    background-color: darkslategrey;
+    display: inline-block;
+    border: 1px solid silver;
+    width: 190px;
     color: #EAE7DC;
     cursor: pointer;
     text-align: center;
@@ -117,29 +136,55 @@ main {
 }
 
 .table-button {
+    font-family: inherit;
     display: inline-block;
     background-color: #376E6F;
-    border: none;
-    width: 100%;
+    border: 1px solid silver;
     color: #EAE7DC;
     cursor: pointer;
     text-align: center;
-    padding: 15px 15px;
+    padding: 10px 10px;
+    margin: 0;
+    font-size: medium;
+}
+
+.darker-table-button {
+    font-family: inherit;
+    display: inline-block;
+    background-color: darkslategrey;
+    border: 1px solid silver;
+    color: #EAE7DC;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 10px;
     margin: 0;
     font-size: medium;
 }
 
 .no-click-table-button {
     display: inline-block;
-    background-color: #636b6b;
-    border: none;
-    width: 100%;
-    color: #EAE7DC;
-    cursor: pointer;
+    background-color: silver;
+    border: 1px solid silver;
+    color: #585858;
+    cursor: not-allowed;
     text-align: center;
-    padding: 15px 15px;
+    padding: 10px 10px;
     margin: 0;
     font-size: medium;
+}
+
+.table-col-with-buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.darker-table-button:hover {
+    background-color:#e85a4f;
+}
+
+.darker-button:hover {
+    background-color:#e85a4f;
 }
 
 .button:hover {
@@ -163,26 +208,37 @@ main {
     box-sizing: content-box;
 }
 .form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
     background: rgba(255, 255, 255, 0.25);
     padding: 15px 15px;
-    display: inline-block;
     box-sizing: border-box;
     border-radius: 20px;
   }
+
 .form-table {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     padding: 15px;
     text-align: left;
-    display: inline-block;
     float: none;
     border: none;
   }
 
 .real-table {
+    display: inline-flex;
+    table-layout: fixed;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-around;
     border-collapse: collapse;
     overflow: hidden;
     border: 1px solid #376E6F;
     border-radius: 20px;
-    display: inline-block;
     float: none;
   }
 
@@ -199,7 +255,7 @@ main {
 }
 
 .text-field {
-    width: 100%;
+    width: 350px;
     padding: 15px 15px;
     margin: 5px 0;
     box-sizing: border-box;

@@ -26,7 +26,8 @@ public class AddBookServlet extends HttpServlet {
 
         callDb();
 
-        String selectedIndex = req.getParameter("filtered-author");
+        String selectedAuthorId = req.getParameter("authorId");
+//        String selectedIndex = req.getParameter("filtered-author");
         String titel = req.getParameter("titel");
         String isbn = req.getParameter("isbn");
         String publisher = req.getParameter("publisher");
@@ -42,8 +43,8 @@ public class AddBookServlet extends HttpServlet {
          * Aus diesem SelectedAuthor kann nun ein neues Buch erzeugt und in die Liste hinzugefügt werden.
          * Danach wird man auf das "add-book"-menu weitergeleitet.
          */
-        if ((selectedIndex != null) && (name != null)) {
-            Author selectedAuthor = aDao.searchForAndSelect(name,Integer.parseInt(selectedIndex));
+        if ((selectedAuthorId != null) && (name != null)) {
+            Author selectedAuthor = aDao.getAuthorById(Integer.parseInt(selectedAuthorId));
             bDao.addNew(selectedAuthor.getFirstName(), selectedAuthor.getLastName(), isbn, titel, publisher, year);
             dbm.insertBook(bDao.getLastBook());
             req.setAttribute("sentence", "Du hast erfolgreich ein neues Buch von " +

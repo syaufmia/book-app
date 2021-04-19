@@ -18,8 +18,6 @@ public class DeleteAuthorServlet extends HttpServlet {
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             getServletContext().getRequestDispatcher("/search-author.jsp").forward(req, resp);
-
-
     }
 
     @Override
@@ -28,10 +26,6 @@ public class DeleteAuthorServlet extends HttpServlet {
         callDb();
         String selectedIndex = req.getParameter("selected");
         String name = req.getParameter("name");
-
-
-        StringBuilder sb = new StringBuilder();
-
 
         if (selectedIndex != null) {
             int ID = Integer.parseInt(selectedIndex);
@@ -48,37 +42,22 @@ public class DeleteAuthorServlet extends HttpServlet {
                     List<Author> list = aDao.searchFor(name);
                     if (!list.isEmpty()) { //list not empty
                         req.setAttribute("authorSearchList", list);
-//                        StringBuilder htmlText = new StringBuilder();
-                        //for-Schleife zum Erstellen der Liste (mit HTML tags) als String
-//                        for (int i = 0; i < list.size(); i++) {
-//                            htmlText.append("<tr><td><input type=\"radio\" name=\"filtered-author\" value=\"")
-//                                    .append(i)
-//                                    .append("\" size=\"100\" checked=\"checked\" />")
-//                                    .append("</td> <td> <label> ")
-//                                    .append(StringTrimmer.trim(list.get(i).toStringNoID()))
-//                                    .append("</td></tr>");
-//                        }
-//                        req.setAttribute("htmltext", htmlText.toString());
-//                        req.setAttribute("name", name);
                         getServletContext().getRequestDispatcher("/choose-an-author-to-delete.jsp").forward(req, resp);
                     } else {
                         req.setAttribute("message", "Es konnte kein Autor unter diesem Namen gefunden werden. ");
                         doGet(req, resp);
                     }
-
                 } else {
-                    sb.append("Du musst schon etwas eingeben. ");
-                    req.setAttribute("message", sb.toString());
+                    req.setAttribute("message", "Du musst schon etwas eingeben. ");
                     getServletContext().getRequestDispatcher("/search-author.jsp").forward(req, resp);
                 }
             } else {
-                sb.append("Ein unerwarteter Fehler ist aufgetreten. ");
-                req.setAttribute("message", sb.toString());
+                req.setAttribute("message", "Ein unerwarteter Fehler ist aufgetreten. ");
                 getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
             }
         }
-
     }
+
     protected void callDb () {
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);

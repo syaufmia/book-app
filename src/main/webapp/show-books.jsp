@@ -43,10 +43,18 @@
                                     <c:when test="${sessionScope.user != null}">
                                         <c:choose>
                                             <c:when test="${requestScope.borrowedBookList.contains(book)}">
-                                                <td><span class="no-click-table-button">NEIN</span></td>
+                                                <td class="table-col-with-buttons">
+                                                    <span class="no-click-table-button">
+                                                        ausgeliehen
+                                                    </span>
+                                                </td>
                                             </c:when>
                                             <c:otherwise>
-                                                <td><button class="table-button" name="bookId" type="submit" value="${book.bookId}">JA</button></td>
+                                                <td class="table-col-with-buttons">
+                                                    <button class="darker-table-button" name="bookId" type="submit" value="${book.bookId}">
+                                                        ausleihen
+                                                    </button>
+                                                </td>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:when>

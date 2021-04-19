@@ -13,13 +13,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
     <body>
         <main>
             <div class="text-box">
                 <c:choose>
                     <c:when test="${sessionScope.user != null}">
-
                         <p class="grey"> Hallo ${sessionScope.user.firstName} ${sessionScope.user.lastName}. </p>
                         <h1>Ausgeliehene Bücher</h1>
                         <table class="real-table">
@@ -27,8 +25,7 @@
                                 <th>Buchtitel</th>
                                 <th>Isbn</th>
                                 <th>ausgeliehen bis</th>
-                                <th>zurückgeben</th>
-                                <th>verlängern</th>
+                                <th class="table-col-with-buttons">Aktion</th>
                             </tr>
                             <form action="${pageContext.request.contextPath}/login/" method="post">
                             <c:forEach var= "loan" items="${sessionScope.loanList}">
@@ -36,49 +33,55 @@
                                     <td>${loan.book.title}</td>
                                     <td>${loan.book.isbn}</td>
                                     <td>${loan.endDate}</td>
-                                    <td><button class="table-button" name="loanIdReturn" type="submit" value="${loan.loanId}">JA</button></td>
-                                    <td><button class="table-button" name="loanIdExtend" type="submit" value="${loan.loanId}">JA</button></td>
+                                    <td class="table-col-with-buttons">
+                                        <button class="darker-table-button" name="loanIdReturn" type="submit" value="${loan.loanId}">
+                                            zurückgeben
+                                        </button>
+                                    </td>
+                                    <td class="table-col-with-buttons">
+                                        <button class="table-button" name="loanIdExtend" type="submit" value="${loan.loanId}">
+                                            verlängern
+                                        </button>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </form>
                         </table>
                         <form name="logout-form" action="${pageContext.request.contextPath}/login/" method="POST">
                             <input type="hidden" name="logout" value="true">
-                            <input class="button" type="submit" value="ausloggen" name="submit" />
+                            <input class="darker-button" type="submit" value="ausloggen" name="submit"/>
                         </form>
-                </c:when>
-                <c:otherwise>
-                    <div class="text-box">
-                    <h1>Melde dich an</h1>
-                    <p>Bitte gib deinen Benutzernamen und Passwort ein.</p>
-                    <p class="red">${requestScope.message}</p>
-                    <p class="grey"> ${requestScope.sentence} </p>
-                    <%-- actionURl => URL depending on the outcome of the addAuthorServlet --%>
-
-                    <form class="form" name="login" action="${pageContext.request.contextPath}/login/" method="POST">
-                        <table class="form-table">
-                            <tr>
-                                <td>Benutzername: </td>
-                                <td>
-                                    <label>
-                                    <input class="text-field" type="text" name="username" value="" size="50" />
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Passwort: </td>
-                                <td>
-                                    <label>
-                                    <input class="text-field" type="password" name="password" value="" size="50" />
-                                    </label>
-                                </td>
-                            </tr>
-                        </table>
-                        <input class="button" type="reset" value="Felder leeren" name="clear" />
-                        <input class="button" type="submit" value="Anmelden" name="submit" />
-                    </form>
-                    </div>
-                </c:otherwise>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="text-box">
+                        <h1>Melde dich an</h1>
+                        <p>Bitte gib deinen Benutzernamen und Passwort ein.</p>
+                        <p class="red">${requestScope.message}</p>
+                        <p class="grey"> ${requestScope.sentence} </p>
+                        <form class="form" name="login" action="${pageContext.request.contextPath}/login/" method="POST">
+                            <table class="form-table">
+                                <tr>
+                                    <td>Benutzername: </td>
+                                    <td>
+                                        <label>
+                                        <input class="text-field" type="text" name="username" value=""/>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Passwort: </td>
+                                    <td>
+                                        <label>
+                                        <input class="text-field" type="password" name="password" value=""/>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                            <input class="darker-button" type="submit" value="Anmelden" name="submit"/>
+                            <input class="button" type="reset" value="Felder leeren" name="clear"/>
+                        </form>
+                        </div>
+                    </c:otherwise>
                 </c:choose>
             </div>
         </main>
