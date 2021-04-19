@@ -12,6 +12,7 @@ public class Loan implements Serializable {
     private User user;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalDate returnDate;
     private static int loanIdCounter = 1;
 
     /**
@@ -28,12 +29,13 @@ public class Loan implements Serializable {
     /**
      * when calling Loan-Data from db
      */
-    public Loan (int loanId, Book book, User user, LocalDate startDate, LocalDate endDate) {
+    public Loan (int loanId, Book book, User user, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
         this.loanId = loanId;
         this.book = book;
         this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.returnDate = returnDate;
     }
 
 
@@ -47,6 +49,14 @@ public class Loan implements Serializable {
 
     public void setLoanId (int loanId) {
         this.loanId = loanId;
+    }
+
+    public LocalDate getReturnDate () {
+        return returnDate;
+    }
+
+    public void setReturnDate (LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 
     public Book getBook () {

@@ -16,27 +16,27 @@ public class TestMain {
 
     public static void main(String[] args){
 
-        DbManager dbm = new DbManager();
-        UserDao uDao = new UserDao();
-        LoanDao lDao = new LoanDao();
-
-        BookDao bDao = new BookDao();
-//        dbm.selectAll(DbManager.Table.BOOK);
-
-        dbm.selectAll(DbManager.Table.AUTHOR);
-        dbm.selectAll(DbManager.Table.BOOK);
-        dbm.selectAll(DbManager.Table.USER);
-        dbm.selectAll(DbManager.Table.LOAN);
-
-        for (Book book : bDao.getBookList()) {
-            System.out.println(book.getAuthor().toStringNoId());
-        }
-
-
-
-        System.out.println(lDao.getListOfBorrowedBooksOnDateByUser(2, LocalDate.now()));
+//        DbManager dbm = new DbManager();
+//        UserDao uDao = new UserDao();
+//        LoanDao lDao = new LoanDao();
 //
-        System.out.println(lDao.getLoanListByUser(2));
+//        BookDao bDao = new BookDao();
+////        dbm.selectAll(DbManager.Table.BOOK);
+//
+//        dbm.selectAll(DbManager.Table.AUTHOR);
+//        dbm.selectAll(DbManager.Table.BOOK);
+//        dbm.selectAll(DbManager.Table.USER);
+//        dbm.selectAll(DbManager.Table.LOAN);
+
+//        for (Book book : bDao.getBookList()) {
+//            System.out.println(book.getAuthor().toStringNoId());
+//        }
+//
+//
+//
+//        System.out.println(lDao.getListOfBorrowedBooksOnDateByUser(2, LocalDate.now()));
+////
+//        System.out.println(lDao.getLoanListByUser(2));
 //        lDao.addLoan(22, 2);
 //        dbm.insertLoan(lDao.getLastLoan());
 //

@@ -46,13 +46,18 @@ public class LoginServlet extends HttpServlet {
 
             if (loanIdReturn != null) {
                 int loanId = Integer.parseInt(loanIdReturn);
-                lDao.changeEndDate(loanId, LocalDate.now());
-                dbm.updateLoan(loanId, LocalDate.now());
+                lDao.returnBook(loanId, LocalDate.now());
+                if (!lDao.loanIsDelayed(loanId, LocalDate.now())) {
+                    dbm.updateLoanEndDate(loanId, LocalDate.now());
+                }
+                dbm.updateLoanReturn(loanId, LocalDate.now());
             }
             else if (loanIdExtend != null) {
                 int loanId = Integer.parseInt(loanIdExtend);
-                lDao.extendEndDate(loanId, 7);
-                dbm.updateLoan(loanId, lDao.getLoan(loanId).getEndDate());
+                if (lDao.loanExtendable(loanId, LocalDate.now())) {
+                    lDao.extendEndDate(loanId, 7);
+                    dbm.updateLoanEndDate(loanId, lDao.getLoan(loanId).getEndDate());
+                }
             }
             else if (logout != null && logout.equalsIgnoreCase("true")) {
                 httpSession.removeAttribute("user");

@@ -20,7 +20,8 @@ public class LoanDao {
                     result.getInt("book_id"),
                     result.getInt("user_id"),
                     result.getDate("start_date").toLocalDate(),
-                    result.getDate("end_date").toLocalDate());
+                    result.getDate("end_date").toLocalDate(),
+                    result.getDate("return_date").toLocalDate());
         }
         setLoanIdCounterToMax();
     }
@@ -49,10 +50,10 @@ public class LoanDao {
      * Does not check, if book is already in booklist, since a book
      * should be only available once.
      */
-    public List<Book> getListOfBorrowedBooksOnDate (LocalDate date) {
+    public List<Book> getListOfBorrowedBooks () {
         List<Book> borrowedBooks = new ArrayList<>();
         for (Loan l : ll) {
-            if (date.isBefore(l.getEndDate()) && date.isAfter(l.getStartDate().minusDays(1))) {
+            if (l.getReturnDate() == null) {
                 borrowedBooks.add(l.getBook());
             }
         }
@@ -73,10 +74,16 @@ public class LoanDao {
     public List<Loan> getLoanListByUserOnDate (int userId, LocalDate date) {
         List<Loan> loanList = new ArrayList<>();
         for (Loan l : ll) {
-            if (l.getUser().getUserId() == userId
-                    && date.isAfter(l.getStartDate().minusDays(1))
-                    && date.isBefore(l.getEndDate())) {
-                loanList.add(l);
+            if (l.getUser().getUserId() == userId) {
+
+                if (l.getEndDate() == null) {
+                    loanList.add(l);
+
+                }
+                else if (date.isBefore(l.getEndDate())
+                        && date.isAfter(l.getStartDate().minusDays(1))) {
+                    loanList.add(l);
+                }
             }
         }
         return loanList;
@@ -89,10 +96,15 @@ public class LoanDao {
     public List<Book> getListOfBorrowedBooksOnDateByUser (int userId, LocalDate date) {
         List<Book> borrowedBooks = new ArrayList<>();
         for (Loan l : ll) {
-            if (date.isBefore(l.getEndDate())
-                    && date.isAfter(l.getStartDate().minusDays(1))
-                    && l.getUser().getUserId() == userId) {
-                borrowedBooks.add(l.getBook());
+            if (l.getUser().getUserId() == userId) {
+                if (date.isBefore(l.getEndDate())
+                        && date.isAfter(l.getStartDate().minusDays(1))) {
+                    borrowedBooks.add(l.getBook());
+                }
+                else if (l.getEndDate() == null) {
+                    borrowedBooks.add(l.getBook());
+
+                }
             }
         }
         return borrowedBooks;
@@ -111,6 +123,18 @@ public class LoanDao {
         return available;
     }
 
+    public boolean loanIsDelayed (int loanId, LocalDate date) {
+        boolean delayed = false;
+        for (Loan l : ll) {
+            if (loanId == l.getLoanId()) {
+                if (date.isAfter(l.getEndDate())) {
+                    delayed = true;
+                }
+            }
+        }
+        return delayed;
+    }
+
 
     public List<Loan> getLoanListByEndDate (LocalDate endDate) {
         List<Loan> loanListByEndDate = new ArrayList<>();
@@ -126,6 +150,31 @@ public class LoanDao {
     public List<Loan> getAll () {
         return ll;
     }
+
+    public void returnBook (int loanId, LocalDate date) {
+        for (Loan l : ll) {
+            if (l.getLoanId() == loanId
+                    && l.getReturnDate() == null) {
+                if (!date.isAfter(l.getEndDate())) {
+                    l.setEndDate(date);
+                }
+                l.setReturnDate(date);
+            }
+        }
+    }
+
+    public boolean loanExtendable (int loanId, LocalDate date) {
+        boolean extendable = true;
+        for (Loan l : ll) {
+            if (l.getLoanId() == loanId) {
+                if (date.isAfter(l.getEndDate())) {
+                    extendable = false;
+                }
+            }
+        }
+        return extendable;
+    }
+
 
     public void changeEndDate (int loanId, LocalDate date) {
         for (Loan l : ll) {
@@ -177,7 +226,7 @@ public class LoanDao {
         ll.add(loan);
     }
 
-    public void addLoan (int loanId, int bookId, int userId, LocalDate startDate, LocalDate endDate) {
+    public void addLoan (int loanId, int bookId, int userId, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
         BookDao bDao = new BookDao();
         UserDao uDao = new UserDao();
         Loan loan = new Loan(
@@ -185,7 +234,8 @@ public class LoanDao {
                 bDao.getBook(bookId),
                 uDao.getUser(userId),
                 startDate,
-                endDate
+                endDate,
+                returnDate
         );
         ll.add(loan);
     }

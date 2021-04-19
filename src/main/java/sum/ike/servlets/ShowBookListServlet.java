@@ -2,7 +2,6 @@ package sum.ike.servlets;
 
 import sum.ike.control.dao.BookDao;
 import sum.ike.control.dao.LoanDao;
-import sum.ike.control.dao.UserDao;
 import sum.ike.control.db.DbManager;
 import sum.ike.model.User;
 import javax.servlet.ServletException;
@@ -28,7 +27,7 @@ public class ShowBookListServlet extends HttpServlet {
 
         resp.setContentType("text/html;charset=UTF-8");
         req.setAttribute("bookList", bDao.getBookList());
-        req.setAttribute("borrowedBookList", lDao.getListOfBorrowedBooksOnDate(LocalDate.now()));
+        req.setAttribute("borrowedBookList", lDao.getListOfBorrowedBooks());
         getServletContext().getRequestDispatcher("/show-books.jsp").forward(req, resp);
     }
 

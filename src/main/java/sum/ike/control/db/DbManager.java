@@ -186,7 +186,7 @@ public class DbManager {
         }
     }
 
-    public void updateLoan (int loanId, LocalDate endDate) {
+    public void updateLoanEndDate (int loanId, LocalDate endDate) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
@@ -195,6 +195,24 @@ public class DbManager {
             state = con.createStatement();
             state.executeUpdate("UPDATE loan SET end_date = '"
                     + endDate
+                    + "' WHERE loan_id = "
+                    + loanId + ";");
+            state.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateLoanReturn (int loanId, LocalDate returnDate) {
+        DbConnector db = new DbConnector();
+        Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
+        Statement state;
+
+        try {
+            state = con.createStatement();
+            state.executeUpdate("UPDATE loan SET return_date = '"
+                    + returnDate
                     + "' WHERE loan_id = "
                     + loanId + ";");
             state.close();
