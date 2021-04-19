@@ -42,6 +42,10 @@
                             </c:forEach>
                             </form>
                         </table>
+                        <form name="logout-form" action="${pageContext.request.contextPath}/login/" method="POST">
+                            <input type="hidden" name="logout" value="true">
+                            <input class="button" type="submit" value="ausloggen" name="submit" />
+                        </form>
                 </c:when>
                 <c:otherwise>
                     <div class="text-box">

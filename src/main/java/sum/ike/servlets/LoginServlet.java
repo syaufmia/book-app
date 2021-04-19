@@ -56,6 +56,7 @@ public class LoginServlet extends HttpServlet {
             user = (User) httpSession.getAttribute("user");
             String loanIdReturn = req.getParameter("loanIdReturn");
             String loanIdExtend = req.getParameter("loanIdExtend");
+            String logout = req.getParameter("logout");
 
             if (loanIdReturn != null) {
                 int loanId = Integer.parseInt(loanIdReturn);
@@ -66,6 +67,11 @@ public class LoginServlet extends HttpServlet {
                 int loanId = Integer.parseInt(loanIdExtend);
                 lDao.extendEndDate(loanId, 7);
                 dbm.updateLoan(loanId, lDao.getLoan(loanId).getEndDate());
+            }
+            else if (logout != null && logout.equalsIgnoreCase("true")) {
+                httpSession.removeAttribute("user");
+                httpSession.removeAttribute("borrowedBooks");
+                httpSession.removeAttribute("loanList");
             }
         }
         else {
