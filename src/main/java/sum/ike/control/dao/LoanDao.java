@@ -86,10 +86,8 @@ public class LoanDao {
         List<Loan> loanList = new ArrayList<>();
         for (Loan l : ll) {
             if (l.getUser().getUserId() == userId) {
-
-                if (l.getEndDate() == null) {
+                if (l.getReturnDate() == null) {
                     loanList.add(l);
-
                 }
                 else if (date.isBefore(l.getEndDate())
                         && date.isAfter(l.getStartDate().minusDays(1))) {

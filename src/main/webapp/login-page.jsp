@@ -24,7 +24,7 @@
                             <tr>
                                 <th>Buchtitel</th>
                                 <th>Isbn</th>
-                                <th>ausgeliehen bis</th>
+                                <th>Abgabe spätestens</th>
                                 <th class="table-col-with-buttons">Aktion</th>
                             </tr>
                             <form action="${pageContext.request.contextPath}/login/" method="post">
@@ -32,7 +32,7 @@
                                 <tr>
                                     <td>${loan.book.title}</td>
                                     <td>${loan.book.isbn}</td>
-                                    <td>${loan.endDate}</td>
+                                    <td>${loan.endDate.dayOfMonth}.${loan.endDate.monthValue}.${loan.endDate.year} um ${loan.endDate.hour} Uhr</td>
                                     <td class="table-col-with-buttons">
                                         <button class="darker-table-button" name="loanIdReturn" type="submit" value="${loan.loanId}">
                                             zurückgeben
