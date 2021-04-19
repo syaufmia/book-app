@@ -24,6 +24,8 @@ public class AddBookServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        callDb();
+
         String selectedIndex = req.getParameter("filtered-author");
         String titel = req.getParameter("titel");
         String isbn = req.getParameter("isbn");
@@ -50,20 +52,17 @@ public class AddBookServlet extends HttpServlet {
             req.setAttribute("actionURL", "added-book");
             getServletContext().getRequestDispatcher("/add-book.jsp").forward(req, resp);
         }
-        StringBuilder displayText = new StringBuilder();
 
         /*
          * Dieser Fall tritt auf, wenn selectedIndex | name == null sowie titel, isbn & publisher != null
          * d.h. wenn der User zum ersten Mal nach dem POST-request in add-book.jsp weitergeleitet wird.
          */
-        if ((titel != null) && (isbn != null) && (publisher != null)) {
+        else if ((titel != null) && (isbn != null) && (publisher != null)) {
             if (titel.isEmpty() || isbn.isEmpty() || publisher.isEmpty()) {
-                displayText.append("Die Felder dürfen nicht leer sein. ");
-                req.setAttribute("message", displayText.toString());
+                req.setAttribute("message", "Die Felder dürfen nicht leer sein. ");
                 doGet(req, resp);
             } else if (bDao.containsIsbn(isbn)) {
-                displayText.append("Diese ISBN ist bereits in meiner Bibliothek enthalten. ");
-                req.setAttribute("message", displayText.toString());
+                req.setAttribute("message", "Diese ISBN ist bereits in meiner Bibliothek enthalten. ");
                 doGet(req, resp);
             }
             else {
@@ -74,12 +73,11 @@ public class AddBookServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/add-author-after-book.jsp").forward(req, resp);
             }
         } else {
-            displayText.append("Ein unerwarteter Fehler ist aufgetreten. ");
-            req.setAttribute("message", displayText.toString());
+            req.setAttribute("message", "Ein unerwarteter Fehler ist aufgetreten. ");
             doGet(req, resp);
         }
-
     }
+
     protected void callDb () {
         dbm.selectAll(DbManager.Table.AUTHOR);
         dbm.selectAll(DbManager.Table.BOOK);

@@ -145,6 +145,8 @@ public class DbManager {
             state = con.createStatement();
             state.executeUpdate(insertInto(Table.BOOK)
                     + " VALUES ("
+                    + book.getBookId()
+                    + ", "
                     + book.getAuthor().getAuthorId()
                     + ", '"
                     + book.getTitle().toUpperCase(Locale.ROOT)
@@ -255,7 +257,7 @@ public class DbManager {
             case AUTHOR:
                 return "INSERT INTO " + table + " (author_id, first_name, last_name)";
             case BOOK:
-                return "INSERT INTO " + table + " (author_id, title, isbn, publisher, year)";
+                return "INSERT INTO " + table + " (book_id, author_id, title, isbn, publisher, year)";
             case USER:
                 return "INSERT INTO " + table + " (user_id, password, username, email, first_name, last_name)";
             case LOAN:
