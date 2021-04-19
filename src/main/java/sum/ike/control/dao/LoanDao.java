@@ -16,12 +16,22 @@ public class LoanDao {
 
     public void getData (ResultSet result) throws SQLException {
         if (!loanIdExists(result.getInt("loan_id"))) {
+            if (result.getObject("return_date") != null) {
             addLoan(result.getInt("loan_id"),
                     result.getInt("book_id"),
                     result.getInt("user_id"),
                     result.getDate("start_date").toLocalDate(),
                     result.getDate("end_date").toLocalDate(),
                     result.getDate("return_date").toLocalDate());
+            }
+            else {
+                addLoan(result.getInt("loan_id"),
+                        result.getInt("book_id"),
+                        result.getInt("user_id"),
+                        result.getDate("start_date").toLocalDate(),
+                        result.getDate("end_date").toLocalDate(),
+                        null);
+            }
         }
         setLoanIdCounterToMax();
     }
