@@ -2,7 +2,8 @@ package sum.ike.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Loan implements Serializable {
 
@@ -10,9 +11,9 @@ public class Loan implements Serializable {
     private int loanId;
     private Book book;
     private User user;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalDate returnDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private LocalDateTime returnDate;
     private static int loanIdCounter = 1;
 
     /**
@@ -22,14 +23,14 @@ public class Loan implements Serializable {
         this.loanId = loanIdCounter++;
         this.book = book;
         this.user = user;
-        this.startDate = LocalDate.now();
-        this.endDate = LocalDate.now().plusDays(14);
+        this.startDate = LocalDateTime.now();
+        this.endDate = LocalDateTime.of(LocalDate.now().plusDays(14), LocalTime.of(14,0));
     }
 
     /**
      * when calling Loan-Data from db
      */
-    public Loan (int loanId, Book book, User user, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
+    public Loan (int loanId, Book book, User user, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime returnDate) {
         this.loanId = loanId;
         this.book = book;
         this.user = user;
@@ -51,11 +52,11 @@ public class Loan implements Serializable {
         this.loanId = loanId;
     }
 
-    public LocalDate getReturnDate () {
+    public LocalDateTime getReturnDate () {
         return returnDate;
     }
 
-    public void setReturnDate (LocalDate returnDate) {
+    public void setReturnDate (LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -75,19 +76,19 @@ public class Loan implements Serializable {
         this.user = user;
     }
 
-    public LocalDate getStartDate () {
+    public LocalDateTime getStartDate () {
         return startDate;
     }
 
-    public void setStartDate (LocalDate startDate) {
+    public void setStartDate (LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate () {
+    public LocalDateTime getEndDate () {
         return endDate;
     }
 
-    public void setEndDate (LocalDate endDate) {
+    public void setEndDate (LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

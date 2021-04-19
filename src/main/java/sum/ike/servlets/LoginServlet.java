@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class LoginServlet extends HttpServlet {
 
@@ -27,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 
         if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
             User user = (User) httpSession.getAttribute("user");
-            httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDate.now()));
+            httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDateTime.now()));
         }
         getServletContext().getRequestDispatcher("/login-page.jsp").forward(req, resp);
     }
@@ -46,15 +47,15 @@ public class LoginServlet extends HttpServlet {
 
             if (loanIdReturn != null) {
                 int loanId = Integer.parseInt(loanIdReturn);
-                lDao.returnBook(loanId, LocalDate.now());
-                if (!lDao.loanIsDelayed(loanId, LocalDate.now())) {
-                    dbm.updateLoanEndDate(loanId, LocalDate.now());
+                lDao.returnBook(loanId, LocalDateTime.now());
+                if (!lDao.loanIsDelayed(loanId, LocalDateTime.now())) {
+                    dbm.updateLoanEndDate(loanId, LocalDateTime.now());
                 }
-                dbm.updateLoanReturn(loanId, LocalDate.now());
+                dbm.updateLoanReturn(loanId, LocalDateTime.now());
             }
             else if (loanIdExtend != null) {
                 int loanId = Integer.parseInt(loanIdExtend);
-                if (lDao.loanExtendable(loanId, LocalDate.now())) {
+                if (lDao.loanExtendable(loanId, LocalDateTime.now())) {
                     lDao.extendEndDate(loanId, 7);
                     dbm.updateLoanEndDate(loanId, lDao.getLoan(loanId).getEndDate());
                 }
@@ -72,7 +73,7 @@ public class LoginServlet extends HttpServlet {
                 if (uDao.userLoginCorrect(username, password)) {
                     User user = uDao.getUser(username, password);
                     httpSession.setAttribute("user", user);
-                    httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDate.now()));
+                    httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDateTime.now()));
                 }
                 else {
                     req.setAttribute("message", "Benutzername oder Passwort ist falsch.");

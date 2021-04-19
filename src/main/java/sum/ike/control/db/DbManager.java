@@ -11,6 +11,7 @@ import sum.ike.model.User;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 public class DbManager {
@@ -186,7 +187,7 @@ public class DbManager {
         }
     }
 
-    public void updateLoanEndDate (int loanId, LocalDate endDate) {
+    public void updateLoanEndDate (int loanId, LocalDateTime endDate) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
@@ -204,7 +205,7 @@ public class DbManager {
         }
     }
 
-    public void updateLoanReturn (int loanId, LocalDate returnDate) {
+    public void updateLoanReturn (int loanId, LocalDateTime returnDate) {
         DbConnector db = new DbConnector();
         Connection con = db.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
         Statement state;
