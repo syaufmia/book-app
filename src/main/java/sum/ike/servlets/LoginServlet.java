@@ -25,11 +25,14 @@ public class LoginServlet extends HttpServlet {
 
         callDb();
         HttpSession httpSession = req.getSession();
+        req.setAttribute("dateTimeNow",LocalDateTime.now());
 
         if ((httpSession.getAttribute("user")) != null && (httpSession.getAttribute("user") instanceof User)) {
             User user = (User) httpSession.getAttribute("user");
             httpSession.setAttribute("loanList", lDao.getLoanListByUserOnDate(user.getUserId(), LocalDateTime.now()));
+
         }
+
         getServletContext().getRequestDispatcher("/login-page.jsp").forward(req, resp);
     }
 

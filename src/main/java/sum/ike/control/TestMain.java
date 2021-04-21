@@ -1,7 +1,12 @@
 package sum.ike.control;
 
+import sum.ike.control.dao.LoanDao;
 import sum.ike.control.db.DbConnector;
 import sum.ike.control.db.DbManager;
+import sum.ike.model.Author;
+import sum.ike.model.Book;
+import sum.ike.model.Loan;
+import sum.ike.model.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,30 +25,13 @@ public class TestMain {
 
     public static void main(String[] args){
 
-        LocalDateTime date2 = LocalDateTime.of(LocalDate.now(), LocalTime.of(14,0, 0));
-        LocalDateTime date = LocalDateTime.now(Clock.systemUTC());
-        DbConnector dbc = new DbConnector();
-        Connection con = dbc.connect(DbConnector.BIB_URL, DbConnector.BIB_USER, DbConnector.BIB_PASS);
-        Statement state;
-        try {
-            state = con.createStatement();
-            state.executeUpdate("INSERT INTO test (time) VALUES ('"
-                    + date2
-                    + "');");
-            state.close();
-            con.close();
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.err.println("Doppelter Eintrag wurde ignoriert. " + e.getMessage());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
-        LocalDate.now();
-
-        System.out.println(date2);
-
-        System.out.println(date.getHour());
-        System.out.println(date.getMinute());
+        Author author = new Author(1,"Jen", "Man");
+        Book book = new Book(2,author,"111", "title", "verlag", 2001);
+        User user = new User(3,"safi", "1234","s@gmail.com","safiye", "uzun");
+        Loan loan = new Loan(book, user);
+        System.out.println(loan);
 
     }
 

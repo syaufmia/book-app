@@ -11,6 +11,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
     <body>
@@ -29,7 +30,14 @@
                             </tr>
                             <form action="${pageContext.request.contextPath}/login/" method="post">
                             <c:forEach var= "loan" items="${sessionScope.loanList}">
-                                <tr>
+                                <c:choose>
+                                    <c:when test="${loan.endDate.isBefore(requestScope.dateTimeNow)}">
+                                        <tr class="alert-table-row">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <tr>
+                                    </c:otherwise>
+                                </c:choose>
                                     <td>${loan.book.title}</td>
                                     <td>${loan.book.isbn}</td>
                                     <td>${loan.endDate.dayOfMonth}.${loan.endDate.monthValue}.${loan.endDate.year} um ${loan.endDate.hour} Uhr</td>

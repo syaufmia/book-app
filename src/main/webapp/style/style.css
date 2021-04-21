@@ -245,13 +245,25 @@ main {
 .real-table th, .real-table td {
     padding: 10px 15px;
   }
-.real-table tr:nth-child(even) {
-    background:  #EAE7DC;
-   }
 
 .real-table th {
     background-color: #376E6F;
     color: #EAE7DC;
+}
+
+.real-table th {
+    background-color: #376E6F;
+}
+
+
+.real-table tr:nth-child(even) {
+    background-color:  #EAE7DC;
+}
+
+.alert-table-row {
+    border: 2px solid #e85a4f;
+    color: #e85a4f;
+    font-weight: bold;
 }
 
 .text-field {

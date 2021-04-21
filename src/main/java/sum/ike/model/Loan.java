@@ -1,9 +1,11 @@
 package sum.ike.model;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Loan implements Serializable {
 
@@ -25,6 +27,12 @@ public class Loan implements Serializable {
         this.user = user;
         this.startDate = LocalDateTime.now();
         this.endDate = LocalDateTime.of(LocalDate.now().plusDays(14), LocalTime.of(14,0));
+        if (this.endDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+            this.endDate = this.endDate.plusDays(2);
+        }
+        else if (this.endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            this.endDate = this.endDate.plusDays(1);
+        }
     }
 
     /**
@@ -98,8 +106,8 @@ public class Loan implements Serializable {
                 "loanId=" + loanId +
                 ", book=" + book +
                 ", user=" + user +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
+                ", startDate=" + startDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")) +
+                ", endDate=" + endDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")) +
                 '}';
     }
 }
