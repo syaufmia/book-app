@@ -4,14 +4,17 @@
 - Als Nutzer möchte ich Bücher ausleihen, um sie zu lesen
 - Als Nutzer möchte ich meine ausgeliehenen Bücher einsehen können
 - Als Nutzer möchte Bücher vor Ablauf der Abgabefrist abgeben können
-- Als Verwalter der Applikation möchte ich, dass Nutzer nur eine begrenzte Anzahl von Büchern gleichzeitig ausleihen können, damit es noch genug Bücher zum Ausleihen gibt
-- Als Verwalter der Applikation möchte ich, dass sich Nutzer zum Ausleihen erst anmelden müssen, um zu vermeiden, dass sich Unbefugte Bücher ausleihen können
+- Als Besitzer der Applikation möchte ich, dass Nutzer nur eine begrenzte Anzahl von Büchern gleichzeitig ausleihen können, damit es noch genug Bücher zum Ausleihen gibt
+- Als Besitzer der Applikation möchte ich, dass sich Nutzer zum Ausleihen erst anmelden müssen, um zu vermeiden, dass sich Unbefugte Bücher ausleihen können
+- Als Besitzer möchte ich, dass Nutzer, die die Abgabefrist nicht einhalten, eine Strafbebühr bezahlen müssen, damit Bücher nicht für immer komplett verschwinden
+- Als Nutzer möchte ich, dass ich an die Abgabefristen erinnert werde, damit ich keine Mahngebühren zahlen muss
+
 
 === Tasks
 - Book Objekte benötigen eine ID
 - Loan als Objekt für BuchVerleihe
 - LoanDao zum Verwalten der Verleihe (End Datum mit aktuellem Datum verlgleichen?)
-- Wenn End-Datum bereits vorbei -> Buch wieder verfügbar
-- Loan Datenbank enthält: User (ID), Book (ID), end & start datum
-- User benötigen List<Loan> von Büchern, die sie momentan ausgeliehen haben (d.h. wenn aktuelles Datum zwischen Start- und Enddate -> wenn nicht mehr, liegt Lending in der Vergangenheit)
-- Loan Datenbank enthält Einträge bis zu einer gewissen Zeit (z.B. 2 Wochen lang) und sie werden danach gelöscht
+- Wenn End-Datum bereits vorbei aber Buch nicht zurückgegeben -> Mahnung
+- Loan Datenbank enthält: User (ID), Book (ID), stat-datum, end-datum und rückgabe-datum
+- User benötigen List<Loan> gefiltert nach büchern, die sie momentan ausgeliehen haben (d.h. wenn aktuelles Datum zwischen Start- und Enddate liegt ODER buch rückgabedatum nicht definiert (da nicht zurückgegeben) -> andernfalls liegt Verleih-Eintrag in DB in der vergangenheit)
+- Loan Datenbank enthält Einträge bis zu einer gewissen Zeit (z.B. 1 MOnat lang) und sie werden danach gelöscht, es sei denn, das Buch wurde immer noch nicht zurückgegeben (rückgabe-datum nicht definiert)
