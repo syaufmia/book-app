@@ -44,6 +44,17 @@ public class UserDao {
         }
         return user;
     }
+//
+//    public boolean usernameExists (String username) {
+//        boolean exists = false;
+//        for (User u : ul) {
+//            if (u.getUsername().equalsIgnoreCase(username)) {
+//                exists = true;
+//                break;
+//            }
+//        }
+//        return exists;
+//    }
 
     public int getMaxUserId () {
         int max = 0;

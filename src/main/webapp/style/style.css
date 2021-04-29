@@ -13,6 +13,7 @@ main {
     flex-direction: column;
     flex-wrap: wrap;
     align-content: space-around;
+    align-items: center;
     float: left;
     background: rgba(255, 255, 255, 0.25);
     padding: 25px;
@@ -173,6 +174,21 @@ main {
     font-size: medium;
 }
 
+.darker-fake-button {
+    text-decoration: none;
+    font-family: inherit;
+    background-color: darkslategrey;
+    display: inline-block;
+    border: 1px solid silver;
+    width: 190px;
+    color: #EAE7DC;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 15px;
+    margin: 15px;
+    font-size: large;
+}
+
 .table-col-with-buttons {
     flex: 1;
     display: flex;
@@ -184,6 +200,10 @@ main {
 }
 
 .darker-button:hover {
+    background-color:#e85a4f;
+}
+
+.darker-fake-button:hover {
     background-color:#e85a4f;
 }
 

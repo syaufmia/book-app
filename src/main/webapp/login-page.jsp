@@ -88,6 +88,7 @@
                             <input class="darker-button" type="submit" value="Anmelden" name="submit"/>
                             <input class="button" type="reset" value="Felder leeren" name="clear"/>
                         </form>
+                            <a class="darker-fake-button" href="${pageContext.request.contextPath}/register/">Neu registrieren</a>
                         </div>
                     </c:otherwise>
                 </c:choose>

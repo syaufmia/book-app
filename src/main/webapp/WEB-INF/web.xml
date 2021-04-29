@@ -60,8 +60,17 @@
         <servlet-class>sum.ike.servlets.DeleteBookServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <servlet-class>sum.ike.servlets.RegisterUserServlet</servlet-class>
+    </servlet>
 
 
+
+    <servlet-mapping>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <url-pattern>/register/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
