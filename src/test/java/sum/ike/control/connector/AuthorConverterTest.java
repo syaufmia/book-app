@@ -3,8 +3,11 @@ package sum.ike.control.connector;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sum.ike.model.Author;
+
+import java.util.List;
 
 
 class AuthorConverterTest {
@@ -19,12 +22,14 @@ class AuthorConverterTest {
     }
 
     @Test
-    void convertForBook () {
+    @DisplayName("check correctly parsing Author-object into AuthorX-Object")
+    void testConvertForBook () {
 
         AuthorX actualAuthorX = authorConverter.convertForBook(actualAuthor);
-        assertAll("author",
+        assertAll("authorX",
                 () -> assertEquals(22, actualAuthorX.getAuthor_id()),
                 () -> assertEquals("First", actualAuthorX.getFirst_name()),
                 () -> assertEquals("Last", actualAuthorX.getLast_name()));
     }
+
 }
