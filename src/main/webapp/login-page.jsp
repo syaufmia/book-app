@@ -72,7 +72,7 @@
                                     <td>Benutzername: </td>
                                     <td>
                                         <label>
-                                        <input class="text-field" type="text" name="username" value=""/>
+                                        <input id="u-name-field" class="text-field" type="text" name="username" value=""/>
                                         </label>
                                     </td>
                                 </tr>
@@ -80,12 +80,12 @@
                                     <td>Passwort: </td>
                                     <td>
                                         <label>
-                                        <input class="text-field" type="password" name="password" value=""/>
+                                        <input id="p-word-field" class="text-field" type="password" name="password" value=""/>
                                         </label>
                                     </td>
                                 </tr>
                             </table>
-                            <input class="darker-button" type="submit" value="Anmelden" name="submit"/>
+                            <input id="submit-login" class="darker-button" type="submit" value="Anmelden" name="submit"/>
                             <input class="button" type="reset" value="Felder leeren" name="clear"/>
                         </form>
                             <a class="darker-fake-button" href="${pageContext.request.contextPath}/register/">Neu registrieren</a>

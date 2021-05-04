@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sum.ike</groupId>
-    <artifactId>book-manager</artifactId>
+    <artifactId>book-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -33,14 +33,12 @@
             <scope>test</scope>
         </dependency>
 
-
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -60,7 +58,11 @@
             <version>8.0.23</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
 
     </dependencies>
 

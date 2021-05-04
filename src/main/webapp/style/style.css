@@ -8,6 +8,16 @@ body {
 main {
 
 }
+
+#u-name-field {
+
+}
+#p-word-field {
+
+}
+#submit-login {
+
+}
 .text-box {
     display: flex;
     flex-direction: column;
