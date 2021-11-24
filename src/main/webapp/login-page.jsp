@@ -42,12 +42,12 @@
                                     <td>${loan.book.isbn}</td>
                                     <td>${loan.endDate.dayOfMonth}.${loan.endDate.monthValue}.${loan.endDate.year} um ${loan.endDate.hour} Uhr</td>
                                     <td class="table-col-with-buttons">
-                                        <button class="darker-table-button" name="loanIdReturn" type="submit" value="${loan.loanId}">
+                                        <button id ="return-book-${loan.loanId}" class="darker-table-button" name="loanIdReturn" type="submit" value="${loan.loanId}">
                                             zurückgeben
                                         </button>
                                     </td>
                                     <td class="table-col-with-buttons">
-                                        <button class="table-button" name="loanIdExtend" type="submit" value="${loan.loanId}">
+                                        <button id="extend-book-${loan.loanId}" class="table-button" name="loanIdExtend" type="submit" value="${loan.loanId}">
                                             verlängern
                                         </button>
                                     </td>
@@ -55,7 +55,7 @@
                             </c:forEach>
                             </form>
                         </table>
-                        <form name="logout-form" action="${pageContext.request.contextPath}/login/" method="POST">
+                        <form id= "logout" name="logout-form" action="${pageContext.request.contextPath}/login/" method="POST">
                             <input type="hidden" name="logout" value="true">
                             <input class="darker-button" type="submit" value="ausloggen" name="submit"/>
                         </form>

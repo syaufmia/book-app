@@ -3,6 +3,7 @@ package sum.ike.control.connector;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sum.ike.model.Author;
@@ -10,6 +11,7 @@ import sum.ike.model.Author;
 import java.util.List;
 
 
+@Disabled
 class AuthorConverterTest {
 
     private AuthorConverter authorConverter;
