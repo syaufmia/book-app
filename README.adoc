@@ -1,8 +1,9 @@
 = image:docs/img/openbook.png[] Bücherverwaltung
 Safiye Uzun <safiye.uzun@msg.group>
 v1.0, 2021-02-11
-:toc:
+:toc: left
 :toc-title: Inhaltsverzeichnis
+:icons: font
 
 == Einleitung
 
@@ -45,14 +46,24 @@ h| Konsolen-Applikation
 h| Web-Applikation
 h| RESTful API
 h| JDBC
-| ~ 120h
-| ~ 100h
-| ~ 50h
-| ~ 20h
-4+^s| Gesamt: ~290h
+| ~ 120 h
+| ~ 100 h
+| ~ 50 h
+| ~ 20 h
+4+^s| Gesamt: ~ 290 h
 |====
 
+.Zusätzlich hinzugekommene Feature
+[cols=","]
+|====
+h| Feature "User-Anmeldung"
+h| Feature "Bücher ausleihen"
 
+| ~ 10 h
+| ~ 20 h
+
+2+^s| Gesamt: ~ 30 h
+|====
 
 == Umgebung
 
@@ -144,29 +155,30 @@ Für die Eingabe vonseiten des Anwenders werden Textfelder zur Verfügung gestel
 
 === Beispiele
 
+image:docs/img/my-page-ausgeloggt.png[]
+
+image:docs/img/my-page.PNG[]
+
+image:docs/img/buecherliste.png[]
 
 image:docs/img/add-author.png[]
 
 image:docs/img/add-book.png[]
 
-
 == Programmverlauf
 
 
 === Anwendungsfälle
-image:docs/dias/usecase.svg[]
+image:docs/dias/use-cases.svg[]
 
 Jeder Anwender hat vollen Zugriff auf die Bücher- und Autorenverwaltung und ist nicht auf eine bestimmte Personengruppe eingeschränkt.
 
 Im nächsten Schritt werden die einzelnen Fälle näher erläutert.
-
-[INFO]
+[TIP]
 ====
-Wichtig: Bei allen Anwendungsprozessen, in denen eine Eingabe durch den Anwender benötigt wird, ist davon auszugehen, dass die Eingabefelder ausgefüllt sind. Grundsätzlich gilt in der gesamten Anwendung, dass keine Felder leer stehen dürfen. +
+Bei allen Anwendungsprozessen, in denen eine Eingabe durch den Anwender benötigt wird, ist davon auszugehen, dass die Eingabefelder ausgefüllt sind. Grundsätzlich gilt in der gesamten Anwendung, dass keine Felder leer stehen dürfen. +
 _Ausnahme: Falsche oder unzulässige Jahresangaben werden durch das Jahr 2000 ersetzt._
 ====
-
-
 
 === Alle Einträge ausgeben
 
