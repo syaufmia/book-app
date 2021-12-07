@@ -1,5 +1,6 @@
 /target
 /.idea
 /out
-/whatever
-/src/main/java/sum/ike/servlets/api/https
+*.iml
+*.http
+
